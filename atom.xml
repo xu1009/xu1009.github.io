@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xu1009.github.io/"/>
-  <updated>2017-08-26T05:42:22.992Z</updated>
+  <updated>2017-08-05T06:24:41.805Z</updated>
   <id>http://xu1009.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>ni</title>
-    <link href="http://xu1009.github.io/2017/08/26/ni/"/>
-    <id>http://xu1009.github.io/2017/08/26/ni/</id>
-    <published>2017-08-26T05:42:22.000Z</published>
-    <updated>2017-08-26T05:42:22.992Z</updated>
+    <title>SpringMVC框架简述</title>
+    <link href="http://xu1009.github.io/2017/08/05/SpringMVC%E6%A1%86%E6%9E%B6%E7%AE%80%E8%BF%B0/"/>
+    <id>http://xu1009.github.io/2017/08/05/SpringMVC框架简述/</id>
+    <published>2017-08-05T06:24:41.000Z</published>
+    <updated>2017-08-05T06:24:41.805Z</updated>
     
     <summary type="html">
     
@@ -30,43 +30,684 @@
   </entry>
   
   <entry>
-    <title>myblog</title>
-    <link href="http://xu1009.github.io/2017/08/25/myblog/"/>
-    <id>http://xu1009.github.io/2017/08/25/myblog/</id>
-    <published>2017-08-25T14:21:20.000Z</published>
-    <updated>2017-08-25T14:21:20.251Z</updated>
+    <title>Maven实战</title>
+    <link href="http://xu1009.github.io/2017/07/29/Maven%E5%AE%9E%E6%88%98/"/>
+    <id>http://xu1009.github.io/2017/07/29/Maven实战/</id>
+    <published>2017-07-29T08:13:32.000Z</published>
+    <updated>2017-07-30T14:59:11.585Z</updated>
     
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://xu1009.github.io/2017/08/25/hello-world/"/>
-    <id>http://xu1009.github.io/2017/08/25/hello-world/</id>
-    <published>2017-08-25T14:18:16.831Z</published>
-    <updated>2017-08-25T14:18:16.832Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+    <content type="html"><![CDATA[<ul>
+<li>构建是什么，build这个不是IDE帮我们完成的吗，为啥需要maven</li>
+<li>平时用到的maven都是依赖管理工具和项目信息管理工具</li>
+<li>maven有一个坐标系统准确定位每一个构建（artifact）</li>
+<li>坐标系统就是按package来一级级传递的吧</li>
+<li>构建工具有 maven ant ide make等</li>
+<li>IDE都是手工的进行鼠标点击来完成编译、测试、代码生成，低效还容易出错。</li>
+<li>make是最早的构建工具，有一个Makefile的脚本文件驱动，在Linux下比较好使。</li>
+<li>Ant意思是another neat tool，构建工具，基本结构也是target和depends，没有依赖管理，可以借助Ivy管理依赖。</li>
+<li>maven是声明式的，有很好的依赖管理。</li>
+<li>maven可以创建内部的仓库服务器，中央仓库会有点慢而且，有些jar不一定有.使用nexus建立自己的maven仓库。</li>
+<li>maven的坐标系统，就是groupid artifactid等</li>
+<li>groupid artifactid version 依赖的基本坐标</li>
+<li>type 依赖的类型，默认为jar</li>
+<li>scope以来的范围，就是作用域</li>
+<li>optional 标记依赖是否可选</li>
+<li>exclusion 用来排除依赖传递性</li>
+<li>依赖范围就是用来控制依赖与这三种classpath（编译、测试、运行）的关系</li>
+<li><scope> </scope>有这几种依赖范围，</li>
+<li>compile：编译依赖范围，这也是默认的依赖范围，三个阶段都可以。</li>
+<li>test：测试依赖范围，只对测试依赖有效</li>
+<li>provided：已提供依赖范围，只对编译和测试有效，运行无效。</li>
+<li>runtime：测试和运行时有效</li>
+<li>system：和provided一样，但是这个必须指定依赖的路径。</li>
+<li>import：这个后续补上，没详细说</li>
+<li>jar包冲突，maven有自己的依赖调解原则，第一原则是最近者优先，最先依赖的那个会被使用，如果路径长度是一样的就看依赖在pom文件中的顺序。</li>
+</ul>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      &lt;ul&gt;
+&lt;li&gt;构建是什么，build这个不是IDE帮我们完成的吗，为啥需要maven&lt;/li&gt;
+&lt;li&gt;平时用到的maven都是依赖管理工具和项目信息管理工具&lt;/li&gt;
+&lt;li&gt;maven有一个坐标系统准确定位每一个构建（artifact）&lt;/li&gt;
+&lt;li&gt;坐标系统就是按p
     
     </summary>
     
+    
+      <category term="maven" scheme="http://xu1009.github.io/tags/maven/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mock与junit</title>
+    <link href="http://xu1009.github.io/2017/07/19/Mock%E4%B8%8Ejunit/"/>
+    <id>http://xu1009.github.io/2017/07/19/Mock与junit/</id>
+    <published>2017-07-19T03:27:58.000Z</published>
+    <updated>2017-07-19T03:29:29.899Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="Mock junit" scheme="http://xu1009.github.io/tags/Mock-junit/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入分析JAVA WEB技术总结</title>
+    <link href="http://xu1009.github.io/2017/07/15/%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90JAVA-WEB%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/"/>
+    <id>http://xu1009.github.io/2017/07/15/深入分析JAVA-WEB技术总结/</id>
+    <published>2017-07-14T23:47:36.000Z</published>
+    <updated>2017-07-14T23:48:21.215Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="DNS解析过程"><a href="#DNS解析过程" class="headerlink" title="DNS解析过程"></a>DNS解析过程</h5><ul>
+<li>最先在浏览器缓存里面找</li>
+<li>本地操作系统缓存</li>
+<li>本地域名服务器</li>
+<li>根服务器</li>
+<li>解析完成之后会自动缓存这个结果<h5 id="域名解析方式"><a href="#域名解析方式" class="headerlink" title="域名解析方式"></a>域名解析方式</h5></li>
+<li>A记录,指定URL所对应的IP地址</li>
+<li>MX记录,将某个地址下的邮件服务器指向自己的mail server</li>
+<li>CNAME记录,别名解析,为一个域名设置很多别名</li>
+<li>NS记录,为某个域名指定DNS解析服务器</li>
+<li>TXT记录,为域名设置说明<h5 id="JAVA-IO"><a href="#JAVA-IO" class="headerlink" title="JAVA IO"></a>JAVA IO</h5></li>
+<li>基于字节的IO,基于字符的,基于磁盘的,基于网络的.</li>
+<li>字节到字符需要解码,字符到字节需要编码,很透彻</li>
+<li>所以在读取文件或者写入文件的时候需要指定编码解码方式,不指定就使用系统默认的编解码方式<h5 id="文件访问方式"><a href="#文件访问方式" class="headerlink" title="文件访问方式"></a>文件访问方式</h5></li>
+<li>标准IO访问,调用操作系统操作文件的方法,这里涉及到高速缓存.</li>
+<li>直接IO访问,不经过高速缓存,直接访问磁盘,这样会比较慢</li>
+<li>同步IO,就是阻塞式的IO,必须等到读取或者写入完成之后,才能做其他事情</li>
+<li>异步IO,非阻塞式,读取和写入时,当前线程不必等待,可以去处理其它事情.</li>
+<li>内存映射,将磁盘一段内存空间映射到用户缓存空间,这样访问,<h5 id="同步-异步-阻塞-非阻塞"><a href="#同步-异步-阻塞-非阻塞" class="headerlink" title="同步 异步  阻塞  非阻塞"></a>同步 异步  阻塞  非阻塞</h5></li>
+<li>同步就是一个任务序列的完成需要依赖另外一个任务时,只有等待被依赖的任务完成之后,依赖的任务才能完成,这是一种可靠的任务序列.</li>
+<li>异步是不可靠的任务序列,他不必等待被依赖的任务完成,只是通知被依赖的任务要完成什么样的工作.</li>
+<li>同步能够保证程序的可靠行,异步可以提升程序的性能,必须在可靠性和性能之间保持平衡.</li>
+<li>阻塞是CPU停下来等待一个慢动作完成之后,才能执行其它任务.</li>
+<li>非阻塞是CPU没必要停下来,非阻塞明显提高了CPU的利用率,带来的坏处就是线程之间的切换带来的开销.<h3 id="编码问题相关"><a href="#编码问题相关" class="headerlink" title="编码问题相关"></a>编码问题相关</h3></li>
+<li>通俗的讲,计算机存储的基本单元是英语,其它语言必须通过一次翻译,翻译成英语才能和计算机通信,这叫做编码.<h5 id="一些编码方式简述"><a href="#一些编码方式简述" class="headerlink" title="一些编码方式简述"></a>一些编码方式简述</h5></li>
+<li>ASCLL码,总共有128个,用一个字节的低7位表示,0-31表示换行 回车这些,32-126表示打印字符,可以通过键盘输入并且能够显示出来.</li>
+<li>ISO-8859-1仍然是单字节编码,主要是用来弥补ASCLL码的不足,加了一些西欧语言字符,应用的十分广泛,总共有256个字节.</li>
+<li>GB2312 中文编码字符集,使用双字节编码,就是比较少,才6000多个汉字.</li>
+<li>GBK和GB2312兼容,增加了很多汉字,相当于GB2312的拓展,而且两者是兼容的.</li>
+<li>GB18030 国家标准,但是用的不多.</li>
+<li>UTF-16使用定长表示方法,不论什么字符都使用两个字节表示.</li>
+<li>UTF-8采用变长编码,utf-16虽然在表示上非常方便,但是有些字符只需要一个字节表示就够了,没必要使用两个字节表示,所以这样就造成内存空间的的增大,十分不方便,UTF-8使用1-6个字节组成,</li>
+<li>编码,解码问题主要是从字节到字符或者字符到字节的过程,Java内存使用的时utf-16编码,utf-16编码简单高效,utf-8多用于网络编码,节省流量,utf-16是顺序编码,这样会导致中间一个字节码坏掉之后影响之后的,而utf-8则不会,它会对单个字符进行校验,所以可靠性更高.<h4 id="Java-web中的编码和解码问题"><a href="#Java-web中的编码和解码问题" class="headerlink" title="Java web中的编码和解码问题"></a>Java web中的编码和解码问题</h4></li>
+<li>首先网络中传输使用的是http协议,也就是socket,socket流是字节流,所以,要想在网络中传输,首先需要编码,从网络中获取到字节流之后再进行解码还原成我们需要的那种.</li>
+<li>URI和QueryString的编解码还不一样,tomcat处理这个URL时,就是要解码,uri就是使用配置文件中的解码方式,connector中的URIEncoding决定了解码方式,queryString的话就是基本上按照header中的content type来解码的,需要配置tomcat中的useBodingEncodingForUri为true.</li>
+<li>tomcat在解析post方式的表单数据时,解码方式是要按照header中的content type里面的charset属性,如果请求头中没有包含该属性的话,则会按照默认的iso-8859-1进行解码,如果提交的数据包含非ASCLL码的话就会出现乱码的现象.</li>
+<li>返回给浏览器的数据也需要编码,浏览器根据,response中的header  charset进行解码的,如果没有这个响应头的话就按照HTML中指定的charset进行解码,如果仍然没有的话就按照默认的解码方式.<h4 id="Javac相关"><a href="#Javac相关" class="headerlink" title="Javac相关"></a>Javac相关</h4></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;DNS解析过程&quot;&gt;&lt;a href=&quot;#DNS解析过程&quot; class=&quot;headerlink&quot; title=&quot;DNS解析过程&quot;&gt;&lt;/a&gt;DNS解析过程&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;最先在浏览器缓存里面找&lt;/li&gt;
+&lt;li&gt;本地操作系统缓存&lt;/li&gt;
+&lt;li&gt;本地域名服
+    
+    </summary>
+    
+    
+      <category term="java web" scheme="http://xu1009.github.io/tags/java-web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JVM基础知识</title>
+    <link href="http://xu1009.github.io/2017/07/15/JVM%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <id>http://xu1009.github.io/2017/07/15/JVM基础知识/</id>
+    <published>2017-07-14T23:46:05.000Z</published>
+    <updated>2017-07-14T23:46:51.499Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="JVM运行时数据区域"><a href="#JVM运行时数据区域" class="headerlink" title="JVM运行时数据区域"></a>JVM运行时数据区域</h2><ul>
+<li><strong>程序计数器</strong>   <code>线程独享</code>   程序计数器是一块内存较小的存储空间，可以看做当前线程所执行的字节码的行号指示器，字节码解释器工作时就是通过改变这个计数器值来选取下一条需要执行的字节码指令，线程执行的是Java方法的话，这个计数器记录的就是正在执行的字节码指令地址，如果时native方法，那么记录的就是空，该区域没有规定内存错误。</li>
+<li><strong>Java虚拟机栈</strong> <code>线程独享</code>   生命周期和线程相同，每个方法创建时都会创建一个栈帧，用于存储局部变量表（存储了基本数据类型和对象引用类型）、操作数栈、动态链接、方法出口信息。栈帧在栈中的入栈出栈就是对应方法调用到执行的过程。</li>
+<li><strong>本地方法栈</strong>   <code>线程独享</code>  这个和虚拟机栈一样功能，只不过虚拟机栈是为Java方法服务，这个是为本地方法服务的，即为native方法服务。</li>
+<li><strong>Java堆</strong>   <code>线程共享</code>   这个方法是JVM管理的主要区域，也称为GC堆，主要存储的时对象实例和数组。</li>
+<li><strong>方法区域</strong>   <code>线程共享</code>   主要存储的是类信息、常量、静态变量，垃圾回收主要对这个区域中的运行时常量池的回收和对类型的卸载。<h2 id="对象内存布局和定位"><a href="#对象内存布局和定位" class="headerlink" title="对象内存布局和定位"></a>对象内存布局和定位</h2></li>
+<li>对象在内存中的存储布局分为3块区域：对象头、实例数据、对齐和填充</li>
+<li>对象定位有两种，一种时句柄，一种是直接指针，句柄的话就是堆中有一个句柄池存储各个对象实例的地址，栈中的reference可以通过句柄访问，这种访问慢，但是对象地址变化的话，只需要改变句柄池不需要操作栈中的内容，直接指针的话就是访问的比较快，直接操作的对象<h2 id="JVM垃圾回收机制"><a href="#JVM垃圾回收机制" class="headerlink" title="JVM垃圾回收机制"></a>JVM垃圾回收机制</h2><h5 id="判断什么是垃圾"><a href="#判断什么是垃圾" class="headerlink" title="判断什么是垃圾"></a>判断什么是垃圾</h5></li>
+<li><strong>引用计数算法</strong>   引用计数算法是jdk1.2之前的算法，算法的主要过程是，当一个对象被引用时计数器就会加1，引用失效时就减1，最后当这个计数器为0时就会被确认成垃圾，这个有个问题就是无法回收互相引用的对象。</li>
+<li><strong>可达性分析算法</strong> 可达性分析算法也是目前用来判断对象是否为垃圾的一个算法，它使用图论的知识，他会从一系列GC ROOTS起点向下搜索，当一个节点到GC ROOTS没用任何引用链相连，那么那就会认为他是可回收的。可作为GC ROOTS的对象有java虚拟机栈中的引用的对象，方法区域中静态和常量引用的对象，本地方法栈中的JNI引用的对象，这个算法分析时必须停止其它所有线程。<h5 id="引用分类"><a href="#引用分类" class="headerlink" title="引用分类"></a>引用分类</h5></li>
+<li><strong>强引用</strong>   也是平时最常用的引用，这类引用，只要还存在，垃圾收集器就永远不会回收它，及时出现内存溢出。</li>
+<li><strong>软引用</strong>    当内存不够时才会回收它，比如用做缓存，描述还有用但是非必要对象。</li>
+<li><strong>弱引用</strong>   比软引用还要弱的引用，不管内存是否充足都会被回收掉，   如果这个对象是偶尔的使用，并且希望在使用时随时就能获取到，但又不想影响此对象的垃圾收集，那么你应该用 Weak Reference 来记住此对象。</li>
+<li><strong>虚引用</strong>   也叫幽灵引用，最弱的一种引用关系，无法通过虚引用获取一个对象实例，为一个对象设置虚引用关联的唯一目的就是，当该对象被回收时收到一个系统通知。<h5 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h5></li>
+<li><strong>标记清除算法</strong>    标记清除算法两个过程，一个是标记，一个是清除，这个算法是最基础的垃圾收集算法，主要有两个缺点，一个是标记和清除的效率都很低，另一个是标记清除导致内存碎片，当存储大对象时，由于找不到连续的存储空间，会触发另一次收集。</li>
+<li><strong>复制算法</strong>    为了解决效率的问题，这个算法主要是将内存分区，一个是用来使用，另一个用来存储，现在商业虚拟机都是分为Eden、from survivor、to survivor，比例时8:1:1，Eden和from survivor用来使用，将存活的对象复制到to survivor，然后回收那些垃圾，当存活的对象大于to   survivor的空间时，那些对象会进入老年代。</li>
+<li><strong>标记整理算法</strong>   存活的对象向一边移动，这样就解决了内存碎片的问题。</li>
+<li><strong>分代收集算法</strong>    现在使用大部分都是这个算法，根据新生代和老年代选择合适的算法收集，比如G1收集器使用的就是这个算法。<h5 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h5></li>
+<li><strong>serial收集器</strong>   单线程收集器，收集器采用复制算法，所以回收的对象时新生代的对象，收集的时候必须停止其它所有线程，也就是stop the  world直到它收集结束，这个时间也就是停顿时间，<code>简单高效，多用于client模式下的新生代收集器，由于是一个线程，就避免了切换线程所带来的开销，所以在client模式下是一个很好的选择</code></li>
+<li><strong>parnew收集器</strong>     <code>serial收集器的多线程版本，其它没啥区别，只是在使用复制算法的时候使用了多线程，在单核cpu的情况下，由于切换线程带来的开销，收集的效率还不如serial，收集器收集期间还是需要停止其它所有线程</code></li>
+<li><strong>parallel scavenge收集器</strong>  <code>并行的多线程收集器</code>关注的不是停顿时间，关注的时吞吐量，这种适合那些在后台运算不要交互的任务，还有就是他能自适应调整，这也是和parnew的区别。</li>
+<li><strong>serialold收集器</strong>  <code>serial收集器的老年代版本</code></li>
+<li><strong>paraell old收集器</strong>  <code>parnew收集器的老年代版本</code></li>
+<li><strong>CMS收集器</strong>   <code>使用标记清除算法，实现了并发收集，就是在收集期间其它用户线程不会停止，GC线程和用户线程交替运行，</code>缺点是并发收集对cpu资源比较敏感，cpu还要在运行用户线程的同时还要分出一部分去收集，当cpu负荷比较大时cms算法会对程序有很大影响，还有就是无法收集浮动垃圾，然后就是采用标记清除算法的缺点，该收集主要包括四个过程：初始标记、并发标记、重新标记、并发清除。</li>
+<li><strong>G1收集器</strong>    当前最新的垃圾收集器，主要过程是初始标记、并发标记、最终标记、筛选回收。分代收集、可预测的停顿、还有就是G1之前的收集算法进行收集的范围都是整个老年代或者新生代，G1则是把内存分为若干个大小相等的region，G1跟踪每个region里面垃圾堆积的价值大小，在后台维护一个优先级列表，每次都会回收价值最大的那个region。<h5 id="内存分配和回收策略"><a href="#内存分配和回收策略" class="headerlink" title="内存分配和回收策略"></a>内存分配和回收策略</h5></li>
+<li>大多数情况下，对象在新生代Eden分配，当Eden没有足够的空间进行分配时，就会触发一次minor GC。<h6 id="对象进入老年代的情况"><a href="#对象进入老年代的情况" class="headerlink" title="对象进入老年代的情况"></a>对象进入老年代的情况</h6></li>
+<li>大对象直接进入老年代，JVM提供一个专门设置这个阈值的参数，超过这个阈值的参数直接进入老年代</li>
+<li>长期存活的对象进入老年代，对象年龄是在survivor没熬过一次minor GC就加1，具体超过多少，也有一个JVM阈值可以设置。</li>
+<li>相同年龄的对象总和大于survivor空间的一半，那大于等于这个年龄的对象进入老年代。</li>
+<li>一次minor GC之后，存活的对象进入survivor，最后无法容纳的进入老年代。<h5 id="一些JVM指令和可视化工具"><a href="#一些JVM指令和可视化工具" class="headerlink" title="一些JVM指令和可视化工具"></a>一些JVM指令和可视化工具</h5></li>
+<li>这些都是为了深入观察jvm，比如堆栈，新生代，老年代，线程等，自带的命令行工具，比如jps显示JVM中的进程，jmap生成heap转储快照，jstack生成线程的快照。</li>
+<li>可视化工具jconsole和visualVM，<h5 id="有关JVM参数设置问题"><a href="#有关JVM参数设置问题" class="headerlink" title="有关JVM参数设置问题"></a>有关JVM参数设置问题</h5></li>
+<li>Xmx最大堆内存,通常和Xms搭配使用,配置堆内存的,Xmn配置新生代的内存.<h5 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a>类文件结构</h5></li>
+<li>.class文件,也就是字节码文件,是JVM想要实现语言无关,已经是平台无关了,JVM不和语言绑定,他只和字节码文件相关联,任何其它语言都可以使用JVM作为语言的产品交付媒介,只要这些语言的编译器能够生成符合JVM要求的字节码文件规范.</li>
+<li>class采用一种伪结构来存储数据,这种结构中只有无符号数和表两种类型数据.</li>
+<li>class文件开头是4个字节的魔数,该数标志该文件是否能被JVM接受,很多文件存储标准中都有魔数来进行身份识别.Java中class文件的魔数是咖啡宝贝,紧接着4个字节是class版本号,也就是jdk版本号,低版本jdk不能执行高版本的字节码文件.</li>
+<li>常量池包含了字面量和符号引用.</li>
+<li>再接着是访问标志,用于识别这是类还是接口,是否定义为public,是否定义为abstract,是否被final修饰等.</li>
+<li>类索引,父类索引,接口索引集合,这三项数据来确定这个类的继承关系.这三项都是用于缺点权限定名.</li>
+<li>字段表集合,用于描述接口或者类中声明的变量.</li>
+<li>方法表集合,用于描述接口或者类中声明的方法<h5 id="虚拟机类加载机制"><a href="#虚拟机类加载机制" class="headerlink" title="虚拟机类加载机制"></a>虚拟机类加载机制</h5></li>
+<li>Java类的加载,链接和初始化都是在程序运行期间完成的,虽然会增加开销,但是提高了灵活性.</li>
+<li>类整个生命周期包括:加载 — 验证— 准备—解析— 初始化—使用—卸载</li>
+<li><strong>加载</strong>   通过类权限定名获取该类的二进制字节流,将这个字节流所代表的静态存储结构转化为方法区域的运行时数据结构,在内存中生成一个代表该类的对象.</li>
+<li><strong>验证</strong>   确保class文件字节流中包含的信息符合当前虚拟机的要求,包括,文件格式验证,元数据验证,字节码验证,符号引用验证.</li>
+<li><strong>准备</strong>    正式为类变量分配内存并设置类变量初始值.</li>
+<li><strong>解析</strong>    解析是将符号引用替换为直接引用.</li>
+<li><strong>初始化</strong>   类加载的最后一步,这里才真正执行类中的Java代码,之前分配的变量都是初始值,现在才是赋值真正的.<h6 id="加载过程详述"><a href="#加载过程详述" class="headerlink" title="加载过程详述"></a>加载过程详述</h6></li>
+<li>这个加载就是前面所说的步骤中的第一步,通过类全限定名获取类的二进制流,这个在Java中是放到JVM之外了,而这个代码模块被称为<code>类加载器</code></li>
+<li>判断两个类是否相等,必须在同一个类加载器加载的前提下判断才有意义.</li>
+<li><strong>双亲委派模型</strong>     Java中分为两种类加载器,一种是启动类加载器还有就是其它,启动类加载器是在JVM内部,其它独立于jvm.</li>
+<li><code>启动类加载器</code>   bootstrap classloader,这个会将Javahome/lib目录下的被jvm识别的类库加载到虚拟机</li>
+<li><code>拓展类加载器</code>  extension classloader,负责加载Javahome/lib/ext中的类库,</li>
+<li><code>应用程序类加载器</code>  application classloader,负责加载用户路径上的类库.</li>
+<li><code>双亲委派模型</code>  表示类加载器之间的层次关系,要求除了启动类加载器之外,其它所有类加载器都要有自己的父类加载器,他们之间不是以继承的关系而是组合的关系.</li>
+<li><code>双亲委派模型工作过程</code>   当一个类加载器收到类加载请求时,他不会自己加载,而是将这个请求传给自己的父类,这样依次向上,最后到了启动类加载器,如果启动类加载器无法加载,再向下传递.这个模型的好处就是类随着他的类加载器一起具备了一种带有优先级的层次关系.<h5 id="JVM执行引擎"><a href="#JVM执行引擎" class="headerlink" title="JVM执行引擎"></a>JVM执行引擎</h5></li>
+<li>Java虚拟机栈存储的是栈帧,栈帧存储了局部变量表,操作数栈,动态链接和方法返回地址等信息.</li>
+<li><code>局部变量表</code>    这个存放了基本类型和对象引用,局部变量表以变量槽为最小单位.</li>
+<li><code>操作数栈</code>    这个是后入先出的栈<h6 id="Tomcat的类加载器"><a href="#Tomcat的类加载器" class="headerlink" title="Tomcat的类加载器"></a>Tomcat的类加载器</h6></li>
+<li>有很多类加载器,一个是分离一个是共享,多级类加载器.<h5 id="Java优化"><a href="#Java优化" class="headerlink" title="Java优化"></a>Java优化</h5></li>
+</ul>
+<h5 id="Java并发相关"><a href="#Java并发相关" class="headerlink" title="Java并发相关"></a>Java并发相关</h5>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;JVM运行时数据区域&quot;&gt;&lt;a href=&quot;#JVM运行时数据区域&quot; class=&quot;headerlink&quot; title=&quot;JVM运行时数据区域&quot;&gt;&lt;/a&gt;JVM运行时数据区域&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;程序计数器&lt;/strong&gt;   &lt;code&gt;线
+    
+    </summary>
+    
+    
+      <category term="JVM" scheme="http://xu1009.github.io/tags/JVM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MYSQL相关基础知识</title>
+    <link href="http://xu1009.github.io/2017/07/02/MYSQL%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <id>http://xu1009.github.io/2017/07/02/MYSQL相关基础知识/</id>
+    <published>2017-07-02T10:19:47.000Z</published>
+    <updated>2017-07-02T14:21:07.914Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="一些基本知识"><a href="#一些基本知识" class="headerlink" title="一些基本知识"></a>一些基本知识</h3><ul>
+<li>SELECT * FROM TABLE1 LEFT JOIN TABLE2 ON …</li>
+<li><p>left join on是查询左边所有右边满足条件的记录如下所示语法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> p.FirstName, p.LastName, a.City, a.State  <span class="keyword">FROM</span> Person p <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Address a <span class="keyword">on</span> p.PersonId = a.PersonId;</div></pre></td></tr></table></figure>
+</li>
+<li><p>RIGHT JOIN ON 与其对应 查询的是右边所有，左边满足条件的记录，比如上述查询等效如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> p.FirstName, p.LastName, a.City, a.State  <span class="keyword">FROM</span>  Address a <span class="keyword">RIGHT</span> <span class="keyword">JOIN</span>  Person p <span class="keyword">on</span> p.PersonId = a.PersonId;</div></pre></td></tr></table></figure>
+</li>
+<li><p>DISTINCT 是去除查询的结果集中重复的元素</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> salary <span class="keyword">FROM</span> <span class="keyword">TABLE</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="MYSQL相关基础知识/dis.jpg" alt="distinct的用法"></p>
+<ul>
+<li>IN操作符如下用法<br><img src="MYSQL相关基础知识/in.jpg" alt="in操作符"><br>其中要是查找不在其中的就是加个NOT IN 这样就可以找到补集</li>
+<li>between语句<br><img src="MYSQL相关基础知识/between.jpg" alt="between语句用法"><h3 id="join"><a href="#join" class="headerlink" title="join"></a>join</h3></li>
+<li>inner join是内连接，关键字在表中存在至少一个匹配时返回行，没有匹配就不返回</li>
+<li>left join和right join肯定有返回,left join是左边所有加上右边满足条件的，right join是右边所有加上左边满足条件的 </li>
+<li>UNION 语句是将两个查询的结果合并，这个会去除重复的元素</li>
+<li><p>union all 回列出所有元素</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span> <span class="keyword">FROM</span> C</div><div class="line"><span class="keyword">UNION</span> ALL</div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span> <span class="keyword">FROM</span> B</div></pre></td></tr></table></figure>
+</li>
+<li><p>group by是按类分的最后返回的感觉是两个表的样子</p>
+</li>
+<li>分享一个细节就是使用IN的语句时，可以 in table，不过列需要对应<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> t_topics <span class="keyword">WHERE</span> (reply_count,user_id) <span class="keyword">IN</span> (<span class="keyword">SELECT</span> user_id <span class="keyword">as</span> <span class="keyword">id</span>,<span class="keyword">max</span>(reply_count) <span class="keyword">as</span> <span class="keyword">max</span> <span class="keyword">from</span> t_topics <span class="keyword">GROUP</span> <span class="keyword">BY</span> user_id)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>比如这个，in前面的列顺序必须和后面的一致</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;一些基本知识&quot;&gt;&lt;a href=&quot;#一些基本知识&quot; class=&quot;headerlink&quot; title=&quot;一些基本知识&quot;&gt;&lt;/a&gt;一些基本知识&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;SELECT * FROM TABLE1 LEFT JOIN TABLE2 ON …&lt;/li&gt;
+
+    
+    </summary>
+    
+    
+      <category term="mysql" scheme="http://xu1009.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx+tomcat+redis实现服务器集群和共享session</title>
+    <link href="http://xu1009.github.io/2017/06/27/Nginx-tomcat-redis%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9B%86%E7%BE%A4%E5%92%8C%E5%85%B1%E4%BA%ABsession/"/>
+    <id>http://xu1009.github.io/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/</id>
+    <published>2017-06-27T07:37:22.000Z</published>
+    <updated>2017-06-27T08:13:07.331Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="有关Nginx"><a href="#有关Nginx" class="headerlink" title="有关Nginx"></a>有关Nginx</h2><ul>
+<li>Nginx是一个代理服务器，主要功能是实现负载均衡和虚拟主机。</li>
+<li>负载均衡就是使用Nginx作为代理服务器，用户请求首先是达到Nginx服务器，Nginx再根据实际情况将请求分流，分发到不同后端，这里就是后端实现了服务器集群，</li>
+<li>下图就是负载均衡原理<br><img src="http://img.blog.csdn.net/20160612171735599?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="负载均衡原理"></li>
+<li>有关Nginx的详细介绍可以参考该博客<a href="http://blog.csdn.net/hiyun9/article/details/51602428" target="_blank" rel="external">nginx详细介绍及配置</a><h2 id="有关redis"><a href="#有关redis" class="headerlink" title="有关redis"></a>有关redis</h2></li>
+<li>redis是一个数据库，一个键值型数据库</li>
+<li>redis将数据存储到内存，持久化到磁盘，所以读写速度很快</li>
+<li>redis可以做关系型数据库的缓存，存储一些数据量比较小的数据<h2 id="Nginx负载均衡中的session问题"><a href="#Nginx负载均衡中的session问题" class="headerlink" title="Nginx负载均衡中的session问题"></a>Nginx负载均衡中的session问题</h2></li>
+<li>负载均衡会将每次请求分发到不同的服务器</li>
+<li>session保存在服务器端，sessionid在本地，这就会导致在这个服务器生成的session下次请求另一个服务器时导致无法识别的问题。</li>
+<li>这就需要服务器集群之间共享session</li>
+<li>最简单的问题就是登陆验证的时候，验证码保存到session中，验证码的生成是一个服务器，最后登陆验证的时候是另一个服务器，这就会导致验证失败。<h4 id="几种解决session共享的方法"><a href="#几种解决session共享的方法" class="headerlink" title="几种解决session共享的方法"></a>几种解决session共享的方法</h4></li>
+</ul>
+<ol>
+<li><p>配置Nginx中neinx.conf的server选项，如下加入ip_hash,这样是对于同一个ip只会分发到一个服务器，这样其实失去了负载均衡的意思，而且Nginx获取的必须是用户真实的ip地址，也就是必须是最前端的服务器，配置如下</p>
+<figure class="highlight roboconf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">#user  nobody;</span></div><div class="line">worker_processes  1;</div><div class="line"></div><div class="line"><span class="comment">#error_log  logs/error.log;</span></div><div class="line"><span class="comment">#error_log  logs/error.log  notice;</span></div><div class="line"><span class="comment">#error_log  logs/error.log  info;</span></div><div class="line"></div><div class="line"><span class="comment">#pid        logs/nginx.pid;</span></div><div class="line"></div><div class="line"></div><div class="line">events &#123;</div><div class="line">    <span class="attribute">worker_connections  1024;</span></div><div class="line"><span class="attribute">&#125;</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">http &#123;</span></div><div class="line"><span class="attribute">    include       mime.types;</span></div><div class="line"><span class="attribute">    default_type  application/octet-stream;</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</span></div><div class="line"><span class="attribute">    #                  '$status $body_bytes_sent "$http_referer" '</span></div><div class="line"><span class="attribute">    #                  '"$http_user_agent" "$http_x_forwarded_for"';</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">    #access_log  logs/access.log  main;</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">    sendfile        on;</span></div><div class="line"><span class="attribute">    #tcp_nopush     on;</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">    #keepalive_timeout  0;</span></div><div class="line"><span class="attribute">    keepalive_timeout  65;</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">    #gzip  on;</span></div><div class="line"><span class="attribute">upstream netitcast.com&#123;</span></div><div class="line"><span class="attribute">   server  127.0.0.1</span>:18080 weight=1;</div><div class="line">   <span class="attribute">server  127.0.0.1</span>:28080 weight=2;</div><div class="line">   <span class="attribute">ip_hash; #这里配置</span></div><div class="line"><span class="attribute">&#125;</span></div><div class="line"><span class="attribute">    server &#123;</span></div><div class="line"><span class="attribute">        listen       80;</span></div><div class="line"><span class="attribute">        server_name  localhost;</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">        #charset koi8-r;</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">        #access_log  logs/host.access.log  main;</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">        #location / &#123;</span></div><div class="line"><span class="attribute">        #    root   html;</span></div><div class="line"><span class="attribute">        #    index  index.html index.htm;</span></div><div class="line"><span class="attribute">        #&#125;</span></div><div class="line"><span class="attribute">		location / &#123;</span></div><div class="line"><span class="attribute">			proxy_pass  http</span>://netitcast<span class="variable">.com</span>;</div><div class="line">			<span class="attribute">proxy_redirect  default;</span></div><div class="line"><span class="attribute">		&#125;</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">        #error_page  404              /404.html;</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">        # redirect server error pages to the static page /50x.html</span></div><div class="line"><span class="attribute">        #</span></div><div class="line"><span class="attribute">        error_page   500 502 503 504  /50x.html;</span></div><div class="line"><span class="attribute">        location = /50x.html &#123;</span></div><div class="line"><span class="attribute">            root   html;</span></div><div class="line"><span class="attribute">        &#125;</span></div><div class="line"><span class="attribute"></span></div><div class="line"><span class="attribute">        # proxy the PHP scripts to Apache listening on 127.0.0.1</span>:80</div><div class="line">        #</div><div class="line">        #location ~ \<span class="variable">.php</span>$ &#123;</div><div class="line">        #    proxy_pass   http://127.0.0.1;</div><div class="line">        <span class="comment">#&#125;</span></div><div class="line"></div><div class="line">        <span class="comment"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span></div><div class="line">        <span class="comment">#</span></div><div class="line">        <span class="comment">#location ~ \.php$ &#123;</span></div><div class="line">        <span class="comment">#    root           html;</span></div><div class="line">        <span class="comment">#    fastcgi_pass   127.0.0.1:9000;</span></div><div class="line">        <span class="comment">#    fastcgi_index  index.php;</span></div><div class="line">        <span class="comment">#    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span></div><div class="line">        <span class="comment">#    include        fastcgi_params;</span></div><div class="line">        <span class="comment">#&#125;</span></div><div class="line"></div><div class="line">        <span class="comment"># deny access to .htaccess files, if Apache's document root</span></div><div class="line">        <span class="comment"># concurs with nginx's one</span></div><div class="line">        <span class="comment">#</span></div><div class="line">        <span class="comment">#location ~ /\.ht &#123;</span></div><div class="line">        <span class="comment">#    deny  all;</span></div><div class="line">        <span class="comment">#&#125;</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment"># another virtual host using mix of IP-, name-, and port-based configuration</span></div><div class="line">    <span class="comment">#</span></div><div class="line">    <span class="comment">#server &#123;</span></div><div class="line">    <span class="comment">#    listen       8000;</span></div><div class="line">    <span class="comment">#    listen       somename:8080;</span></div><div class="line">    <span class="comment">#    server_name  somename  alias  another.alias;</span></div><div class="line"></div><div class="line">    <span class="comment">#    location / &#123;</span></div><div class="line">    <span class="comment">#        root   html;</span></div><div class="line">    <span class="comment">#        index  index.html index.htm;</span></div><div class="line">    <span class="comment">#    &#125;</span></div><div class="line">    <span class="comment">#&#125;</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment"># HTTPS server</span></div><div class="line">    <span class="comment">#</span></div><div class="line">    <span class="comment">#server &#123;</span></div><div class="line">    <span class="comment">#    listen       443 ssl;</span></div><div class="line">    <span class="comment">#    server_name  localhost;</span></div><div class="line"></div><div class="line">    <span class="comment">#    ssl_certificate      cert.pem;</span></div><div class="line">    <span class="comment">#    ssl_certificate_key  cert.key;</span></div><div class="line"></div><div class="line">    <span class="comment">#    ssl_session_cache    shared:SSL:1m;</span></div><div class="line">    <span class="comment">#    ssl_session_timeout  5m;</span></div><div class="line"></div><div class="line">    <span class="comment">#    ssl_ciphers  HIGH:!aNULL:!MD5;</span></div><div class="line">    <span class="comment">#    ssl_prefer_server_ciphers  on;</span></div><div class="line"></div><div class="line">    <span class="comment">#    location / &#123;</span></div><div class="line">    <span class="comment">#        root   html;</span></div><div class="line">    <span class="comment">#        index  index.html index.htm;</span></div><div class="line">    <span class="comment">#    &#125;</span></div><div class="line">    <span class="comment">#&#125;</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>第二个就是使用redis存储session了</p>
+<blockquote>
+<p> 这里使用的是tomcat-redis-session-manager框架，该框架是基于tomcat服务器的，只需要在tomcat中加入tomcat-redis-session-1.0-SNAPSHOT.jar、jedis-2.7.2.jar、commons-pool2-2.0.jar三个包<br> 三个包的下载地址<a href="http://download.csdn.net/detail/u010870518/9585716" target="_blank" rel="external">点击下载</a>网上很多包不能用，这里是可以用的，不过是对于tomcat7</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><p>修改Tomcat的conf/context.xml，加入redis的相关连接信息，配置如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Valve</span> <span class="attr">className</span>=<span class="string">"com.orangefunction.tomcat.redissessions.RedisSessionHandlerValve"</span> /&gt;</span>  </div><div class="line"> <span class="tag">&lt;<span class="name">Manager</span> <span class="attr">className</span>=<span class="string">"com.orangefunction.tomcat.redissessions.RedisSessionManager"</span>  </span></div><div class="line"><span class="tag">  <span class="attr">host</span>=<span class="string">"localhost"</span>  </span></div><div class="line"><span class="tag">  <span class="attr">port</span>=<span class="string">"6379"</span>  </span></div><div class="line"><span class="tag">  <span class="attr">database</span>=<span class="string">"0"</span>  </span></div><div class="line"><span class="tag">  <span class="attr">maxInactiveInterval</span>=<span class="string">"60"</span> /&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>这样就可以在新建session的时候将session存储到redis然后读取的时候从redis获取，redis是服务器集群的共享，<br>下图是原理<br><img src="http://img.blog.csdn.net/20160725171038125" alt="redis共享session的原理"></p>
+</li>
+<li>在默认的情况下Tomcat的Session管理，如果不进行设置的话是由Tomcat自带的tandardManager类进行控制的，我们可以根据这个类自定义一个Manager，主要重写的就是org.apache.catalina.session.ManagerBase里边的具体写的操作，<br>这也是tomcat-redis-session-manager的基本原理，将tomcat的session存储位置指向了Redis</li>
+<li>RedisSessionManager继承了org.apache.catalina.session.ManagerBase并重写了add、findSession、createEmptySession、remove等方法，并将对session的增删改查操作指向了对Redis数据存储的操作</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;有关Nginx&quot;&gt;&lt;a href=&quot;#有关Nginx&quot; class=&quot;headerlink&quot; title=&quot;有关Nginx&quot;&gt;&lt;/a&gt;有关Nginx&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Nginx是一个代理服务器，主要功能是实现负载均衡和虚拟主机。&lt;/li&gt;
+&lt;li&gt;负载均
+    
+    </summary>
+    
+    
+      <category term="学习，Nginx，redis" scheme="http://xu1009.github.io/tags/%E5%AD%A6%E4%B9%A0%EF%BC%8CNginx%EF%BC%8Credis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>golang学习</title>
+    <link href="http://xu1009.github.io/2017/06/23/golang%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://xu1009.github.io/2017/06/23/golang学习/</id>
+    <published>2017-06-23T07:37:14.000Z</published>
+    <updated>2017-06-24T12:27:33.173Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="go语言"><a href="#go语言" class="headerlink" title="go语言"></a>go语言</h3><p>先来一段代码感受一下<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</div><div class="line">	fmt.Print(<span class="string">"hello world"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>分析一下这段代码</p>
+<ul>
+<li>包是main这个也是有意义的，包是main的表示该段代码可以独立执行</li>
+<li>main函数和正常的程序一样，程序运行时首先执行的，如果有init函数就执行init</li>
+<li>标识符首字母的大小写决定了该变量的可见性，大写就是public，小写是private</li>
+</ul>
+<hr>
+<p>go语言也需要提前声明变量</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a <span class="keyword">int</span> = <span class="number">1</span></div><div class="line"><span class="keyword">var</span> a = <span class="number">1</span></div><div class="line">a := <span class="number">10</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>常量const，不能被修改的量</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;go语言&quot;&gt;&lt;a href=&quot;#go语言&quot; class=&quot;headerlink&quot; title=&quot;go语言&quot;&gt;&lt;/a&gt;go语言&lt;/h3&gt;&lt;p&gt;先来一段代码感受一下&lt;br&gt;&lt;figure class=&quot;highlight go&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td clas
+    
+    </summary>
+    
+    
+      <category term="golang" scheme="http://xu1009.github.io/tags/golang/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>常用RPC框架</title>
+    <link href="http://xu1009.github.io/2017/06/22/%E5%B8%B8%E7%94%A8RPC%E6%A1%86%E6%9E%B6/"/>
+    <id>http://xu1009.github.io/2017/06/22/常用RPC框架/</id>
+    <published>2017-06-22T07:16:22.000Z</published>
+    <updated>2017-06-23T07:17:06.835Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="DUBBO远程调用框架"><a href="#DUBBO远程调用框架" class="headerlink" title="DUBBO远程调用框架"></a>DUBBO远程调用框架</h1><h3 id="spring配置方式"><a href="#spring配置方式" class="headerlink" title="spring配置方式"></a>spring配置方式</h3><p><a href="http://blog.csdn.net/u013142781/article/details/50387583" target="_blank" rel="external">spring配置dubbo</a></p>
+<h3 id="dubbo-admin搭建"><a href="#dubbo-admin搭建" class="headerlink" title="dubbo-admin搭建"></a>dubbo-admin搭建</h3><ul>
+<li>这个dubbo-admin部署到tomcat上只能使用jdk1.7以下版本否则会报错</li>
+<li>教程<br><a href="http://blog.csdn.net/u013142781/article/details/50396621" target="_blank" rel="external">配置dubbo-admin</a><h3 id="Zookeeper搭建，这是个注册中心"><a href="#Zookeeper搭建，这是个注册中心" class="headerlink" title="Zookeeper搭建，这是个注册中心"></a>Zookeeper搭建，这是个注册中心</h3></li>
+<li>服务器端将需要需要远程的方法注册到该注册中心</li>
+<li>客户端进行订阅该注册中心</li>
+<li>这里需要几个jar包</li>
+<li>dubbo netty zookeeper zkclient jline</li>
+<li><a href="http://blog.csdn.net/u013142781/article/details/50395650" target="_blank" rel="external">zookeeper配置</a></li>
+</ul>
+<hr>
+<h1 id="redis的应用场景的介绍"><a href="#redis的应用场景的介绍" class="headerlink" title="redis的应用场景的介绍"></a>redis的应用场景的介绍</h1><p><a href="http://blog.nosqlfan.com/html/2235.html" target="_blank" rel="external">redis作者谈redis应用场景</a></p>
+<ul>
+<li>Redis支持五种数据类型：string（字符串），hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)</li>
+<li>string类型是二进制安全的。意思是redis的string可以包含任何数据。比如jpg图片或者序列化的对象 。</li>
+<li>string类型是Redis最基本的数据类型，一个键最大能存储512MB。</li>
+<li>redis以内存作为存储介质的数据库，高速存储是他的特点，可以作为MySQL的高速缓存</li>
+<li>众多语言都支持Redis，因为Redis交换数据快，所以在服务器中常用来存储一些需要频繁调取的数据，这样可以大大节省系统直接读取磁盘来获得数据的I/O开销，更重要的是可以极大提升速度。</li>
+<li>redis将数据写到内存，也会持久化到磁盘，断电之后重启数据会自动恢复，这点很强，数据是放到了运行内存中</li>
+<li>redis存储对象是将对象序列化<h4 id="spring配置redis过程"><a href="#spring配置redis过程" class="headerlink" title="spring配置redis过程"></a>spring配置redis过程</h4></li>
+<li><p>redis.xml</p>
+<blockquote>
+<p>spring也是将操作redis的方法封装到模板中了，这和jdbc和hibernate非常像 需要添加spring-data-redis包</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;   </div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span>   </span></div><div class="line"><span class="tag">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span>   </span></div><div class="line"><span class="tag">    <span class="attr">xmlns:p</span>=<span class="string">"http://www.springframework.org/schema/p"</span>   </span></div><div class="line"><span class="tag">    <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span>   </span></div><div class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   </span></span></div><div class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd"</span>&gt;</span>  </div><div class="line"> </div><div class="line">    <span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">"classpath:redis.properties"</span>/&gt;</span> </div><div class="line">    </div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"propertyConfigurerRedis"</span>  </span></div><div class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">"org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"order"</span> <span class="attr">value</span>=<span class="string">"1"</span> /&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"ignoreUnresolvablePlaceholders"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"systemPropertiesMode"</span> <span class="attr">value</span>=<span class="string">"1"</span> /&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"searchSystemEnvironment"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"locations"</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span>  </div><div class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>classpath:redis.properties<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span>  </div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"jedisPoolConfig"</span>  </span></div><div class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">"redis.clients.jedis.JedisPoolConfig"</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxIdle"</span> <span class="attr">value</span>=<span class="string">"300"</span> /&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"testOnBorrow"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span>  </div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">     </div><div class="line">     </div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"jedisConnectionFactory"</span>  </span></div><div class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">"org.springframework.data.redis.connection.jedis.JedisConnectionFactory"</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"usePool"</span> <span class="attr">value</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hostName"</span> <span class="attr">value</span>=<span class="string">"localhost"</span> /&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"port"</span> <span class="attr">value</span>=<span class="string">"6379"</span> /&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"timeout"</span> <span class="attr">value</span>=<span class="string">"5000"</span> /&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"database"</span> <span class="attr">value</span>=<span class="string">"0"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">"0"</span> <span class="attr">ref</span>=<span class="string">"jedisPoolConfig"</span> /&gt;</span>  </div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">    </div><div class="line">    <span class="comment">&lt;!-- spring封装到模板了 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"redisTemplate"</span>  </span></div><div class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">"org.springframework.data.redis.core.StringRedisTemplate"</span>    </span></div><div class="line"><span class="tag">        <span class="attr">p:connectionFactory-ref</span>=<span class="string">"jedisConnectionFactory"</span> &gt;</span>  </div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">        </div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"redisBase"</span> <span class="attr">abstract</span>=<span class="string">"true"</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"template"</span> <span class="attr">ref</span>=<span class="string">"redisTemplate"</span>/&gt;</span>  </div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line">    </div><div class="line">  </div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>java操作redis</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">ApplicationContext context = <span class="keyword">new</span> FileSystemXmlApplicationContext(<span class="string">"src\\redis.xml"</span>);</div><div class="line">	<span class="keyword">final</span> RedisTemplate&lt;Serializable, Serializable&gt; redis = (RedisTemplate&lt;Serializable, Serializable&gt;) context.getBean(<span class="string">"redisTemplate"</span>);</div><div class="line">	<span class="keyword">final</span> JedisConnectionFactory rf = (JedisConnectionFactory) context.getBean(<span class="string">"jedisConnectionFactory"</span>);</div><div class="line">	 Jedis con = rf.getConnection().getNativeConnection();<span class="comment">//获得了redis对象可以直接操作</span></div><div class="line"><span class="comment">//其实也可以使用spring的模板但是感觉不方便</span></div><div class="line"><span class="comment">//spring模板存储对象的时候比较好</span></div><div class="line">		</div><div class="line">	System.out.println(con.get(<span class="string">"spring"</span>));</div><div class="line">	System.out.println(con.keys(<span class="string">"*"</span>));</div><div class="line">	con.set(<span class="string">"jedis"</span>, <span class="string">"success"</span>);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="dubbo-server的xml配置如下"><a href="#dubbo-server的xml配置如下" class="headerlink" title="dubbo server的xml配置如下"></a>dubbo server的xml配置如下</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span></span></div><div class="line"><span class="tag">	<span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">	<span class="attr">xmlns:dubbo</span>=<span class="string">"http://code.alibabatech.com/schema/dubbo"</span> </span></div><div class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></span></div><div class="line"><span class="tag"><span class="string">	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd</span></span></div><div class="line"><span class="tag"><span class="string">	http://code.alibabatech.com/schema/dubbo  </span></span></div><div class="line"><span class="tag"><span class="string">    http://code.alibabatech.com/schema/dubbo/dubbo.xsd"</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"server"</span> <span class="attr">class</span>=<span class="string">"dubboServer.DubboServer"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	</div><div class="line">	<span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"xixi_provider"</span>/&gt;</span></div><div class="line">	</div><div class="line">	 <span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://127.0.0.1:2181"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">"dubbo"</span> <span class="attr">port</span>=<span class="string">"20880"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"dubbo.RegisterService"</span> <span class="attr">ref</span>=<span class="string">"server"</span> /&gt;</span>	</div><div class="line">	</div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="dubbo-client配置"><a href="#dubbo-client配置" class="headerlink" title="dubbo client配置"></a>dubbo client配置</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span></span></div><div class="line"><span class="tag">	<span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">	<span class="attr">xmlns:dubbo</span>=<span class="string">"http://code.alibabatech.com/schema/dubbo"</span> </span></div><div class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></span></div><div class="line"><span class="tag"><span class="string">	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd</span></span></div><div class="line"><span class="tag"><span class="string">	http://code.alibabatech.com/schema/dubbo  </span></span></div><div class="line"><span class="tag"><span class="string">    http://code.alibabatech.com/schema/dubbo/dubbo.xsd"</span>&gt;</span></div><div class="line"></div><div class="line">	</div><div class="line">	<span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"hehe_provider"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://127.0.0.1:2181"</span> /&gt;</span> 	</div><div class="line">	<span class="tag">&lt;<span class="name">dubbo:reference</span>  <span class="attr">id</span>=<span class="string">"RegisterService"</span> <span class="attr">interface</span>=<span class="string">"dubbo.RegisterService"</span>&gt;</span><span class="tag">&lt;/<span class="name">dubbo:reference</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;DUBBO远程调用框架&quot;&gt;&lt;a href=&quot;#DUBBO远程调用框架&quot; class=&quot;headerlink&quot; title=&quot;DUBBO远程调用框架&quot;&gt;&lt;/a&gt;DUBBO远程调用框架&lt;/h1&gt;&lt;h3 id=&quot;spring配置方式&quot;&gt;&lt;a href=&quot;#spring配
+    
+    </summary>
+    
+    
+      <category term="总结" scheme="http://xu1009.github.io/tags/%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>javaWeb基本知识</title>
+    <link href="http://xu1009.github.io/2017/06/22/javaWeb%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/"/>
+    <id>http://xu1009.github.io/2017/06/22/javaWeb基本知识/</id>
+    <published>2017-06-22T06:45:49.000Z</published>
+    <updated>2017-06-22T06:45:49.694Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Spring相关内容总结</title>
+    <link href="http://xu1009.github.io/2017/06/22/Spring%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9%E6%80%BB%E7%BB%93/"/>
+    <id>http://xu1009.github.io/2017/06/22/Spring相关内容总结/</id>
+    <published>2017-06-22T01:47:22.000Z</published>
+    <updated>2017-06-22T06:41:57.437Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="spring的特点"><a href="#spring的特点" class="headerlink" title="spring的特点"></a>spring的特点</h3><ul>
+<li>非入侵框架，应用程序对框架依赖更小</li>
+<li>提供了一种在任何环境下都可以使用的编程模型，代码和环境分离</li>
+<li>提高代码重用性</li>
+</ul>
+<h3 id="反向控制和依赖注入"><a href="#反向控制和依赖注入" class="headerlink" title="反向控制和依赖注入"></a>反向控制和依赖注入</h3><ul>
+<li>spring剥夺了调用者创建被调用者的权利，这叫反向控制，也叫依赖注入，这些都是在xml中进行实例化，调用者再通过xml引入，这样调用者和被调用者之间的耦合度就降低了。</li>
+<li>反向控制的具体实现就是在xml中实例化，然后引入该xml</li>
+<li>方向控制的核心思想就是建立对象的过程在对象工厂外面进行，对象工厂通过多态的方式来建立相应对象</li>
+<li>调用者依赖spring IOC容器来获得（注入）对象实例</li>
+<li>这里面有点设计模式的感觉，就是类之间的直接引用导致代码耦合度过高，不便于维护和拓展，这里就应该降低耦合度，所以需要在外部创建另一个类的实例，另一个类再引用就行了。</li>
+<li>spring默认实例化bean的时候是单例模式，<strong>scope属性</strong>可以更改</li>
+<li>spring加入构造函数的参数时，所有参数默认都是string类型进行查找</li>
+<li>还可以通过autowire进行自动装配，这个是通过类型名字等装配属性或者构造函数的参数<h4 id="spring装配时的属性编辑器"><a href="#spring装配时的属性编辑器" class="headerlink" title="spring装配时的属性编辑器"></a>spring装配时的属性编辑器</h4></li>
+<li>属性编辑器就是使用一些基本类型的数据来装配其它类型的属性，比如URL url，本来url属性是个对象，但是实际使用的时候可以直接使用string类型来装配，这就是属性编辑器的功能。</li>
+<li>属性编辑器需要继承那个类然后覆盖响应的方法，最后在xml中进行装配该属性编辑器。</li>
+</ul>
+<hr>
+<h3 id="面向切面编程AOP"><a href="#面向切面编程AOP" class="headerlink" title="面向切面编程AOP"></a>面向切面编程AOP</h3><ul>
+<li>传统的OOP不能做到随时在某个类中加入某个功能实现</li>
+<li>即使加上了，后期维护拓展也很难</li>
+<li>AOP就是往这些类中加入一些实现，而这些实现不是在类中，而是在aspect中，这样就使得这些实现很容易维护。</li>
+<li>spring有自己的AOP框架，还可以使用其他的比如 AspectJ Jboss AOP</li>
+<li>Spring的事务管理就是用的这个，就是在指定方法中进行事务的代理，将改方法放到事务中处理，也就是在指定的方法中加入了事务的实现。<h4 id="面向切面编程一些基本特点"><a href="#面向切面编程一些基本特点" class="headerlink" title="面向切面编程一些基本特点"></a>面向切面编程一些基本特点</h4></li>
+<li>方面（aspect）相当于OOP中的类，封装用于横插入系统的功能。</li>
+<li>通知（advice）就是方面中的方法，要插入的功能实现在这里写</li>
+<li>连接点（joinpoint）应用程序插入方面的地点，就是指定哪些类。</li>
+<li>切入点（pointcut）这个就是指定连接点中的方法</li>
+<li>目标（target）AOP的目标，要拦截的靶子</li>
+<li>代理（proxy）也是一个类，相当于目标类的子类，通过这个子类来访问目标类</li>
+<li>织入（weaving）在目标对象中插入方面代码的过程叫做织入</li>
+</ul>
+<hr>
+<h4 id="前置通知（beforeadvice）"><a href="#前置通知（beforeadvice）" class="headerlink" title="前置通知（beforeadvice）"></a>前置通知（beforeadvice）</h4><ul>
+<li>顾名思义，就是在目标方法之前完成的</li>
+<li>这里就是拦截了指定接口中的所有方法，然后在advice中可以获取该方法，方法的参数，以及该方法所在类。</li>
+<li>前置通知还可以改变拦截方法的参数</li>
+</ul>
+<hr>
+<h4 id="后置通知（afteradvice）"><a href="#后置通知（afteradvice）" class="headerlink" title="后置通知（afteradvice）"></a>后置通知（afteradvice）</h4><ul>
+<li>后置通知和前置通知原理是一样的，只不过他是在目标方法完成之后执行的</li>
+</ul>
+<hr>
+<h4 id="环绕通知（aroundadvice）"><a href="#环绕通知（aroundadvice）" class="headerlink" title="环绕通知（aroundadvice）"></a>环绕通知（aroundadvice）</h4><ul>
+<li>环绕通知有点不同的是它可以阻止目标方法的执行（这里可以使一些调试的方法在发布之后不执行，不删除，方便下次调试，发布时还不影响）</li>
+<li>环绕通知还可以控制目标方法的返回值</li>
+</ul>
+<hr>
+<h4 id="异常通知（throws-advice）"><a href="#异常通知（throws-advice）" class="headerlink" title="异常通知（throws advice）"></a>异常通知（throws advice）</h4><ul>
+<li>异常通知就是在异常发生时执行</li>
+<li>该异常通知处理完之后，异常仍然抛出，若想捕获还需要使用try catch进行异常的捕获。</li>
+</ul>
+<hr>
+<h3 id="使用advisor指定切入点（就是指定拦截哪些方法）"><a href="#使用advisor指定切入点（就是指定拦截哪些方法）" class="headerlink" title="使用advisor指定切入点（就是指定拦截哪些方法）"></a>使用advisor指定切入点（就是指定拦截哪些方法）</h3><ul>
+<li>前面那些是拦截了目标接口中的所有方法，这个就不能容忍，降低系统效率。</li>
+<li>这个配置是有点麻烦的，下面是一个实例</li>
+</ul>
+<p><img src="Spring相关内容总结/pointcut.png" alt="potincut"></p>
+<p>目标接口中的方法被调用之前会先调用这个match方法判断是否是指定的方法。</p>
+<hr>
+<h3 id="使用控制流切入点，这个是可以拦截某种情况下调用的方法，比如只拦截在某个类中调用的该方法"><a href="#使用控制流切入点，这个是可以拦截某种情况下调用的方法，比如只拦截在某个类中调用的该方法" class="headerlink" title="使用控制流切入点，这个是可以拦截某种情况下调用的方法，比如只拦截在某个类中调用的该方法"></a>使用控制流切入点，这个是可以拦截某种情况下调用的方法，比如只拦截在某个类中调用的该方法</h3><ul>
+<li>这个是动态切入点最好不要使用</li>
+</ul>
+<hr>
+<h3 id="spring的事务管理"><a href="#spring的事务管理" class="headerlink" title="spring的事务管理"></a>spring的事务管理</h3><ul>
+<li>spring把事务委托给第三方管理，transactionManager类中配置事务</li>
+<li>通常是通过事务模板来操作数据库</li>
+<li>这里分为编程式事务和声明式事务<h5 id="编程式事务"><a href="#编程式事务" class="headerlink" title="编程式事务"></a>编程式事务</h5></li>
+<li>编程式事务就是执行execut方法时回调一个方法，该方法会放在事务中执行</li>
+<li>编程式事务不方便</li>
+</ul>
+<p><img src="Spring相关内容总结/transactionOfP.png" alt="编程式事务"></p>
+<h4 id="声明式事务"><a href="#声明式事务" class="headerlink" title="声明式事务"></a>声明式事务</h4><ul>
+<li>这个是最常用的事务管理方式，可以配置事务属性</li>
+<li>不需要编程，只是在xml中进行配置，有点AOP的感觉，拦截了指定接口中的方法，并在该方法中加入事务</li>
+<li>这个hibernate事务中经常用到，不过hibernate中用到的是BeanNameAutoProxyCreator，这个类中指定拦截的类，然后再在interceptorNames属性指定拦截器</li>
+<li>拦截器中指定拦截的方法及事务属性，这样就能自动为指定的方法产生事务代理</li>
+<li>hibernate4之后不能使用事务模板了，所以直接使用hibernate原生的方法操作数据库，也就是使用session，xml配置sessionfactory，还有就是配置hibernate DataSource时不能使用hibernate生成的那个xml了，只能在spring自己的xml中配置。</li>
+</ul>
+<p>下面是具体的配置</p>
+<p><img src="Spring相关内容总结/autoproxytransaction.png" alt="beanname"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;spring的特点&quot;&gt;&lt;a href=&quot;#spring的特点&quot; class=&quot;headerlink&quot; title=&quot;spring的特点&quot;&gt;&lt;/a&gt;spring的特点&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;非入侵框架，应用程序对框架依赖更小&lt;/li&gt;
+&lt;li&gt;提供了一种在任何环
+    
+    </summary>
+    
+    
+      <category term="总结" scheme="http://xu1009.github.io/tags/%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>测试一下上传图片</title>
+    <link href="http://xu1009.github.io/2017/06/21/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/"/>
+    <id>http://xu1009.github.io/2017/06/21/测试一下上传图片/</id>
+    <published>2017-06-21T02:46:27.000Z</published>
+    <updated>2017-06-21T04:05:11.360Z</updated>
+    
+    <content type="html"><![CDATA[<!-- toc -->
+<h3 id="测试一下上传图片"><a href="#测试一下上传图片" class="headerlink" title="测试一下上传图片"></a>测试一下上传图片</h3><h4 id="下面是一个图片"><a href="#下面是一个图片" class="headerlink" title="下面是一个图片"></a>下面是一个图片</h4><p><img src="测试一下上传图片/Koala.jpg" alt="考拉"></p>
+<h3 id="如何使用hexo在blog中插入一张本地图片"><a href="#如何使用hexo在blog中插入一张本地图片" class="headerlink" title="如何使用hexo在blog中插入一张本地图片"></a>如何使用hexo在blog中插入一张本地图片</h3><p>1.首先是将主页配置文件_config.yml里面的post_asset_folder:这个选项设置为true<br>2.然后需要安装一个上传图片的插件</p>
+<blockquote>
+<p>npm install hexo-asset-image –save 这是下载dalao的git</p>
+</blockquote>
+<ul>
+<li>再次新建博文时，就会在博文目录下生成一个同名文件夹</li>
+<li>只需要将图片放到该文件夹中就行</li>
+<li>引用时就是直接  <em>*</em>/name.jpg就可以</li>
+</ul>
+<h3 id="引入一个逗比图"><a href="#引入一个逗比图" class="headerlink" title="引入一个逗比图"></a>引入一个逗比图</h3><p><img src="http://img.blog.csdn.net/20170226154012235?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvU3VnYXJfUmFpbmJvdw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="dobi"></p>
+<p><img src="http://img.blog.csdn.net/20170226153729569?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvU3VnYXJfUmFpbmJvdw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;h3 id=&quot;测试一下上传图片&quot;&gt;&lt;a href=&quot;#测试一下上传图片&quot; class=&quot;headerlink&quot; title=&quot;测试一下上传图片&quot;&gt;&lt;/a&gt;测试一下上传图片&lt;/h3&gt;&lt;h4 id=&quot;下面是一个图片&quot;&gt;&lt;a href=&quot;#下面是一个图片&quot; 
+    
+    </summary>
+    
+    
+      <category term="图片" scheme="http://xu1009.github.io/tags/%E5%9B%BE%E7%89%87/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo+githubpages搭建个人博客</title>
+    <link href="http://xu1009.github.io/2017/06/21/hexo-githubpages%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://xu1009.github.io/2017/06/21/hexo-githubpages搭建个人博客/</id>
+    <published>2017-06-21T02:21:51.000Z</published>
+    <updated>2017-06-21T04:07:15.766Z</updated>
+    
+    <content type="html"><![CDATA[<!-- toc -->
+<h2 id="Hexo安装，hexo基于node，首先需要安装nodejs"><a href="#Hexo安装，hexo基于node，首先需要安装nodejs" class="headerlink" title="Hexo安装，hexo基于node，首先需要安装nodejs"></a>Hexo安装，hexo基于node，首先需要安装nodejs</h2><ul>
+<li>安装hexo  </li>
+</ul>
+<p><code>npm install -g hexo</code><br><code>hexo version</code>查看hexo版本，确定是否安装完成<br><a id="more"></a></p>
+<h2 id="有关-config-yml配置"><a href="#有关-config-yml配置" class="headerlink" title="有关_config.yml配置"></a>有关_config.yml配置</h2><h3 id="Site-站点配置"><a href="#Site-站点配置" class="headerlink" title="Site 站点配置"></a>Site 站点配置</h3><ul>
+<li>title: Hexo-demo #网站标题</li>
+<li>subtitle: hexo is simple and easy to study #网站副标题　　</li>
+<li>description: this is hexo-demo #网栈描述</li>
+<li>author: pomy #你的名字</li>
+<li>language: zh-CN #网站使用的语言</li>
+<li><p>timezone: Asia/Shanghai #网站时区</p>
+<h3 id="URL可以不用配置"><a href="#URL可以不用配置" class="headerlink" title="URL可以不用配置"></a>URL可以不用配置</h3></li>
+<li><p>url: <a href="http://yoursite.com" target="_blank" rel="external">http://yoursite.com</a> #网址，搜索时会在搜索引擎中显示</p>
+</li>
+<li>root: / #网站根目录</li>
+<li>permalink: :year/:month/:day/:title/ #永久链接格式</li>
+<li>permalink_defaults: #永久链接中各部分的默认值<h3 id="Directory-目录配置"><a href="#Directory-目录配置" class="headerlink" title="Directory 目录配置"></a>Directory 目录配置</h3></li>
+<li>source_dir: source #资源文件夹，这个文件夹用来存放内容</li>
+<li>public_dir: public #公共文件夹，这个文件夹用于存放生成的站点文件</li>
+<li>tag_dir: tags #标签文件夹</li>
+<li>archive_dir: archives #归档文件夹</li>
+<li>category_dir: categories #分类文件夹</li>
+<li>code_dir: downloads/code #Include code 文件夹</li>
+<li>i18n_dir: :lang #国际化文件夹</li>
+<li>skip_render: #跳过指定文件的渲染，您可使用 glob 来配置路径<h3 id="Writing-写作配置"><a href="#Writing-写作配置" class="headerlink" title="Writing 写作配置"></a>Writing 写作配置</h3></li>
+<li>new_post_name: :title.md # 新文章的文件名称</li>
+<li>default_layout: post #默认布局</li>
+<li>titlecase: false # Transform title into titlecase</li>
+<li>external_link: true # Open external links in new tab</li>
+<li>filename_case: 0 #把文件名称转换为 (1) 小写或 (2) 大写</li>
+<li>render_drafts: false #显示草稿</li>
+<li>post_asset_folder: false #是否启动资源文件夹</li>
+<li>relative_link: false #把链接改为与根目录的相对位址</li>
+<li>future: true</li>
+<li>highlight: #代码块的设置</li>
+<li>enable: true</li>
+<li>line_number: true</li>
+<li>auto_detect: true</li>
+<li>tab_replace:<h3 id="Category-amp-Tag-分类-amp-标签"><a href="#Category-amp-Tag-分类-amp-标签" class="headerlink" title="Category &amp; Tag 分类 &amp; 标签"></a>Category &amp; Tag 分类 &amp; 标签</h3></li>
+<li>default_category: uncategorized #默认分类</li>
+<li>category_map: #分类别名</li>
+<li>tag_map: #标签别名<h3 id="Date-Time-format-时间和日期"><a href="#Date-Time-format-时间和日期" class="headerlink" title="Date / Time format 时间和日期"></a>Date / Time format 时间和日期</h3></li>
+<li>date_format: YYYY-MM-DD</li>
+<li>time_format: HH:mm:ss<h3 id="Pagination-分页"><a href="#Pagination-分页" class="headerlink" title="Pagination 分页"></a>Pagination 分页</h3></li>
+<li>per_page: 10 #每页显示的文章量 (0 = 关闭分页功能)</li>
+<li>pagination_dir: page #分页目录<h3 id="Extensions-扩展"><a href="#Extensions-扩展" class="headerlink" title="Extensions 扩展"></a>Extensions 扩展</h3><h4 id="Plugins-http-hexo-io-plugins-插件"><a href="#Plugins-http-hexo-io-plugins-插件" class="headerlink" title="Plugins: http://hexo.io/plugins/ 插件"></a>Plugins: <a href="http://hexo.io/plugins/" target="_blank" rel="external">http://hexo.io/plugins/</a> 插件</h4><h4 id="Themes-http-hexo-io-themes-主题"><a href="#Themes-http-hexo-io-themes-主题" class="headerlink" title="Themes: http://hexo.io/themes/ 主题"></a>Themes: <a href="http://hexo.io/themes/" target="_blank" rel="external">http://hexo.io/themes/</a> 主题</h4></li>
+<li>theme: landscape #当前主题名称<h3 id="Deployment-部署到github"><a href="#Deployment-部署到github" class="headerlink" title="Deployment #部署到github"></a>Deployment #部署到github</h3><h4 id="Docs-http-hexo-io-docs-deployment-html"><a href="#Docs-http-hexo-io-docs-deployment-html" class="headerlink" title="Docs: http://hexo.io/docs/deployment.html"></a>Docs: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">http://hexo.io/docs/deployment.html</a></h4></li>
+<li>deploy:</li>
+<li>type:</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;h2 id=&quot;Hexo安装，hexo基于node，首先需要安装nodejs&quot;&gt;&lt;a href=&quot;#Hexo安装，hexo基于node，首先需要安装nodejs&quot; class=&quot;headerlink&quot; title=&quot;Hexo安装，hexo基于node，首先需要安装nodejs&quot;&gt;&lt;/a&gt;Hexo安装，hexo基于node，首先需要安装nodejs&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;安装hexo  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;npm install -g hexo&lt;/code&gt;&lt;br&gt;&lt;code&gt;hexo version&lt;/code&gt;查看hexo版本，确定是否安装完成&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="学习" scheme="http://xu1009.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>markdown语法简介</title>
+    <link href="http://xu1009.github.io/2017/06/20/markdown%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/"/>
+    <id>http://xu1009.github.io/2017/06/20/markdown语法简介/</id>
+    <published>2017-06-20T14:39:36.000Z</published>
+    <updated>2017-06-21T04:06:52.259Z</updated>
+    
+    <content type="html"><![CDATA[<!-- toc -->
+<h1 id="这是一个测试"><a href="#这是一个测试" class="headerlink" title="这是一个测试"></a>这是一个测试</h1><h4 id="下面是列表的排序-来标记"><a href="#下面是列表的排序-来标记" class="headerlink" title="下面是列表的排序*来标记"></a>下面是列表的排序*来标记</h4><ul>
+<li>1</li>
+<li>2</li>
+<li>3<h4 id="有序列表直接1-等等"><a href="#有序列表直接1-等等" class="headerlink" title="有序列表直接1.等等"></a>有序列表直接1.等等</h4></li>
+</ul>
+<ol>
+<li>dasd</li>
+<li>weqwe<h4 id="下面是引用"><a href="#下面是引用" class="headerlink" title="下面是引用"></a>下面是引用</h4><blockquote>
+<p>这里是引用<br>撒大声地23<br>123123<br>123123</p>
+<h4 id="插入连接格式是"><a href="#插入连接格式是" class="headerlink" title="插入连接格式是[] ()"></a>插入连接格式是[] ()</h4><p><a href="https://baidu.com" target="_blank" rel="external">百度</a></p>
+<h4 id="插入图片格式是-！【name】（link）"><a href="#插入图片格式是-！【name】（link）" class="headerlink" title="插入图片格式是 ！【name】（link）"></a>插入图片格式是 ！【name】（link）</h4><p><img src="http://mouapp.com/Mou_128.png" alt="Mou icon"></p>
+<h4 id="文字粗体是用-包围，斜体是用包围"><a href="#文字粗体是用-包围，斜体是用包围" class="headerlink" title="文字粗体是用*包围，斜体是用包围"></a>文字粗体是用<em>*包围，斜体是用</em>包围</h4><p><strong>你好</strong> 你好 <em>你好</em></p>
+<h4 id="表格的生成是比较累的"><a href="#表格的生成是比较累的" class="headerlink" title="表格的生成是比较累的"></a>表格的生成是比较累的</h4></blockquote>
+</li>
+</ol>
+<h4 id="代码使用反引号"><a href="#代码使用反引号" class="headerlink" title="代码使用反引号"></a>代码使用反引号</h4><hr>
+<h4 id="表格使用这个比较麻烦"><a href="#表格使用这个比较麻烦" class="headerlink" title="表格使用这个比较麻烦"></a>表格使用这个比较麻烦</h4><table>
+<thead>
+<tr>
+<th>表头1</th>
+<th>表头2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td>data</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>给出列子<br>return shell_exec(“echo $input | $markdown_script”);<br>tst   </p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = b</div><div class="line"><span class="keyword">for</span> a <span class="keyword">in</span> b:</div><div class="line">	a = b</div></pre></td></tr></table></figure>
+<h3 id="代码块的编辑"><a href="#代码块的编辑" class="headerlink" title="代码块的编辑"></a>代码块的编辑</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;!-- toc --&gt;
+&lt;h1 id=&quot;这是一个测试&quot;&gt;&lt;a href=&quot;#这是一个测试&quot; class=&quot;headerlink&quot; title=&quot;这是一个测试&quot;&gt;&lt;/a&gt;这是一个测试&lt;/h1&gt;&lt;h4 id=&quot;下面是列表的排序-来标记&quot;&gt;&lt;a href=&quot;#下面是列表的排序-来标记
+    
+    </summary>
+    
+    
+      <category term="学习" scheme="http://xu1009.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JVM基础知识 | BlogXu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="JVM运行时数据区域 程序计数器   线程独享   程序计数器是一块内存较小的存储空间，可以看做当前线程所执行的字节码的行号指示器，字节码解释器工作时就是通过改变这个计数器值来选取下一条需要执行的字节码指令，线程执行的是Java方法的话，这个计数器记录的就是正在执行的字节码指令地址，如果时native方法，那么记录的就是空，该区域没有规定内存错误。 Java虚拟机栈 线程独享   生命周期和线程相">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM基础知识">
+<meta property="og:url" content="http://xu1009.github.io/2017/07/15/JVM基础知识/index.html">
+<meta property="og:site_name" content="BlogXu">
+<meta property="og:description" content="JVM运行时数据区域 程序计数器   线程独享   程序计数器是一块内存较小的存储空间，可以看做当前线程所执行的字节码的行号指示器，字节码解释器工作时就是通过改变这个计数器值来选取下一条需要执行的字节码指令，线程执行的是Java方法的话，这个计数器记录的就是正在执行的字节码指令地址，如果时native方法，那么记录的就是空，该区域没有规定内存错误。 Java虚拟机栈 线程独享   生命周期和线程相">
+<meta property="og:updated_time" content="2017-07-14T23:46:51.499Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM基础知识">
+<meta name="twitter:description" content="JVM运行时数据区域 程序计数器   线程独享   程序计数器是一块内存较小的存储空间，可以看做当前线程所执行的字节码的行号指示器，字节码解释器工作时就是通过改变这个计数器值来选取下一条需要执行的字节码指令，线程执行的是Java方法的话，这个计数器记录的就是正在执行的字节码指令地址，如果时native方法，那么记录的就是空，该区域没有规定内存错误。 Java虚拟机栈 线程独享   生命周期和线程相">
+  
+    <link rel="alternative" href="/atom.xml" title="BlogXu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/xu.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/xu.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">xu</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/writesomething">随笔</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/xu1009" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/Keras" title="weibo">weibo</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Mock-junit/" style="font-size: 10px;">Mock junit</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/java-web/" style="font-size: 10px;">java web</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/图片/" style="font-size: 10px;">图片</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/学习，Nginx，redis/" style="font-size: 10px;">学习，Nginx，redis</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a>
+                    </div>
+                </section>
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">爱代码，爱生活！</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/xu.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/writesomething">随笔</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/xu1009" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/Keras" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-JVM基础知识" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/15/JVM基础知识/" class="article-date">
+      <time datetime="2017-07-14T23:46:05.000Z" itemprop="datePublished">2017-07-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JVM基础知识
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="JVM运行时数据区域"><a href="#JVM运行时数据区域" class="headerlink" title="JVM运行时数据区域"></a>JVM运行时数据区域</h2><ul>
+<li><strong>程序计数器</strong>   <code>线程独享</code>   程序计数器是一块内存较小的存储空间，可以看做当前线程所执行的字节码的行号指示器，字节码解释器工作时就是通过改变这个计数器值来选取下一条需要执行的字节码指令，线程执行的是Java方法的话，这个计数器记录的就是正在执行的字节码指令地址，如果时native方法，那么记录的就是空，该区域没有规定内存错误。</li>
+<li><strong>Java虚拟机栈</strong> <code>线程独享</code>   生命周期和线程相同，每个方法创建时都会创建一个栈帧，用于存储局部变量表（存储了基本数据类型和对象引用类型）、操作数栈、动态链接、方法出口信息。栈帧在栈中的入栈出栈就是对应方法调用到执行的过程。</li>
+<li><strong>本地方法栈</strong>   <code>线程独享</code>  这个和虚拟机栈一样功能，只不过虚拟机栈是为Java方法服务，这个是为本地方法服务的，即为native方法服务。</li>
+<li><strong>Java堆</strong>   <code>线程共享</code>   这个方法是JVM管理的主要区域，也称为GC堆，主要存储的时对象实例和数组。</li>
+<li><strong>方法区域</strong>   <code>线程共享</code>   主要存储的是类信息、常量、静态变量，垃圾回收主要对这个区域中的运行时常量池的回收和对类型的卸载。<h2 id="对象内存布局和定位"><a href="#对象内存布局和定位" class="headerlink" title="对象内存布局和定位"></a>对象内存布局和定位</h2></li>
+<li>对象在内存中的存储布局分为3块区域：对象头、实例数据、对齐和填充</li>
+<li>对象定位有两种，一种时句柄，一种是直接指针，句柄的话就是堆中有一个句柄池存储各个对象实例的地址，栈中的reference可以通过句柄访问，这种访问慢，但是对象地址变化的话，只需要改变句柄池不需要操作栈中的内容，直接指针的话就是访问的比较快，直接操作的对象<h2 id="JVM垃圾回收机制"><a href="#JVM垃圾回收机制" class="headerlink" title="JVM垃圾回收机制"></a>JVM垃圾回收机制</h2><h5 id="判断什么是垃圾"><a href="#判断什么是垃圾" class="headerlink" title="判断什么是垃圾"></a>判断什么是垃圾</h5></li>
+<li><strong>引用计数算法</strong>   引用计数算法是jdk1.2之前的算法，算法的主要过程是，当一个对象被引用时计数器就会加1，引用失效时就减1，最后当这个计数器为0时就会被确认成垃圾，这个有个问题就是无法回收互相引用的对象。</li>
+<li><strong>可达性分析算法</strong> 可达性分析算法也是目前用来判断对象是否为垃圾的一个算法，它使用图论的知识，他会从一系列GC ROOTS起点向下搜索，当一个节点到GC ROOTS没用任何引用链相连，那么那就会认为他是可回收的。可作为GC ROOTS的对象有java虚拟机栈中的引用的对象，方法区域中静态和常量引用的对象，本地方法栈中的JNI引用的对象，这个算法分析时必须停止其它所有线程。<h5 id="引用分类"><a href="#引用分类" class="headerlink" title="引用分类"></a>引用分类</h5></li>
+<li><strong>强引用</strong>   也是平时最常用的引用，这类引用，只要还存在，垃圾收集器就永远不会回收它，及时出现内存溢出。</li>
+<li><strong>软引用</strong>    当内存不够时才会回收它，比如用做缓存，描述还有用但是非必要对象。</li>
+<li><strong>弱引用</strong>   比软引用还要弱的引用，不管内存是否充足都会被回收掉，   如果这个对象是偶尔的使用，并且希望在使用时随时就能获取到，但又不想影响此对象的垃圾收集，那么你应该用 Weak Reference 来记住此对象。</li>
+<li><strong>虚引用</strong>   也叫幽灵引用，最弱的一种引用关系，无法通过虚引用获取一个对象实例，为一个对象设置虚引用关联的唯一目的就是，当该对象被回收时收到一个系统通知。<h5 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h5></li>
+<li><strong>标记清除算法</strong>    标记清除算法两个过程，一个是标记，一个是清除，这个算法是最基础的垃圾收集算法，主要有两个缺点，一个是标记和清除的效率都很低，另一个是标记清除导致内存碎片，当存储大对象时，由于找不到连续的存储空间，会触发另一次收集。</li>
+<li><strong>复制算法</strong>    为了解决效率的问题，这个算法主要是将内存分区，一个是用来使用，另一个用来存储，现在商业虚拟机都是分为Eden、from survivor、to survivor，比例时8:1:1，Eden和from survivor用来使用，将存活的对象复制到to survivor，然后回收那些垃圾，当存活的对象大于to   survivor的空间时，那些对象会进入老年代。</li>
+<li><strong>标记整理算法</strong>   存活的对象向一边移动，这样就解决了内存碎片的问题。</li>
+<li><strong>分代收集算法</strong>    现在使用大部分都是这个算法，根据新生代和老年代选择合适的算法收集，比如G1收集器使用的就是这个算法。<h5 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h5></li>
+<li><strong>serial收集器</strong>   单线程收集器，收集器采用复制算法，所以回收的对象时新生代的对象，收集的时候必须停止其它所有线程，也就是stop the  world直到它收集结束，这个时间也就是停顿时间，<code>简单高效，多用于client模式下的新生代收集器，由于是一个线程，就避免了切换线程所带来的开销，所以在client模式下是一个很好的选择</code></li>
+<li><strong>parnew收集器</strong>     <code>serial收集器的多线程版本，其它没啥区别，只是在使用复制算法的时候使用了多线程，在单核cpu的情况下，由于切换线程带来的开销，收集的效率还不如serial，收集器收集期间还是需要停止其它所有线程</code></li>
+<li><strong>parallel scavenge收集器</strong>  <code>并行的多线程收集器</code>关注的不是停顿时间，关注的时吞吐量，这种适合那些在后台运算不要交互的任务，还有就是他能自适应调整，这也是和parnew的区别。</li>
+<li><strong>serialold收集器</strong>  <code>serial收集器的老年代版本</code></li>
+<li><strong>paraell old收集器</strong>  <code>parnew收集器的老年代版本</code></li>
+<li><strong>CMS收集器</strong>   <code>使用标记清除算法，实现了并发收集，就是在收集期间其它用户线程不会停止，GC线程和用户线程交替运行，</code>缺点是并发收集对cpu资源比较敏感，cpu还要在运行用户线程的同时还要分出一部分去收集，当cpu负荷比较大时cms算法会对程序有很大影响，还有就是无法收集浮动垃圾，然后就是采用标记清除算法的缺点，该收集主要包括四个过程：初始标记、并发标记、重新标记、并发清除。</li>
+<li><strong>G1收集器</strong>    当前最新的垃圾收集器，主要过程是初始标记、并发标记、最终标记、筛选回收。分代收集、可预测的停顿、还有就是G1之前的收集算法进行收集的范围都是整个老年代或者新生代，G1则是把内存分为若干个大小相等的region，G1跟踪每个region里面垃圾堆积的价值大小，在后台维护一个优先级列表，每次都会回收价值最大的那个region。<h5 id="内存分配和回收策略"><a href="#内存分配和回收策略" class="headerlink" title="内存分配和回收策略"></a>内存分配和回收策略</h5></li>
+<li>大多数情况下，对象在新生代Eden分配，当Eden没有足够的空间进行分配时，就会触发一次minor GC。<h6 id="对象进入老年代的情况"><a href="#对象进入老年代的情况" class="headerlink" title="对象进入老年代的情况"></a>对象进入老年代的情况</h6></li>
+<li>大对象直接进入老年代，JVM提供一个专门设置这个阈值的参数，超过这个阈值的参数直接进入老年代</li>
+<li>长期存活的对象进入老年代，对象年龄是在survivor没熬过一次minor GC就加1，具体超过多少，也有一个JVM阈值可以设置。</li>
+<li>相同年龄的对象总和大于survivor空间的一半，那大于等于这个年龄的对象进入老年代。</li>
+<li>一次minor GC之后，存活的对象进入survivor，最后无法容纳的进入老年代。<h5 id="一些JVM指令和可视化工具"><a href="#一些JVM指令和可视化工具" class="headerlink" title="一些JVM指令和可视化工具"></a>一些JVM指令和可视化工具</h5></li>
+<li>这些都是为了深入观察jvm，比如堆栈，新生代，老年代，线程等，自带的命令行工具，比如jps显示JVM中的进程，jmap生成heap转储快照，jstack生成线程的快照。</li>
+<li>可视化工具jconsole和visualVM，<h5 id="有关JVM参数设置问题"><a href="#有关JVM参数设置问题" class="headerlink" title="有关JVM参数设置问题"></a>有关JVM参数设置问题</h5></li>
+<li>Xmx最大堆内存,通常和Xms搭配使用,配置堆内存的,Xmn配置新生代的内存.<h5 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a>类文件结构</h5></li>
+<li>.class文件,也就是字节码文件,是JVM想要实现语言无关,已经是平台无关了,JVM不和语言绑定,他只和字节码文件相关联,任何其它语言都可以使用JVM作为语言的产品交付媒介,只要这些语言的编译器能够生成符合JVM要求的字节码文件规范.</li>
+<li>class采用一种伪结构来存储数据,这种结构中只有无符号数和表两种类型数据.</li>
+<li>class文件开头是4个字节的魔数,该数标志该文件是否能被JVM接受,很多文件存储标准中都有魔数来进行身份识别.Java中class文件的魔数是咖啡宝贝,紧接着4个字节是class版本号,也就是jdk版本号,低版本jdk不能执行高版本的字节码文件.</li>
+<li>常量池包含了字面量和符号引用.</li>
+<li>再接着是访问标志,用于识别这是类还是接口,是否定义为public,是否定义为abstract,是否被final修饰等.</li>
+<li>类索引,父类索引,接口索引集合,这三项数据来确定这个类的继承关系.这三项都是用于缺点权限定名.</li>
+<li>字段表集合,用于描述接口或者类中声明的变量.</li>
+<li>方法表集合,用于描述接口或者类中声明的方法<h5 id="虚拟机类加载机制"><a href="#虚拟机类加载机制" class="headerlink" title="虚拟机类加载机制"></a>虚拟机类加载机制</h5></li>
+<li>Java类的加载,链接和初始化都是在程序运行期间完成的,虽然会增加开销,但是提高了灵活性.</li>
+<li>类整个生命周期包括:加载 — 验证— 准备—解析— 初始化—使用—卸载</li>
+<li><strong>加载</strong>   通过类权限定名获取该类的二进制字节流,将这个字节流所代表的静态存储结构转化为方法区域的运行时数据结构,在内存中生成一个代表该类的对象.</li>
+<li><strong>验证</strong>   确保class文件字节流中包含的信息符合当前虚拟机的要求,包括,文件格式验证,元数据验证,字节码验证,符号引用验证.</li>
+<li><strong>准备</strong>    正式为类变量分配内存并设置类变量初始值.</li>
+<li><strong>解析</strong>    解析是将符号引用替换为直接引用.</li>
+<li><strong>初始化</strong>   类加载的最后一步,这里才真正执行类中的Java代码,之前分配的变量都是初始值,现在才是赋值真正的.<h6 id="加载过程详述"><a href="#加载过程详述" class="headerlink" title="加载过程详述"></a>加载过程详述</h6></li>
+<li>这个加载就是前面所说的步骤中的第一步,通过类全限定名获取类的二进制流,这个在Java中是放到JVM之外了,而这个代码模块被称为<code>类加载器</code></li>
+<li>判断两个类是否相等,必须在同一个类加载器加载的前提下判断才有意义.</li>
+<li><strong>双亲委派模型</strong>     Java中分为两种类加载器,一种是启动类加载器还有就是其它,启动类加载器是在JVM内部,其它独立于jvm.</li>
+<li><code>启动类加载器</code>   bootstrap classloader,这个会将Javahome/lib目录下的被jvm识别的类库加载到虚拟机</li>
+<li><code>拓展类加载器</code>  extension classloader,负责加载Javahome/lib/ext中的类库,</li>
+<li><code>应用程序类加载器</code>  application classloader,负责加载用户路径上的类库.</li>
+<li><code>双亲委派模型</code>  表示类加载器之间的层次关系,要求除了启动类加载器之外,其它所有类加载器都要有自己的父类加载器,他们之间不是以继承的关系而是组合的关系.</li>
+<li><code>双亲委派模型工作过程</code>   当一个类加载器收到类加载请求时,他不会自己加载,而是将这个请求传给自己的父类,这样依次向上,最后到了启动类加载器,如果启动类加载器无法加载,再向下传递.这个模型的好处就是类随着他的类加载器一起具备了一种带有优先级的层次关系.<h5 id="JVM执行引擎"><a href="#JVM执行引擎" class="headerlink" title="JVM执行引擎"></a>JVM执行引擎</h5></li>
+<li>Java虚拟机栈存储的是栈帧,栈帧存储了局部变量表,操作数栈,动态链接和方法返回地址等信息.</li>
+<li><code>局部变量表</code>    这个存放了基本类型和对象引用,局部变量表以变量槽为最小单位.</li>
+<li><code>操作数栈</code>    这个是后入先出的栈<h6 id="Tomcat的类加载器"><a href="#Tomcat的类加载器" class="headerlink" title="Tomcat的类加载器"></a>Tomcat的类加载器</h6></li>
+<li>有很多类加载器,一个是分离一个是共享,多级类加载器.<h5 id="Java优化"><a href="#Java优化" class="headerlink" title="Java优化"></a>Java优化</h5></li>
+</ul>
+<h5 id="Java并发相关"><a href="#Java并发相关" class="headerlink" title="Java并发相关"></a>Java并发相关</h5>
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/07/15/JVM基础知识/">JVM基础知识</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 xu 的个人博客">xu</a></p>
+        <p><span>发布时间:</span>2017年07月15日 - 07时46分</p>
+        <p><span>最后更新:</span>2017年07月15日 - 07时46分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/07/15/JVM基础知识/" title="JVM基础知识">http://xu1009.github.io/2017/07/15/JVM基础知识/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xu1009.github.io/2017/07/15/JVM基础知识/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2017/07/15/深入分析JAVA-WEB技术总结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          深入分析JAVA WEB技术总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/02/MYSQL相关基础知识/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MYSQL相关基础知识</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM运行时数据区域"><span class="toc-number">1.</span> <span class="toc-text">JVM运行时数据区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象内存布局和定位"><span class="toc-number">2.</span> <span class="toc-text">对象内存布局和定位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM垃圾回收机制"><span class="toc-number">3.</span> <span class="toc-text">JVM垃圾回收机制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#判断什么是垃圾"><span class="toc-number">3.0.0.1.</span> <span class="toc-text">判断什么是垃圾</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#引用分类"><span class="toc-number">3.0.0.2.</span> <span class="toc-text">引用分类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#垃圾收集算法"><span class="toc-number">3.0.0.3.</span> <span class="toc-text">垃圾收集算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#垃圾收集器"><span class="toc-number">3.0.0.4.</span> <span class="toc-text">垃圾收集器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#内存分配和回收策略"><span class="toc-number">3.0.0.5.</span> <span class="toc-text">内存分配和回收策略</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#对象进入老年代的情况"><span class="toc-number">3.0.0.5.1.</span> <span class="toc-text">对象进入老年代的情况</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#一些JVM指令和可视化工具"><span class="toc-number">3.0.0.6.</span> <span class="toc-text">一些JVM指令和可视化工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#有关JVM参数设置问题"><span class="toc-number">3.0.0.7.</span> <span class="toc-text">有关JVM参数设置问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#类文件结构"><span class="toc-number">3.0.0.8.</span> <span class="toc-text">类文件结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#虚拟机类加载机制"><span class="toc-number">3.0.0.9.</span> <span class="toc-text">虚拟机类加载机制</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#加载过程详述"><span class="toc-number">3.0.0.9.1.</span> <span class="toc-text">加载过程详述</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JVM执行引擎"><span class="toc-number">3.0.0.10.</span> <span class="toc-text">JVM执行引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Tomcat的类加载器"><span class="toc-number">3.0.0.10.1.</span> <span class="toc-text">Tomcat的类加载器</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Java优化"><span class="toc-number">3.0.0.11.</span> <span class="toc-text">Java优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Java并发相关"><span class="toc-number">3.0.0.12.</span> <span class="toc-text">Java并发相关</span></a></li></ol></li></ol></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'xu1009',
+      repo: 'xu1009.github.io',
+      oauth: {
+        client_id: '6ce4c127cbff7d5540c2',
+        client_secret: '4c1cafc3880ee908111dfca1a6b8a91af4fd07d6',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/07/15/深入分析JAVA-WEB技术总结/" title="上一篇: 深入分析JAVA WEB技术总结">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/07/02/MYSQL相关基础知识/" title="下一篇: MYSQL相关基础知识">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/SpringMVC框架简述/">SpringMVC框架简述</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/Maven实战/">Maven实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/19/Mock与junit/">Mock与junit</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/深入分析JAVA-WEB技术总结/">深入分析JAVA WEB技术总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/JVM基础知识/">JVM基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/02/MYSQL相关基础知识/">MYSQL相关基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/">Nginx+tomcat+redis实现服务器集群和共享session</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/golang学习/">golang学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/常用RPC框架/">常用RPC框架</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/javaWeb基本知识/">javaWeb基本知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/Spring相关内容总结/">Spring相关内容总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/测试一下上传图片/">测试一下上传图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/hexo-githubpages搭建个人博客/">hexo+githubpages搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/20/markdown语法简介/">markdown语法简介</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

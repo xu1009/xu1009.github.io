@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | BlogXu</title>
+  <title>Maven实战 | BlogXu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://xu1009.github.io/home/hello-world.html">
+  <meta name="description" content="构建是什么，build这个不是IDE帮我们完成的吗，为啥需要maven 平时用到的maven都是依赖管理工具和项目信息管理工具 maven有一个坐标系统准确定位每一个构建（artifact） 坐标系统就是按package来一级级传递的吧 构建工具有 maven ant ide make等 IDE都是手工的进行鼠标点击来完成编译、测试、代码生成，低效还容易出错。 make是最早的构建工具，有一个M">
+<meta name="keywords" content="maven">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven实战">
+<meta property="og:url" content="http://xu1009.github.io/2017/07/29/Maven实战/index.html">
 <meta property="og:site_name" content="BlogXu">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-08-25T14:18:16.832Z">
+<meta property="og:description" content="构建是什么，build这个不是IDE帮我们完成的吗，为啥需要maven 平时用到的maven都是依赖管理工具和项目信息管理工具 maven有一个坐标系统准确定位每一个构建（artifact） 坐标系统就是按package来一级级传递的吧 构建工具有 maven ant ide make等 IDE都是手工的进行鼠标点击来完成编译、测试、代码生成，低效还容易出错。 make是最早的构建工具，有一个M">
+<meta property="og:updated_time" content="2017-07-30T14:59:11.585Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="Maven实战">
+<meta name="twitter:description" content="构建是什么，build这个不是IDE帮我们完成的吗，为啥需要maven 平时用到的maven都是依赖管理工具和项目信息管理工具 maven有一个坐标系统准确定位每一个构建（artifact） 坐标系统就是按package来一级级传递的吧 构建工具有 maven ant ide make等 IDE都是手工的进行鼠标点击来完成编译、测试、代码生成，低效还容易出错。 make是最早的构建工具，有一个M">
   
     <link rel="alternative" href="/atom.xml" title="BlogXu" type="application/atom+xml">
   
@@ -40,7 +41,7 @@
           fancybox: true,
           animate: true,
           isHome: false,
-          isPost: false,
+          isPost: true,
           isArchive: false,
           isTag: false,
           isCategory: false,
@@ -189,11 +190,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Maven实战" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/home/hello-world.html" class="article-date">
-      <time datetime="2017-08-26T05:42:47.026Z" itemprop="datePublished">2017-08-26</time>
+      <a href="/2017/07/29/Maven实战/" class="article-date">
+      <time datetime="2017-07-29T08:13:32.000Z" itemprop="datePublished">2017-07-29</time>
 </a>
     </div>
   
@@ -206,7 +207,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      Maven实战
     </h1>
   
 
@@ -216,6 +217,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/maven/">maven</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -223,50 +228,33 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <style>
-    .article-meta {
-        display: none;
-    }
-    #container .article .article-title {
-        padding-right: 0;
-    }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover {
-        border-left: none;
-    }
-    .article-title {
-        font-size: 1.6em
-    }
-    .article-meta {
-        display: none;
-    }
-    .article-entry hr {
-        margin: 0;
-    }
-    #container .article-info-post.article-info {
-      display: none;
-      }
-    #container .article .article-title {
-    padding: 0;
-    }
-</style>
-
-
-          
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <ul>
+<li>构建是什么，build这个不是IDE帮我们完成的吗，为啥需要maven</li>
+<li>平时用到的maven都是依赖管理工具和项目信息管理工具</li>
+<li>maven有一个坐标系统准确定位每一个构建（artifact）</li>
+<li>坐标系统就是按package来一级级传递的吧</li>
+<li>构建工具有 maven ant ide make等</li>
+<li>IDE都是手工的进行鼠标点击来完成编译、测试、代码生成，低效还容易出错。</li>
+<li>make是最早的构建工具，有一个Makefile的脚本文件驱动，在Linux下比较好使。</li>
+<li>Ant意思是another neat tool，构建工具，基本结构也是target和depends，没有依赖管理，可以借助Ivy管理依赖。</li>
+<li>maven是声明式的，有很好的依赖管理。</li>
+<li>maven可以创建内部的仓库服务器，中央仓库会有点慢而且，有些jar不一定有.使用nexus建立自己的maven仓库。</li>
+<li>maven的坐标系统，就是groupid artifactid等</li>
+<li>groupid artifactid version 依赖的基本坐标</li>
+<li>type 依赖的类型，默认为jar</li>
+<li>scope以来的范围，就是作用域</li>
+<li>optional 标记依赖是否可选</li>
+<li>exclusion 用来排除依赖传递性</li>
+<li>依赖范围就是用来控制依赖与这三种classpath（编译、测试、运行）的关系</li>
+<li><scope> </scope>有这几种依赖范围，</li>
+<li>compile：编译依赖范围，这也是默认的依赖范围，三个阶段都可以。</li>
+<li>test：测试依赖范围，只对测试依赖有效</li>
+<li>provided：已提供依赖范围，只对编译和测试有效，运行无效。</li>
+<li>runtime：测试和运行时有效</li>
+<li>system：和provided一样，但是这个必须指定依赖的路径。</li>
+<li>import：这个后续补上，没详细说</li>
+<li>jar包冲突，maven有自己的依赖调解原则，第一原则是最近者优先，最先依赖的那个会被使用，如果路径长度是一样的就看依赖在pom文件中的顺序。</li>
+</ul>
 
       
       
@@ -321,10 +309,76 @@
   </div>
   
     
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/07/29/Maven实战/">Maven实战</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 xu 的个人博客">xu</a></p>
+        <p><span>发布时间:</span>2017年07月29日 - 16时13分</p>
+        <p><span>最后更新:</span>2017年07月30日 - 22时59分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/07/29/Maven实战/" title="Maven实战">http://xu1009.github.io/2017/07/29/Maven实战/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xu1009.github.io/2017/07/29/Maven实战/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
+
+
+<nav id="article-nav">
+  
+    <a href="/2017/08/05/SpringMVC框架简述/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          SpringMVC框架简述
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/19/Mock与junit/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Mock与junit</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
 
   
 </article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
 
 
 
@@ -360,6 +414,39 @@
     
 
 
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/08/05/SpringMVC框架简述/" title="上一篇: SpringMVC框架简述">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/07/19/Mock与junit/" title="下一篇: Mock与junit">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/SpringMVC框架简述/">SpringMVC框架简述</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/Maven实战/">Maven实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/19/Mock与junit/">Mock与junit</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/深入分析JAVA-WEB技术总结/">深入分析JAVA WEB技术总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/JVM基础知识/">JVM基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/02/MYSQL相关基础知识/">MYSQL相关基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/">Nginx+tomcat+redis实现服务器集群和共享session</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/golang学习/">golang学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/常用RPC框架/">常用RPC框架</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/javaWeb基本知识/">javaWeb基本知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/Spring相关内容总结/">Spring相关内容总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/测试一下上传图片/">测试一下上传图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/hexo-githubpages搭建个人博客/">hexo+githubpages搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/20/markdown语法简介/">markdown语法简介</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
 
 
 
