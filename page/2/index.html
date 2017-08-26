@@ -274,7 +274,7 @@
 <li>前面那些是拦截了目标接口中的所有方法，这个就不能容忍，降低系统效率。</li>
 <li>这个配置是有点麻烦的，下面是一个实例</li>
 </ul>
-<p><img src="Spring相关内容总结/pointcut.png" alt="potincut"></p>
+<p><img src="/2017/06/22/Spring相关内容总结/pointcut.png" alt="potincut"></p>
 <p>目标接口中的方法被调用之前会先调用这个match方法判断是否是指定的方法。</p>
 <hr>
 <h3 id="使用控制流切入点，这个是可以拦截某种情况下调用的方法，比如只拦截在某个类中调用的该方法"><a href="#使用控制流切入点，这个是可以拦截某种情况下调用的方法，比如只拦截在某个类中调用的该方法" class="headerlink" title="使用控制流切入点，这个是可以拦截某种情况下调用的方法，比如只拦截在某个类中调用的该方法"></a>使用控制流切入点，这个是可以拦截某种情况下调用的方法，比如只拦截在某个类中调用的该方法</h3><ul>
@@ -288,7 +288,7 @@
 <li>编程式事务就是执行execut方法时回调一个方法，该方法会放在事务中执行</li>
 <li>编程式事务不方便</li>
 </ul>
-<p><img src="Spring相关内容总结/transactionOfP.png" alt="编程式事务"></p>
+<p><img src="/2017/06/22/Spring相关内容总结/transactionOfP.png" alt="编程式事务"></p>
 <h4 id="声明式事务"><a href="#声明式事务" class="headerlink" title="声明式事务"></a>声明式事务</h4><ul>
 <li>这个是最常用的事务管理方式，可以配置事务属性</li>
 <li>不需要编程，只是在xml中进行配置，有点AOP的感觉，拦截了指定接口中的方法，并在该方法中加入事务</li>
@@ -297,7 +297,7 @@
 <li>hibernate4之后不能使用事务模板了，所以直接使用hibernate原生的方法操作数据库，也就是使用session，xml配置sessionfactory，还有就是配置hibernate DataSource时不能使用hibernate生成的那个xml了，只能在spring自己的xml中配置。</li>
 </ul>
 <p>下面是具体的配置</p>
-<p><img src="Spring相关内容总结/autoproxytransaction.png" alt="beanname"></p>
+<p><img src="/2017/06/22/Spring相关内容总结/autoproxytransaction.png" alt="beanname"></p>
 
       
       
@@ -357,7 +357,7 @@
       
           
         <!-- toc -->
-<h3 id="测试一下上传图片"><a href="#测试一下上传图片" class="headerlink" title="测试一下上传图片"></a>测试一下上传图片</h3><h4 id="下面是一个图片"><a href="#下面是一个图片" class="headerlink" title="下面是一个图片"></a>下面是一个图片</h4><p><img src="测试一下上传图片/Koala.jpg" alt="考拉"></p>
+<h3 id="测试一下上传图片"><a href="#测试一下上传图片" class="headerlink" title="测试一下上传图片"></a>测试一下上传图片</h3><h4 id="下面是一个图片"><a href="#下面是一个图片" class="headerlink" title="下面是一个图片"></a>下面是一个图片</h4><p><img src="/2017/06/21/测试一下上传图片/Koala.jpg" alt="考拉"></p>
 <h3 id="如何使用hexo在blog中插入一张本地图片"><a href="#如何使用hexo在blog中插入一张本地图片" class="headerlink" title="如何使用hexo在blog中插入一张本地图片"></a>如何使用hexo在blog中插入一张本地图片</h3><p>1.首先是将主页配置文件_config.yml里面的post_asset_folder:这个选项设置为true<br>2.然后需要安装一个上传图片的插件</p>
 <blockquote>
 <p>npm install hexo-asset-image –save 这是下载dalao的git</p>
@@ -431,7 +431,7 @@
 <h2 id="Hexo安装，hexo基于node，首先需要安装nodejs"><a href="#Hexo安装，hexo基于node，首先需要安装nodejs" class="headerlink" title="Hexo安装，hexo基于node，首先需要安装nodejs"></a>Hexo安装，hexo基于node，首先需要安装nodejs</h2><ul>
 <li>安装hexo  </li>
 </ul>
-<p><code>npm install -g hexo</code><br><code>hexo version</code>查看hexo版本，确定是否安装完成<br>
+<p><code>npm install -g hexo</code><br><code>hexo version</code>查看hexo版本，确定是否安装完成<br></p>
           
       
       
