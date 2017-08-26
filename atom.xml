@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://xu1009.github.io/"/>
   <updated>2017-08-25T14:21:20.251Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://xu1009.github.io/</id>
   
   <author>
     <name>xu</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>myblog</title>
-    <link href="http://yoursite.com/2017/08/25/myblog/"/>
-    <id>http://yoursite.com/2017/08/25/myblog/</id>
+    <link href="http://xu1009.github.io/2017/08/25/myblog/"/>
+    <id>http://xu1009.github.io/2017/08/25/myblog/</id>
     <published>2017-08-25T14:21:20.000Z</published>
     <updated>2017-08-25T14:21:20.251Z</updated>
     
@@ -31,8 +31,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2017/08/25/hello-world/"/>
-    <id>http://yoursite.com/2017/08/25/hello-world/</id>
+    <link href="http://xu1009.github.io/2017/08/25/hello-world/"/>
+    <id>http://xu1009.github.io/2017/08/25/hello-world/</id>
     <published>2017-08-25T14:18:16.831Z</published>
     <updated>2017-08-25T14:18:16.832Z</updated>
     
