@@ -5,13 +5,23 @@
   
   <title>SpringMVC框架简述 | BlogXu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="web端的发展历程如下图所示   最早的CGI 公共网关接口，一种在web服务端使用的脚本技术，使用C或Perl语言编写，用于接收web用户请求并处理，最后动态产生响应给用户，但每次请求将产生一个进程，重量级。 servlet 一种JavaEE web组件技术，是一种在服务端执行的web组件，用于接收用户请求，最后动态产生响应给用户，每次请求就是新建一个线程，这个比CGI要轻量级，能够使用Java">
+<meta name="keywords" content="spring">
+<meta property="og:type" content="article">
 <meta property="og:title" content="SpringMVC框架简述">
 <meta property="og:url" content="http://xu1009.github.io/2017/08/05/SpringMVC框架简述/index.html">
 <meta property="og:site_name" content="BlogXu">
-<meta property="og:updated_time" content="2017-08-05T06:24:41.805Z">
+<meta property="og:description" content="web端的发展历程如下图所示   最早的CGI 公共网关接口，一种在web服务端使用的脚本技术，使用C或Perl语言编写，用于接收web用户请求并处理，最后动态产生响应给用户，但每次请求将产生一个进程，重量级。 servlet 一种JavaEE web组件技术，是一种在服务端执行的web组件，用于接收用户请求，最后动态产生响应给用户，每次请求就是新建一个线程，这个比CGI要轻量级，能够使用Java">
+<meta property="og:image" content="http://xu1009.github.io/2017/08/05/SpringMVC框架简述/web_history.jpg">
+<meta property="og:image" content="http://xu1009.github.io/2017/08/05/SpringMVC框架简述/web_mvc1.jpg">
+<meta property="og:image" content="http://xu1009.github.io/2017/08/05/SpringMVC框架简述/web_mvc2.jpg">
+<meta property="og:image" content="http://xu1009.github.io/2017/08/05/SpringMVC框架简述/springmvc.jpg">
+<meta property="og:image" content="http://xu1009.github.io/2017/08/05/SpringMVC框架简述/springmvc1.jpg">
+<meta property="og:updated_time" content="2017-08-27T06:30:46.384Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC框架简述">
+<meta name="twitter:description" content="web端的发展历程如下图所示   最早的CGI 公共网关接口，一种在web服务端使用的脚本技术，使用C或Perl语言编写，用于接收web用户请求并处理，最后动态产生响应给用户，但每次请求将产生一个进程，重量级。 servlet 一种JavaEE web组件技术，是一种在服务端执行的web组件，用于接收用户请求，最后动态产生响应给用户，每次请求就是新建一个线程，这个比CGI要轻量级，能够使用Java">
+<meta name="twitter:image" content="http://xu1009.github.io/2017/08/05/SpringMVC框架简述/web_history.jpg">
   
     <link rel="alternative" href="/atom.xml" title="BlogXu" type="application/atom+xml">
   
@@ -126,7 +136,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Mock-junit/" style="font-size: 10px;">Mock junit</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/java-web/" style="font-size: 10px;">java web</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/图片/" style="font-size: 10px;">图片</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/学习，Nginx，redis/" style="font-size: 10px;">学习，Nginx，redis</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a>
+                        <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Mock-junit/" style="font-size: 10px;">Mock junit</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/java-web/" style="font-size: 10px;">java web</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/图片/" style="font-size: 10px;">图片</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/学习，Nginx，redis/" style="font-size: 10px;">学习，Nginx，redis</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a>
                     </div>
                 </section>
                 
@@ -213,6 +223,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -220,7 +234,51 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        
+        <h4 id="web端的发展历程"><a href="#web端的发展历程" class="headerlink" title="web端的发展历程"></a>web端的发展历程</h4><p>如下图所示</p>
+<p><img src="/2017/08/05/SpringMVC框架简述/web_history.jpg" alt="web发展历史"></p>
+<ul>
+<li>最早的CGI 公共网关接口，一种在web服务端使用的脚本技术，使用C或Perl语言编写，用于接收web用户请求并处理，最后动态产生响应给用户，但每次请求将产生一个进程，重量级。</li>
+<li>servlet 一种JavaEE web组件技术，是一种在服务端执行的web组件，用于接收用户请求，最后动态产生响应给用户，每次请求就是新建一个线程，这个比CGI要轻量级，能够使用JavaEE 技术,比如JDBC，本质就是在Java代码里面输出HTML流，但是表现逻辑、业务逻辑、控制逻辑混杂。直接在Java代码里面输出HTML，非常不方便。</li>
+<li>JSP 本质还是servlet，就是在HTML中动态写入Java代码.</li>
+<li>Model1 就是jsp升级版，之前请求参数都是通过servlet api获得的，model1中可以在jsp中使用标签<jsp:usebean>将请求参数封装到对象中直接使用，但是jsp中加入了控制，业务，混杂。</jsp:usebean></li>
+<li>Model2 实现了分层，但是请求参数没有封装到Javabean中，还需要手动封装，而且视图的转发严重依赖 servlet api比如请求的转发。</li>
+<li>后来的struts2就是使用了拦截器对请求参数进行封装到bean中，也就是vo中，而且视图的控制由xml进行，视图就是jsp。</li>
+<li>现在的web mvc模式框架，比如spring MVC框架</li>
+</ul>
+<blockquote>
+<p>服务到工作者模式：前端控制器（front controller） 应用控制器（application controller）页面控制器也称为动作（page controller）上下文（context）现在springMVC框架使用的就是这个模式。</p>
+</blockquote>
+<p>这个模式如下图所示,这是最一般的模式：</p>
+<p><img src="/2017/08/05/SpringMVC框架简述/web_mvc1.jpg" alt="mvc1"></p>
+<p><img src="/2017/08/05/SpringMVC框架简述/web_mvc2.jpg" alt="mvc2"></p>
+<ul>
+<li><code>前端控制器</code>  负责为表现层提供统一访问节点，避免model2中出现的重复的控制逻辑，比如前端控制器统一回调相应的功能方法，比如委托应用控制器选择功能处理模块和视图，在model2中都是自己编写的。</li>
+<li><code>应用控制器</code> 根据url选择处理器，选择返回的视图，策略设计模式</li>
+<li><code>页面控制器</code> 功能处理代码，收集参数，封装参数到模型，转调业务对象处理模型，返回逻辑视图名给前端控制器，前端控制器委托应用控制器选择具体的视图，命令模式。</li>
+<li><code>上下文</code> model2中为视图准备要展示的模型数据，我们直接放到了request中，有了上下文之后，我们可以将相关数据放到上下文中，从而和协议无关，也就是和servlet api无关，一般是通过threadlocal实现，线程独享的数据放到threadlocal中是一个键值对。</li>
+</ul>
+<blockquote>
+<p>轻薄的web表现层，做的事情越少越好，薄薄的，不应该包含无关的代码，只负责收集并组织参数到模型对象，启动业务对象的调用，控制器只返回逻辑视图名并由响应的应用控制器来选择具体。</p>
+</blockquote>
+<h4 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h4><blockquote>
+<p>SpringMVC是一个基于Java实现了web mvc设计模式的请求驱动类型的轻量级web框架，请求驱动指的是使用请求-响应模型。<br>Spring web mvc也是服务到工作者模式的实现，</p>
+</blockquote>
+<p>前端控制器：dispatcherServlet就是给web表现层提供统一的访问节点，委托应用控制器进行URL映射和视图选择。</p>
+<p>SpringMVC将应用控制器拆为处理映射器（handler mapping）和视图解析器（view resolver）。</p>
+<p>页面控制器是controller接口（这个一般是使用注解进行和URL对应，包含modelAndView request response）支持本地化解析，主题解析文件上传，还有就是数据验证，数据格式化和数据绑定机制。提供了强中的约定大于配置的契约式编程支持。</p>
+<p>SpringMVC模式一个请求的完整过程如下图所示：</p>
+<p><img src="/2017/08/05/SpringMVC框架简述/springmvc.jpg" alt="springmvc"></p>
+<p>具体执行步骤如下：</p>
+<ol>
+<li>首先用户发送请求————&gt;前端控制器，前端控制器根据请求信息（如URL）来决定选择哪一个页面控制器进行处理并把请求委托给它，即以前的控制器的控制逻辑部分；</li>
+<li>页面控制器接收到请求后，进行功能处理，首先需要收集和绑定请求参数到一个对象，这个对象在Spring Web MVC中叫命令对象，并进行验证，然后将命令对象委托给业务对象进行处理；处理完毕后返回一个ModelAndView（模型数据和逻辑视图名）；</li>
+<li>前端控制器收回控制权，然后根据返回的逻辑视图名，选择相应的视图进行渲染，并把模型数据传入以便视图渲染；</li>
+<li>前端控制器再次收回控制权，将响应返回给用户;</li>
+</ol>
+<p><img src="/2017/08/05/SpringMVC框架简述/springmvc1.jpg" alt="springmvc1"></p>
+<p>其实前端控制器主要是协调的作用，spring web mvc的集中访问点，主要职责就是调度工作，本身主要用于流程控制。</p>
+<h4 id="springMVC容器和spring之间的关系"><a href="#springMVC容器和spring之间的关系" class="headerlink" title="springMVC容器和spring之间的关系"></a>springMVC容器和spring之间的关系</h4><p>平时并没有很注意这方面的东西，在配置的时候只会</p>
+
       
       
     </div>
@@ -232,7 +290,7 @@
         <p><span>本文标题:</span><a href="/2017/08/05/SpringMVC框架简述/">SpringMVC框架简述</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 xu 的个人博客">xu</a></p>
         <p><span>发布时间:</span>2017年08月05日 - 14时24分</p>
-        <p><span>最后更新:</span>2017年08月05日 - 14时24分</p>
+        <p><span>最后更新:</span>2017年08月27日 - 14时30分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/08/05/SpringMVC框架简述/" title="SpringMVC框架简述">http://xu1009.github.io/2017/08/05/SpringMVC框架简述/</a>
             <span class="copy-path" data-clipboard-text="原文: http://xu1009.github.io/2017/08/05/SpringMVC框架简述/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -248,6 +306,15 @@
 
 <nav id="article-nav">
   
+    <a href="/2017/08/27/SpringMVC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          SpringMVC
+        
+      </div>
+    </a>
+  
   
     <a href="/2017/07/29/Maven实战/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">Maven实战</div>
@@ -261,7 +328,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#web端的发展历程"><span class="toc-number">1.</span> <span class="toc-text">web端的发展历程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SpringMVC"><span class="toc-number">2.</span> <span class="toc-text">SpringMVC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#springMVC容器和spring之间的关系"><span class="toc-number">3.</span> <span class="toc-text">springMVC容器和spring之间的关系</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -327,7 +394,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2017/08/27/SpringMVC/" title="上一篇: SpringMVC">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
@@ -336,7 +405,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/SpringMVC框架简述/">SpringMVC框架简述</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/Maven实战/">Maven实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/19/Mock与junit/">Mock与junit</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/深入分析JAVA-WEB技术总结/">深入分析JAVA WEB技术总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/JVM基础知识/">JVM基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/02/MYSQL相关基础知识/">MYSQL相关基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/">Nginx+tomcat+redis实现服务器集群和共享session</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/golang学习/">golang学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/常用RPC框架/">常用RPC框架</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/javaWeb基本知识/">javaWeb基本知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/Spring相关内容总结/">Spring相关内容总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/测试一下上传图片/">测试一下上传图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/hexo-githubpages搭建个人博客/">hexo+githubpages搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/20/markdown语法简介/">markdown语法简介</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/27/SpringMVC/">SpringMVC</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/SpringMVC框架简述/">SpringMVC框架简述</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/Maven实战/">Maven实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/19/Mock与junit/">Mock与junit</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/深入分析JAVA-WEB技术总结/">深入分析JAVA WEB技术总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/JVM基础知识/">JVM基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/02/MYSQL相关基础知识/">MYSQL相关基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/">Nginx+tomcat+redis实现服务器集群和共享session</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/golang学习/">golang学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/常用RPC框架/">常用RPC框架</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/javaWeb基本知识/">javaWeb基本知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/Spring相关内容总结/">Spring相关内容总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/测试一下上传图片/">测试一下上传图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/hexo-githubpages搭建个人博客/">hexo+githubpages搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/20/markdown语法简介/">markdown语法简介</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
