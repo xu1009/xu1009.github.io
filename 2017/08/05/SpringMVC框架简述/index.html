@@ -17,7 +17,7 @@
 <meta property="og:image" content="http://xu1009.github.io/2017/08/05/SpringMVC框架简述/web_mvc2.jpg">
 <meta property="og:image" content="http://xu1009.github.io/2017/08/05/SpringMVC框架简述/springmvc.jpg">
 <meta property="og:image" content="http://xu1009.github.io/2017/08/05/SpringMVC框架简述/springmvc1.jpg">
-<meta property="og:updated_time" content="2017-08-27T06:30:46.384Z">
+<meta property="og:updated_time" content="2017-08-30T15:03:06.044Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC框架简述">
 <meta name="twitter:description" content="web端的发展历程如下图所示   最早的CGI 公共网关接口，一种在web服务端使用的脚本技术，使用C或Perl语言编写，用于接收web用户请求并处理，最后动态产生响应给用户，但每次请求将产生一个进程，重量级。 servlet 一种JavaEE web组件技术，是一种在服务端执行的web组件，用于接收用户请求，最后动态产生响应给用户，每次请求就是新建一个线程，这个比CGI要轻量级，能够使用Java">
@@ -278,6 +278,16 @@
 <p><img src="/2017/08/05/SpringMVC框架简述/springmvc1.jpg" alt="springmvc1"></p>
 <p>其实前端控制器主要是协调的作用，spring web mvc的集中访问点，主要职责就是调度工作，本身主要用于流程控制。</p>
 <h4 id="springMVC容器和spring之间的关系"><a href="#springMVC容器和spring之间的关系" class="headerlink" title="springMVC容器和spring之间的关系"></a>springMVC容器和spring之间的关系</h4><p>平时并没有很注意这方面的东西，在配置的时候只会</p>
+<h4 id="rpc和restFUL-api"><a href="#rpc和restFUL-api" class="headerlink" title="rpc和restFUL api"></a>rpc和restFUL api</h4><p>HTTP是一种应用层网络协议，RPC可以采用自定义协议，也可以通过HTTP协议来传输，thrift，grpc，xml-rpc，json-rpc都是通过HTTP传输的。HTTP既支持长连接，也支持短连接。<br>rpc使用的则是长连接，不需要频繁的建立连接，RESTFUL API使用的是短连接，效率低下，而且在数据传输上，restful api传输了很多无用信息，比如那些header，对于rpc来说却没有。</p>
+<p>所以为什么要用rpc调用？</p>
+<p>因为良好的rpc调用是面向服务的封装，针对服务的可用性和效率等都做了优化。单纯使用http调用则缺少了这些特性。</p>
+<p>简单来说成熟的rpc库相对http容器，跟多的是封装了“服务发现”，”错误重试”一类面向服务的高级特性。可以这么理解，rpc框架是面向服务的更高级的封装。如果把一个http server容器上封装一层服务发现和函数代理调用，那它就已经可以做一个rpc框架了。</p>
+<ol>
+<li>性能，不出很大的意外，http服务都是百毫秒级的，而thrift则能轻松搞到几十ms，别小看这点时间，这少一点，用户的痛苦就会小很多。。。，那么为什么性能差？http需要dns，这来回的网络消耗不是盖的，对于MT的服务是完全没有必要的开销；</li>
+<li>扩展性，http的服务发现纯粹是靠dns做的，加机器需要配置一下dns，这要惊动运维，还有等漫长的roll out时间，与基于zookeeper的自动发现的thrift比，毫无优势可言；</li>
+<li>管理麻烦，http配置的域名需要管理起来也是麻烦事，对外提供统一服务，内部也需要统一一下域名的命名</li>
+<li>RPC:远程过程调用。RPC的核心并不在于使用什么协议。RPC的目的是让你在本地调用远程的方法，而对你来说这个调用是透明的，你并不知道这个调用的方法是部署哪里。通过RPC能解耦服务，这才是使用RPC的真正目的。RPC的原理主要用到了动态代理模式，至于http协议，只是传输协议而已。</li>
+</ol>
 
       
       
@@ -290,7 +300,7 @@
         <p><span>本文标题:</span><a href="/2017/08/05/SpringMVC框架简述/">SpringMVC框架简述</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 xu 的个人博客">xu</a></p>
         <p><span>发布时间:</span>2017年08月05日 - 14时24分</p>
-        <p><span>最后更新:</span>2017年08月27日 - 14时30分</p>
+        <p><span>最后更新:</span>2017年08月30日 - 23时03分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/08/05/SpringMVC框架简述/" title="SpringMVC框架简述">http://xu1009.github.io/2017/08/05/SpringMVC框架简述/</a>
             <span class="copy-path" data-clipboard-text="原文: http://xu1009.github.io/2017/08/05/SpringMVC框架简述/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -319,7 +329,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#web端的发展历程"><span class="toc-number">1.</span> <span class="toc-text">web端的发展历程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SpringMVC"><span class="toc-number">2.</span> <span class="toc-text">SpringMVC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#springMVC容器和spring之间的关系"><span class="toc-number">3.</span> <span class="toc-text">springMVC容器和spring之间的关系</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#web端的发展历程"><span class="toc-number">1.</span> <span class="toc-text">web端的发展历程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SpringMVC"><span class="toc-number">2.</span> <span class="toc-text">SpringMVC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#springMVC容器和spring之间的关系"><span class="toc-number">3.</span> <span class="toc-text">springMVC容器和spring之间的关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rpc和restFUL-api"><span class="toc-number">4.</span> <span class="toc-text">rpc和restFUL api</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 

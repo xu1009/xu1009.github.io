@@ -261,6 +261,16 @@
 <p><img src="/2017/08/05/SpringMVC框架简述/springmvc1.jpg" alt="springmvc1"></p>
 <p>其实前端控制器主要是协调的作用，spring web mvc的集中访问点，主要职责就是调度工作，本身主要用于流程控制。</p>
 <h4 id="springMVC容器和spring之间的关系"><a href="#springMVC容器和spring之间的关系" class="headerlink" title="springMVC容器和spring之间的关系"></a>springMVC容器和spring之间的关系</h4><p>平时并没有很注意这方面的东西，在配置的时候只会</p>
+<h4 id="rpc和restFUL-api"><a href="#rpc和restFUL-api" class="headerlink" title="rpc和restFUL api"></a>rpc和restFUL api</h4><p>HTTP是一种应用层网络协议，RPC可以采用自定义协议，也可以通过HTTP协议来传输，thrift，grpc，xml-rpc，json-rpc都是通过HTTP传输的。HTTP既支持长连接，也支持短连接。<br>rpc使用的则是长连接，不需要频繁的建立连接，RESTFUL API使用的是短连接，效率低下，而且在数据传输上，restful api传输了很多无用信息，比如那些header，对于rpc来说却没有。</p>
+<p>所以为什么要用rpc调用？</p>
+<p>因为良好的rpc调用是面向服务的封装，针对服务的可用性和效率等都做了优化。单纯使用http调用则缺少了这些特性。</p>
+<p>简单来说成熟的rpc库相对http容器，跟多的是封装了“服务发现”，”错误重试”一类面向服务的高级特性。可以这么理解，rpc框架是面向服务的更高级的封装。如果把一个http server容器上封装一层服务发现和函数代理调用，那它就已经可以做一个rpc框架了。</p>
+<ol>
+<li>性能，不出很大的意外，http服务都是百毫秒级的，而thrift则能轻松搞到几十ms，别小看这点时间，这少一点，用户的痛苦就会小很多。。。，那么为什么性能差？http需要dns，这来回的网络消耗不是盖的，对于MT的服务是完全没有必要的开销；</li>
+<li>扩展性，http的服务发现纯粹是靠dns做的，加机器需要配置一下dns，这要惊动运维，还有等漫长的roll out时间，与基于zookeeper的自动发现的thrift比，毫无优势可言；</li>
+<li>管理麻烦，http配置的域名需要管理起来也是麻烦事，对外提供统一服务，内部也需要统一一下域名的命名</li>
+<li>RPC:远程过程调用。RPC的核心并不在于使用什么协议。RPC的目的是让你在本地调用远程的方法，而对你来说这个调用是透明的，你并不知道这个调用的方法是部署哪里。通过RPC能解耦服务，这才是使用RPC的真正目的。RPC的原理主要用到了动态代理模式，至于http协议，只是传输协议而已。</li>
+</ol>
 
       
       
