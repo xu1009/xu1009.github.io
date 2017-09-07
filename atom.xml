@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xu1009.github.io/"/>
-  <updated>2017-09-04T14:45:46.151Z</updated>
+  <updated>2017-09-06T14:27:44.789Z</updated>
   <id>http://xu1009.github.io/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>head first design pattern</title>
+    <link href="http://xu1009.github.io/2017/09/05/head-first-design-pattern/"/>
+    <id>http://xu1009.github.io/2017/09/05/head-first-design-pattern/</id>
+    <published>2017-09-05T13:45:31.000Z</published>
+    <updated>2017-09-06T14:27:44.789Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>　设计模式就是让代码写的规范，什么是规范呢，就是松耦合，高复用，易维护，易拓展，虽然现在很少在平时的代码中考虑这些，不过设计模式并不是一种强制，就如本书作者所说如果发现一种更为简单的方式，就没必要生搬硬套的使用设计模式，设计模式的初衷是让程序猿从复杂的工作中解脱，而不是进入另一个怪圈。</p>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p>策略模式定义了算法族，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
+</blockquote>
+<p>正式的定义往往都那么抽象，策略模式就是封装变化，</p>
+<p>策略模式</p>
+<p>工厂模式</p>
+<p>抽象工厂</p>
+<p>装饰器</p>
+<p>适配器</p>
+<p>外观</p>
+<p>观察者模式</p>
+<p>单例模式</p>
+<p>命令模式</p>
+<p>代理模式</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;　设计模式就是让代码写的规范，什么是规范呢，就是松耦合，高复用，易维护，易拓展，虽然现在很少在平时的代码中考虑这些，不过设计模式并不是一种强制，就如本书作者所说如果发现一种更为简单的方式，就没必要生搬硬套的使用设计模式，设计模式的初衷是让程序猿从复
+    
+    </summary>
+    
+    
+      <category term="design pattern" scheme="http://xu1009.github.io/tags/design-pattern/"/>
+    
+  </entry>
   
   <entry>
     <title>记录一下大神给推荐的书籍哈</title>

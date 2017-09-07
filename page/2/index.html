@@ -128,7 +128,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Mock-junit/" style="font-size: 10px;">Mock junit</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/java-web/" style="font-size: 10px;">java web</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/spring/" style="font-size: 20px;">spring</a> <a href="/tags/图片/" style="font-size: 10px;">图片</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/学习，Nginx，redis/" style="font-size: 10px;">学习，Nginx，redis</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/程序猿的书/" style="font-size: 10px;">程序猿的书</a>
+                        <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Mock-junit/" style="font-size: 10px;">Mock junit</a> <a href="/tags/design-pattern/" style="font-size: 10px;">design pattern</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/java-web/" style="font-size: 10px;">java web</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/spring/" style="font-size: 20px;">spring</a> <a href="/tags/图片/" style="font-size: 10px;">图片</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/学习，Nginx，redis/" style="font-size: 10px;">学习，Nginx，redis</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/程序猿的书/" style="font-size: 10px;">程序猿的书</a>
                     </div>
                 </section>
                 
@@ -189,6 +189,79 @@
     </div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-golang学习" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/23/golang学习/" class="article-date">
+      <time datetime="2017-06-23T07:37:14.000Z" itemprop="datePublished">2017-06-23</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/23/golang学习/">golang学习</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="go语言"><a href="#go语言" class="headerlink" title="go语言"></a>go语言</h3><p>先来一段代码感受一下<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</div><div class="line">	fmt.Print(<span class="string">"hello world"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>分析一下这段代码</p>
+<ul>
+<li>包是main这个也是有意义的，包是main的表示该段代码可以独立执行</li>
+<li>main函数和正常的程序一样，程序运行时首先执行的，如果有init函数就执行init</li>
+<li>标识符首字母的大小写决定了该变量的可见性，大写就是public，小写是private</li>
+</ul>
+<hr>
+<p>go语言也需要提前声明变量</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a <span class="keyword">int</span> = <span class="number">1</span></div><div class="line"><span class="keyword">var</span> a = <span class="number">1</span></div><div class="line">a := <span class="number">10</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>常量const，不能被修改的量</p>
+</blockquote>
+
+      
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-常用RPC框架" class="article article-type-post" itemscope itemprop="blogPost">
   
