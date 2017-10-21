@@ -128,7 +128,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Mock-junit/" style="font-size: 10px;">Mock junit</a> <a href="/tags/design-pattern/" style="font-size: 10px;">design pattern</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/java-web/" style="font-size: 10px;">java web</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/spring/" style="font-size: 20px;">spring</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/图片/" style="font-size: 10px;">图片</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/学习，Nginx，redis/" style="font-size: 10px;">学习，Nginx，redis</a> <a href="/tags/并发-Java/" style="font-size: 20px;">并发 Java</a> <a href="/tags/总结/" style="font-size: 20px;">总结</a> <a href="/tags/程序猿的书/" style="font-size: 10px;">程序猿的书</a>
+                        <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Mock-junit/" style="font-size: 10px;">Mock junit</a> <a href="/tags/design-pattern/" style="font-size: 10px;">design pattern</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/java-web/" style="font-size: 10px;">java web</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/spring/" style="font-size: 20px;">spring</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/图片/" style="font-size: 10px;">图片</a> <a href="/tags/学习/" style="font-size: 15px;">学习</a> <a href="/tags/学习，Nginx，redis/" style="font-size: 10px;">学习，Nginx，redis</a> <a href="/tags/并发-Java/" style="font-size: 15px;">并发 Java</a> <a href="/tags/总结/" style="font-size: 15px;">总结</a> <a href="/tags/程序猿的书/" style="font-size: 10px;">程序猿的书</a>
                     </div>
                 </section>
                 
@@ -189,6 +189,103 @@
     </div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-深入分析JAVA-WEB技术总结" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/15/深入分析JAVA-WEB技术总结/" class="article-date">
+      <time datetime="2017-07-14T23:47:36.000Z" itemprop="datePublished">2017-07-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/15/深入分析JAVA-WEB技术总结/">深入分析JAVA WEB技术总结</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h5 id="DNS解析过程"><a href="#DNS解析过程" class="headerlink" title="DNS解析过程"></a>DNS解析过程</h5><ul>
+<li>最先在浏览器缓存里面找</li>
+<li>本地操作系统缓存</li>
+<li>本地域名服务器</li>
+<li>根服务器</li>
+<li>解析完成之后会自动缓存这个结果<h5 id="域名解析方式"><a href="#域名解析方式" class="headerlink" title="域名解析方式"></a>域名解析方式</h5></li>
+<li>A记录,指定URL所对应的IP地址</li>
+<li>MX记录,将某个地址下的邮件服务器指向自己的mail server</li>
+<li>CNAME记录,别名解析,为一个域名设置很多别名</li>
+<li>NS记录,为某个域名指定DNS解析服务器</li>
+<li>TXT记录,为域名设置说明<h5 id="JAVA-IO"><a href="#JAVA-IO" class="headerlink" title="JAVA IO"></a>JAVA IO</h5></li>
+<li>基于字节的IO,基于字符的,基于磁盘的,基于网络的.</li>
+<li>字节到字符需要解码,字符到字节需要编码,很透彻</li>
+<li>所以在读取文件或者写入文件的时候需要指定编码解码方式,不指定就使用系统默认的编解码方式<h5 id="文件访问方式"><a href="#文件访问方式" class="headerlink" title="文件访问方式"></a>文件访问方式</h5></li>
+<li>标准IO访问,调用操作系统操作文件的方法,这里涉及到高速缓存.</li>
+<li>直接IO访问,不经过高速缓存,直接访问磁盘,这样会比较慢</li>
+<li>同步IO,就是阻塞式的IO,必须等到读取或者写入完成之后,才能做其他事情</li>
+<li>异步IO,非阻塞式,读取和写入时,当前线程不必等待,可以去处理其它事情.</li>
+<li>内存映射,将磁盘一段内存空间映射到用户缓存空间,这样访问,<h5 id="同步-异步-阻塞-非阻塞"><a href="#同步-异步-阻塞-非阻塞" class="headerlink" title="同步 异步  阻塞  非阻塞"></a>同步 异步  阻塞  非阻塞</h5></li>
+<li>同步就是一个任务序列的完成需要依赖另外一个任务时,只有等待被依赖的任务完成之后,依赖的任务才能完成,这是一种可靠的任务序列.</li>
+<li>异步是不可靠的任务序列,他不必等待被依赖的任务完成,只是通知被依赖的任务要完成什么样的工作.</li>
+<li>同步能够保证程序的可靠行,异步可以提升程序的性能,必须在可靠性和性能之间保持平衡.</li>
+<li>阻塞是CPU停下来等待一个慢动作完成之后,才能执行其它任务.</li>
+<li>非阻塞是CPU没必要停下来,非阻塞明显提高了CPU的利用率,带来的坏处就是线程之间的切换带来的开销.<h3 id="编码问题相关"><a href="#编码问题相关" class="headerlink" title="编码问题相关"></a>编码问题相关</h3></li>
+<li>通俗的讲,计算机存储的基本单元是英语,其它语言必须通过一次翻译,翻译成英语才能和计算机通信,这叫做编码.<h5 id="一些编码方式简述"><a href="#一些编码方式简述" class="headerlink" title="一些编码方式简述"></a>一些编码方式简述</h5></li>
+<li>ASCLL码,总共有128个,用一个字节的低7位表示,0-31表示换行 回车这些,32-126表示打印字符,可以通过键盘输入并且能够显示出来.</li>
+<li>ISO-8859-1仍然是单字节编码,主要是用来弥补ASCLL码的不足,加了一些西欧语言字符,应用的十分广泛,总共有256个字节.</li>
+<li>GB2312 中文编码字符集,使用双字节编码,就是比较少,才6000多个汉字.</li>
+<li>GBK和GB2312兼容,增加了很多汉字,相当于GB2312的拓展,而且两者是兼容的.</li>
+<li>GB18030 国家标准,但是用的不多.</li>
+<li>UTF-16使用定长表示方法,不论什么字符都使用两个字节表示.</li>
+<li>UTF-8采用变长编码,utf-16虽然在表示上非常方便,但是有些字符只需要一个字节表示就够了,没必要使用两个字节表示,所以这样就造成内存空间的的增大,十分不方便,UTF-8使用1-6个字节组成,</li>
+<li>编码,解码问题主要是从字节到字符或者字符到字节的过程,Java内存使用的时utf-16编码,utf-16编码简单高效,utf-8多用于网络编码,节省流量,utf-16是顺序编码,这样会导致中间一个字节码坏掉之后影响之后的,而utf-8则不会,它会对单个字符进行校验,所以可靠性更高.<h4 id="Java-web中的编码和解码问题"><a href="#Java-web中的编码和解码问题" class="headerlink" title="Java web中的编码和解码问题"></a>Java web中的编码和解码问题</h4></li>
+<li>首先网络中传输使用的是http协议,也就是socket,socket流是字节流,所以,要想在网络中传输,首先需要编码,从网络中获取到字节流之后再进行解码还原成我们需要的那种.</li>
+<li>URI和QueryString的编解码还不一样,tomcat处理这个URL时,就是要解码,uri就是使用配置文件中的解码方式,connector中的URIEncoding决定了解码方式,queryString的话就是基本上按照header中的content type来解码的,需要配置tomcat中的useBodingEncodingForUri为true.</li>
+<li>tomcat在解析post方式的表单数据时,解码方式是要按照header中的content type里面的charset属性,如果请求头中没有包含该属性的话,则会按照默认的iso-8859-1进行解码,如果提交的数据包含非ASCLL码的话就会出现乱码的现象.</li>
+<li>返回给浏览器的数据也需要编码,浏览器根据,response中的header  charset进行解码的,如果没有这个响应头的话就按照HTML中指定的charset进行解码,如果仍然没有的话就按照默认的解码方式.<h4 id="Cookie-and-Session"><a href="#Cookie-and-Session" class="headerlink" title="Cookie and Session"></a>Cookie and Session</h4></li>
+<li>其实这个没啥讲的，这个用的比较多的是在集群条件下的共享问题，session本质还是cookie，一种特殊的cookie，jsessionid = value<br>value是session的id，服务端会根据这个id去找session对象，这样就可以在传输中节省了大量带宽，传输的只是id了，而且安全性比cookie高，cookie还就是在客户端存储有限制，但是session在服务端集群的条件下存在共享的问题，各有好处，现在用的都是分布式缓存来存储session，有一个订阅服务器去管理，这样就将存储和管理从服务器分离，减少了服务器的负担，可以有效控制session的安全性和cookie的数量。</li>
+</ul>
+
+      
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java-web/">java web</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-JVM基础知识" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -1063,102 +1160,9 @@
 
 
   
-    <article id="post-markdown语法简介" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/06/20/markdown语法简介/" class="article-date">
-      <time datetime="2017-06-20T14:39:36.000Z" itemprop="datePublished">2017-06-20</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/20/markdown语法简介/">markdown语法简介</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <!-- toc -->
-<h1 id="这是一个测试"><a href="#这是一个测试" class="headerlink" title="这是一个测试"></a>这是一个测试</h1><h4 id="下面是列表的排序-来标记"><a href="#下面是列表的排序-来标记" class="headerlink" title="下面是列表的排序*来标记"></a>下面是列表的排序*来标记</h4><ul>
-<li>1</li>
-<li>2</li>
-<li>3<h4 id="有序列表直接1-等等"><a href="#有序列表直接1-等等" class="headerlink" title="有序列表直接1.等等"></a>有序列表直接1.等等</h4></li>
-</ul>
-<ol>
-<li>dasd</li>
-<li>weqwe<h4 id="下面是引用"><a href="#下面是引用" class="headerlink" title="下面是引用"></a>下面是引用</h4><blockquote>
-<p>这里是引用<br>撒大声地23<br>123123<br>123123</p>
-<h4 id="插入连接格式是"><a href="#插入连接格式是" class="headerlink" title="插入连接格式是[] ()"></a>插入连接格式是[] ()</h4><p><a href="https://baidu.com" target="_blank" rel="external">百度</a></p>
-<h4 id="插入图片格式是-！【name】（link）"><a href="#插入图片格式是-！【name】（link）" class="headerlink" title="插入图片格式是 ！【name】（link）"></a>插入图片格式是 ！【name】（link）</h4><p><img src="http://mouapp.com/Mou_128.png" alt="Mou icon"></p>
-<h4 id="文字粗体是用-包围，斜体是用包围"><a href="#文字粗体是用-包围，斜体是用包围" class="headerlink" title="文字粗体是用*包围，斜体是用包围"></a>文字粗体是用<em>*包围，斜体是用</em>包围</h4><p><strong>你好</strong> 你好 <em>你好</em></p>
-<h4 id="表格的生成是比较累的"><a href="#表格的生成是比较累的" class="headerlink" title="表格的生成是比较累的"></a>表格的生成是比较累的</h4></blockquote>
-</li>
-</ol>
-<h4 id="代码使用反引号"><a href="#代码使用反引号" class="headerlink" title="代码使用反引号"></a>代码使用反引号</h4><hr>
-<h4 id="表格使用这个比较麻烦"><a href="#表格使用这个比较麻烦" class="headerlink" title="表格使用这个比较麻烦"></a>表格使用这个比较麻烦</h4><table>
-<thead>
-<tr>
-<th>表头1</th>
-<th>表头2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>data</td>
-<td>data</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>给出列子<br>return shell_exec(“echo $input | $markdown_script”);<br>tst   </p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = b</div><div class="line"><span class="keyword">for</span> a <span class="keyword">in</span> b:</div><div class="line">	a = b</div></pre></td></tr></table></figure>
-<h3 id="代码块的编辑"><a href="#代码块的编辑" class="headerlink" title="代码块的编辑"></a>代码块的编辑</h3>
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习/">学习</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 </div>
