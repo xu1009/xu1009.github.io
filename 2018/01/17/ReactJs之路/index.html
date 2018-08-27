@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ReactJs之路 | BlogXu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="包管理器 npm 构建器 webpack 编译器 babelJSX 语法  javascrip拓展语言，可以写html可以写js，js用大括号就行。组件名称必须大写 123456789function Welcome(props) &amp;#123;  return &amp;lt;h1&amp;gt;Hello, &amp;#123;props.name&amp;#125;&amp;lt;/h1&amp;gt;;&amp;#125;const eleme">
+<meta name="keywords" content="前端 react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactJs之路">
+<meta property="og:url" content="http://xu1009.github.io/2018/01/17/ReactJs之路/index.html">
+<meta property="og:site_name" content="BlogXu">
+<meta property="og:description" content="包管理器 npm 构建器 webpack 编译器 babelJSX 语法  javascrip拓展语言，可以写html可以写js，js用大括号就行。组件名称必须大写 123456789function Welcome(props) &amp;#123;  return &amp;lt;h1&amp;gt;Hello, &amp;#123;props.name&amp;#125;&amp;lt;/h1&amp;gt;;&amp;#125;const eleme">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/407/896/4078962238-585142242e316_articlex">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/168/734/1687340203-5851427977a39_articlex">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/254/013/2540130692-585142a91eb77_articlex">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/150/116/1501167720-5851433ff1174_articlex">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/146/798/1467989449-5851f3865be3b_articlex">
+<meta property="og:updated_time" content="2018-08-27T11:30:41.308Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReactJs之路">
+<meta name="twitter:description" content="包管理器 npm 构建器 webpack 编译器 babelJSX 语法  javascrip拓展语言，可以写html可以写js，js用大括号就行。组件名称必须大写 123456789function Welcome(props) &amp;#123;  return &amp;lt;h1&amp;gt;Hello, &amp;#123;props.name&amp;#125;&amp;lt;/h1&amp;gt;;&amp;#125;const eleme">
+<meta name="twitter:image" content="https://sfault-image.b0.upaiyun.com/407/896/4078962238-585142242e316_articlex">
+  
+    <link rel="alternative" href="/atom.xml" title="BlogXu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/xu.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/xu.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">xu</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/writesomething">随笔</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/xu1009" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/Keras" title="weibo">weibo</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Mock-junit/" style="font-size: 10px;">Mock junit</a> <a href="/tags/RPC-序列化/" style="font-size: 10px;">RPC 序列化</a> <a href="/tags/design-pattern/" style="font-size: 10px;">design pattern</a> <a href="/tags/dp-gluon/" style="font-size: 10px;">dp gluon</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/java-NIO-反射/" style="font-size: 10px;">java NIO 反射</a> <a href="/tags/java-web/" style="font-size: 10px;">java web</a> <a href="/tags/java-基础-面试/" style="font-size: 10px;">java 基础 面试</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mybatis-orm/" style="font-size: 10px;">mybatis orm</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/spring/" style="font-size: 20px;">spring</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/前端-react/" style="font-size: 10px;">前端 react</a> <a href="/tags/图片/" style="font-size: 10px;">图片</a> <a href="/tags/学习/" style="font-size: 15px;">学习</a> <a href="/tags/学习，Nginx，redis/" style="font-size: 10px;">学习，Nginx，redis</a> <a href="/tags/并发-Java/" style="font-size: 15px;">并发 Java</a> <a href="/tags/总结/" style="font-size: 15px;">总结</a> <a href="/tags/程序猿的书/" style="font-size: 10px;">程序猿的书</a>
+                    </div>
+                </section>
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">爱代码，爱生活！</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/xu.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/writesomething">随笔</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/xu1009" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/Keras" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-ReactJs之路" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/01/17/ReactJs之路/" class="article-date">
+      <time datetime="2018-01-17T14:36:17.000Z" itemprop="datePublished">2018-01-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ReactJs之路
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端-react/">前端 react</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <ul>
+<li>包管理器 npm</li>
+<li>构建器 webpack</li>
+<li>编译器 babel<br>JSX 语法</li>
+</ul>
+<p>javascrip拓展语言，可以写html可以写js，js用大括号就行。<br>组件名称必须大写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function Welcome(props) &#123;</span><br><span class="line">  return &lt;h1&gt;Hello, &#123;props.name&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const element = &lt;Welcome name=&quot;Sara&quot; /&gt;;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">  element,</span><br><span class="line">  document.getElementById(&apos;root&apos;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p><welcome>这个是组件，开头大写的，react遇到组件时，他会将属性作为单个对象传递给该组件，这个对象称为props，function那个是定义的组件，这样sara会被传入组件然后渲染到那个root中。</welcome></p>
+<p>props是当你引用组件时的一个对象，你可以使用这个对象中的属性，当然这个属性也是你定义过的。</p>
+<p>使用es6类就允许我们使用其它特性，例如局部状态，生命周期钩子。</p>
+<p>es6 类中使用局部状态就是自己的私有属性，不用再通过props进行传参数了，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;script src=&quot;../build/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;../build/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;../build/browser.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;example&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">        function tick() &#123;</span><br><span class="line">            ReactDOM.render(</span><br><span class="line">                    &lt;h1&gt;Hello, world!&#123;new Date().toLocaleTimeString()&#125;&lt;/h1&gt;,</span><br><span class="line">                document.getElementById(&apos;example&apos;)</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">        setInterval(tick, 1000);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="react-Router"><a href="#react-Router" class="headerlink" title="react Router"></a>react Router</h3><blockquote>
+<p>他可以让你向应用中快速地添加视图和数据流，同时保持页面与URL间的同步。这个是因为这里只有一个根元素的，就是拿不同组件去渲染，所以前端才会用路由，对于不同url使用不同的组件组合去渲染那个根元素？目前看起来是这样子的，这样做的话就可以实现模块复用，模块化更灵活。其中前端怎么get到url的，这个是通过window这个全局对象get到的。其中hash部分是url的#之后的部分。router是建立在history之上的，他会监听浏览器地址栏的变化，并解析这个url为location对象，然后router使用它匹配到路由，正确的渲染相应的组件。</p>
+</blockquote>
+<p>根DOM节点，里面的一切都是react DOM掌控，<br>ReactDOM.render()两个参数，第一个是react element，第二个是根节点DOM，这样就能将元素加到这个根节点中，react元素不可变，因为本来就定义成const啊。</p>
+<p>arrow functions，简单实用，关键是使用箭头函数不用再手动绑定当前类的this了。</p>
+<blockquote>
+<p>React是一个采用声明式，高效而且灵活的用来构建用户界面的框架，React当中包含了一些不同的组件，各种模块化，实现高度复用。</p>
+</blockquote>
+<p>单独定义组件，使用es6 class或者使用类似于js的函数function。</p>
+<p>JSX是一种很特殊的语法，全部混合到一起了，在js中写html，JSX也使用camelCase命名。<br>Babel转译器会把JSX转换成一个名为Reac.createElement()的方法调用。</p>
+<p>JSX浏览器是不会认识的，这就需要Babel将其转译成js代码。</p>
+<p>组件尽量最大可能的模块化，从而达到更高的复用。</p>
+<p>props只能像纯函数一样去使用，就是只读，不能修改，但是应用界面随时间变化，这就需要一个新的东西，这就是state。</p>
+<h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><blockquote>
+<p>State可以在不违反上述规则的情况下，根据用户操作、网络响应、或者其他状态变化，使组件动态的响应并改变组件的输出。</p>
+</blockquote>
+<p>这个可以改变，然后呢这时候定义组件就只能使用es6类来了，因为定义成类的话就可以使用面向对象的一些特性，比如私有属性，生命期钩子。</p>
+<p>父组件或子组件都不知道某个组件时有状态还是无状态，并且他们不应该关心某组件是被定义为一个函数还是一个类。一个组件可以将自己的属性传给下一个组件，下一个组件对于这个是无感知的，数据自顶向下。</p>
+<h3 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h3><blockquote>
+<p>react元素的事件处理和DOM元素的很相似，但是有几点不同，首先react事件绑定属性的命名采用驼峰写法，而不是小写，如果采用JSX的语法你需要传入一个函数作为事件处理函数，而不是一个字符串。</p>
+</blockquote>
+<p>更新状态的时候可以传入函数，这样就可以对传入的值进行二次计算。</p>
+<p>回调函数需要绑定this，这个是因为，其实我也没明白，就是react中的和普通的html不太一样，或者js。</p>
+<p>有关向事件处理程序传递参数，这里面有个e是合成事件，可以使用e进行事件响应取消，如不跳转。</p>
+<h3 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h3><blockquote>
+<p>在REACT中，你可以创建不同的组件封装你需要的行为，然后还可以根据应用的状态变化只渲染其中的一部分。</p>
+</blockquote>
+<p>可以使用js中的if逻辑判断，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UserLogin</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>welcome!!!!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">UserNotLogin</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>you are not login!!!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">CheckLogin</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">const</span> isLogin = props.isLogin;</span><br><span class="line">          <span class="keyword">if</span> (isLogin)&#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">UserLogin</span>/&gt;</span></span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">UserNotLogin</span>/&gt;</span></span>;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></p>
+<p>箭头函数中用小括号将函数体括起来可以在调用时返回这个。</p>
+<h3 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h3><blockquote>
+<p>现代js应用程序的模块打包器，递归构建一个依赖关系图，这个关系图包含应用程序需要的每个模块，然后将所有这些模块打包成一个或者多个bundle。</p>
+</blockquote>
+<ul>
+<li>入口（entry）</li>
+<li>输出（output）</li>
+<li>loader</li>
+<li>插件（plugins）</li>
+</ul>
+<h4 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h4><p>入口起点（entry point）指示webpack应该使用哪个模块来作为构建其内部依赖图的开始。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.esports = &#123;</span><br><span class="line">    entry: <span class="string">'./path/file.js'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h4 id="出口"><a href="#出口" class="headerlink" title="出口"></a>出口</h4><blockquote>
+<p>output属性告诉webpack在哪里输出它所构建的bundles，以及如何命名这些文件，你可以通过在配置中指定一个output字段，来配置。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./path/file.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">        filename: <span class="string">'my-first-webpack.js'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>分离应用程序（app）和第三方（vendor）入口<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">const</span> config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: <span class="string">'./src/app.js'</span>,</span><br><span class="line">    vendors: <span class="string">'./src/vendors.js'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>从入口开始创建依赖图，依赖图完全是分离，相互独立的，只有一个入口起点的单页面应用。</p>
+<p>多页面应用<br>配置文件如下所示<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    pageOne: <span class="string">'./src/pageOne/index.js'</span>,</span><br><span class="line">    pageTwo: <span class="string">'./src/pageTwo/index.js'</span>,</span><br><span class="line">    pageThree: <span class="string">'./src/pageThree/index.js'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>上面就是配置了三个独立分离的依赖图，多页面就是有多个根元素多个html，切换界面的话就需要重新加载文档，并且资源被重新下载。</p>
+<h4 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h4><blockquote>
+<p>这个能够去处理那些非js文件（webpack本身只能理解js），loader可以将所有类型的文件转换为webpack能够处理的有效模块，然后打包处理。<br>loader有两个目标，识别出应该被对应的loader进行转换的那些文件。（test属性），转换这些文件，从而使其能够被添加到依赖图中（并且最终添加到bundle中）（use属性）<br>loader用于对模块的源代码进行转换，loader可以使你在import或加载模块时预处理文件，因此，loader类似于其它构建工具中的task。</p>
+</blockquote>
+<p>首先你要使用npm安装依赖包，比如这里的不同的loader加载不同的格式文件。</p>
+<p>使用loader，这里有三种使用loader的方式：</p>
+<ul>
+<li>配置：在配置文件中指定loader</li>
+<li>内联：在每个import语句中显示指定loader。</li>
+<li>CLI:在shell命令中指定。</li>
+</ul>
+<h4 id="mainfest"><a href="#mainfest" class="headerlink" title="mainfest"></a>mainfest</h4><blockquote>
+<p>一旦你的应用程序中，形如index.html文件，一些bundle和各种资源加载到浏览器，之前的工程目录结构都不存在了，所以这就需要了mainfest，这是让webpack管理各个模块之间怎么交互。当编译器开始执行，解析和映射应用程序时，他会保留所有模块的详细要点，这个数据集合称为Mainfest，当打包完成并发送到浏览器时，会在运行时通过Mainfest来解析和加载模块。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">    filename: <span class="string">'my-first-webpack.bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; <span class="attr">test</span>: <span class="regexp">/\.txt$/</span>, <span class="attr">use</span>: <span class="string">'raw-loader'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 这个全是使用的正则吧，转换以.txt结尾的文件转换。</span></span><br><span class="line"><span class="built_in">module</span>.exports = config;</span><br></pre></td></tr></table></figure>
+<p>“嘿，webpack 编译器，当你碰到「在 require()/import 语句中被解析为 ‘.txt’ 的路径」时，在你对它打包之前，先使用 raw-loader 转换一下。</p>
+<h4 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h4><blockquote>
+<p>想要使用一个插件，你只需要require()它，然后把它添加到pulgins数组中，多数插件可以通过选项自定义，你也可以在一个配置文件中因为不同目的而多次使用一个插件。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>); <span class="comment">// 通过 npm 安装</span></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>); <span class="comment">// 用于访问内置插件</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">    filename: <span class="string">'my-first-webpack.bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; <span class="attr">test</span>: <span class="regexp">/\.txt$/</span>, <span class="attr">use</span>: <span class="string">'raw-loader'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(),</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;<span class="attr">template</span>: <span class="string">'./src/index.html'</span>&#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = config;</span><br></pre></td></tr></table></figure>
+<h3 id="模块热替换（hot-module-replacement）"><a href="#模块热替换（hot-module-replacement）" class="headerlink" title="模块热替换（hot module replacement）"></a>模块热替换（hot module replacement）</h3><blockquote>
+<p>模块热替换功能会在应用程序运行过程中替换，添加或删除模块，而无需重新加载整个页面，这就是传说中的热部署，更改完就会自己重新替换更改的部分，然后发布。就是更新webpack-dev-server的配置，使用webpack内置的HMR插件。</p>
+</blockquote>
+<h3 id="webpack-作用"><a href="#webpack-作用" class="headerlink" title="webpack 作用"></a>webpack 作用</h3><blockquote>
+<p>没有webpack之前，每个js都要在html中引用，这个会导致有些没用的什么的都会被下载，效率低下，自己还要把握引入的顺序，顺序不一致就会导致错误，这就需要webpack去处理这些依赖关系，最后打包成若干个bundle，这样的话，在开发环境中就将依赖关系和需要的js文件之类的全部搞定了，这样在线上的时候就会加载的比较快。</p>
+</blockquote>
+<p>依赖是通过npm构建好的，这里也有一个配置文件，省的你去一个个安装，这个是package.json,每次手动安装的时候可以使用–save参数，这样就会在配置文件中写入，下次换个环境，直接npm install就可以实现自动扫描配置文件中的依赖，下载了。都在node_module中，然后自己在js中需要啥就引用啥就行了。</p>
+<p>然后就是这些依赖如果有需要自己在js中引用就行了，这就是后来的react组件，最后就是使用webpack处理好这些依赖关系，打包成bundle，这样就行了。</p>
+<p>体验了一下全部使用webpack命令打包的感觉，这样，的确不是很方便，这就引入了配置文件，取代CLI(命令接口)，然后那个配置文件呢，只是定义了入口和出口，还要运行很麻烦的webpack指令，这就引入了npm 脚本，在npm配置文件中，定义这个脚本，然后还不用指定依赖的绝对路径。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   ./node_modules/.bin/webpack src/index.js dist/bundle.js  <span class="comment">//直接使用命令的方式</span></span><br><span class="line">   </span><br><span class="line">./node_modules/.bin/webpack --config webpack.config.js  <span class="comment">// 使用配置文件的时候</span></span><br><span class="line">   </span><br><span class="line"><span class="string">"build"</span>: <span class="string">"webpack"</span>  <span class="comment">// 直接 npm run build就行</span></span><br></pre></td></tr></table></figure></p>
+<p>webpack之前只是看的处理依赖的库，现在看看webpack怎么整合其他资源，比如图像。</p>
+<p>在js中import css文件，然后给element添加这个样式，这样webpack就会自己打包这个css到js中，然后在线解析的时候将css样式加到head中去，不过现在常使用的是将css进行分离，这样会提高生产环境的加载速度，两个bundle文件是并行加载的。</p>
+<p>处理图像文件，同样的方式需要loader，然后</p>
+<p>webpack通过运行一个或者多个npm脚本时，会在本地node_modules目录中查找安装的webpack</p>
+<p>source map作用是将编译后的代码映射到原始代码，这样就是方便定位错误。</p>
+<p>生产环境和开发环境配置文件分开，其中公共部分独立出来，然后merge，这样可以实现复用。</p>
+<h3 id="创建一个webpack工程的基本步骤"><a href="#创建一个webpack工程的基本步骤" class="headerlink" title="创建一个webpack工程的基本步骤"></a>创建一个webpack工程的基本步骤</h3><ul>
+<li>首先初始化npm目录结构，npm init -y</li>
+<li>安装webpack（本地安装开发环境依赖）</li>
+<li>构建出目录结构src/index.js dist/index.html</li>
+</ul>
+<p>webpack打包可以通过CLI的方式，不过这种很麻烦，这就有了配置文件，配置文件就是定义打包的一些参数。</p>
+<p>配置文件中有啥呢</p>
+<ul>
+<li>常用的有入口，出口，loader，plugin等。</li>
+<li>不同的loader可以让js引用不同类型文件</li>
+</ul>
+<p>打包之后生成的bundle可以用HtmlWebpackPlugin插件自动的加入到html中去，就是重新生成了html。</p>
+<p>clean-webpack-plugin插件打包之前先清理一下相应目录。</p>
+<h4 id="一个开发工具"><a href="#一个开发工具" class="headerlink" title="一个开发工具"></a>一个开发工具</h4><blockquote>
+<p>代码变化时需要自动编译代码，这里有几个工具，webpac‘s Watch Mode、webpack-dev-server、webpack-dev-middleware，现在大部分都是使用webpack-dev-server。</p>
+</blockquote>
+<p>其中watch的话就是”watch”: “webpack –watch”脚本就行，他会观察当前的文件，如果有变化的话就会重新编译。但是不会自动刷新浏览器界面。</p>
+<ul>
+<li>webpack-dev-server这个比较常见，启动一个server默认在8080端口，详细配置是HMR。</li>
+<li>webpack-dev-middleware</li>
+</ul>
+<p>HRM只是为了不全局刷新，局部更新替换某个模块。</p>
+<h3 id="CSS中的Box-Model"><a href="#CSS中的Box-Model" class="headerlink" title="CSS中的Box Model"></a>CSS中的Box Model</h3><ul>
+<li>margin 边距</li>
+<li>border 边框</li>
+<li>padding 间隙</li>
+<li>content 内容</li>
+</ul>
+<ul>
+<li>边距属性 (margin) 是用来设置一个元素所占空间的边缘到相邻元素之间的距离</li>
+<li>边框属性 (border) 用来设定一个元素的边线</li>
+<li>间隙属性 (padding) 是用来设置元素内容到元素边框的距离</li>
+<li>CSS 背景属性指的是 content 和 padding 区域</li>
+<li>CSS 属性中的 width 和 height 指的是 content 区域的宽和高</li>
+</ul>
+<ul>
+<li>有关webpack-dev-server的代理，转发dev-server的请求，调试很方便。</li>
+</ul>
+<h3 id="Jquery的deferred对象"><a href="#Jquery的deferred对象" class="headerlink" title="Jquery的deferred对象"></a>Jquery的deferred对象</h3><blockquote>
+<p>为了回调函数出现的，链式写法，done，fail，可以多个回调函数，多个事件的同一个回调函数。<br>用处</p>
+</blockquote>
+<h3 id="有关CSS样式优先级问题"><a href="#有关CSS样式优先级问题" class="headerlink" title="有关CSS样式优先级问题"></a>有关CSS样式优先级问题</h3><blockquote>
+<p>优先级就是分配给指定的CSS声明的一个权重，它由匹配的选择器中的每一种选择器类型的数值决定。而当优先级与多个css声明中任意一个声明的优先级相等的时候，css中最后的那个声明将会被应用到元素上。当同一个元素有多个声明的时候，优先级才会有意义，因为每一个直接作用于元素的css规则总是会接管或者覆盖改元素从祖先元素继承而来的规则。</p>
+</blockquote>
+<h4 id="选择器类型"><a href="#选择器类型" class="headerlink" title="选择器类型"></a>选择器类型</h4><ul>
+<li>类型选择器（例如，h1）和伪元素（例如，::before）</li>
+<li>类选择器（class selectors） (例如,.example)，属性选择器（attributes selectors）（例如, [type=”radio”]），伪类（pseudo-classes）（例如, :hover）</li>
+<li>ID选择器（例如, #example）具有更高优先级</li>
+</ul>
+<p>给元素添加的内联样式 (例如, style=”font-weight:bold”) 总会覆盖外部样式表的任何样式 ，因此可看作是具有最高的优先级</p>
+<p>Babel是一个广泛使用的ES6转码器，可以将ES6代码转为ES5代码，从而在现有环境执行。</p>
+<p>es6中的let声明的变量，只在当前代码块有效。这是和var的不同。</p>
+<p>变量提升var输出的是undefined然后let直接抛出错误。</p>
+<p>const 增加了常量</p>
+<h3 id="reacjs"><a href="#reacjs" class="headerlink" title="reacjs"></a>reacjs</h3><blockquote>
+<p>几个概念说一下，jsx是一种格式，就像xml，js等这些，在这个格式中可以把html和js混合写在一起，是javascript的语法的拓展，这个更像js，所以在里面写的一些html需要变化一些，比如html中的标签属性之类，class变成className，使用小驼峰命名法。es6是一种规范，一种标准，是js的标准或者规范，增加了一些新特性。</p>
+</blockquote>
+<p>事件中如果回调函数使用的是箭头函数的话就可以不用绑定。</p>
+<p>jsx只是为React.createElement()方法提供的语法糖。这样在写的时候会方便一些，下面复杂的编译通过babel编译器进行。</p>
+<h3 id="react一些基础常识"><a href="#react一些基础常识" class="headerlink" title="react一些基础常识"></a>react一些基础常识</h3><p>其实我也觉得react会很快，总觉得这种局部刷新的，要完爆其它一切框架，但是实际上却不是这样，官方文档说过react尽量达到跟非react版本相当的性能。</p>
+<p>这里react组件渲染分为初始化渲染和更新渲染（对应相应的生命周期方法）</p>
+<p>首先在初始化渲染的时候回调用根组件下的所有组件的render方法进行渲染，如下图（绿色表示已渲染）</p>
+<p><img src="https://sfault-image.b0.upaiyun.com/407/896/4078962238-585142242e316_articlex" alt=""></p>
+<p>但是当我们要更新某个子组件的时候，如下图的绿色组件（从根组件传递下来应用在绿色组件上的数据发生改变）：</p>
+<p><img src="https://sfault-image.b0.upaiyun.com/168/734/1687340203-5851427977a39_articlex" alt=""></p>
+<p>我们的理想状态只是调用关键路径上组件的render，如下图：</p>
+<p><img src="https://sfault-image.b0.upaiyun.com/254/013/2540130692-585142a91eb77_articlex" alt=""></p>
+<p>但是react默认做法是调用所有组件的render，再对生成的虚拟DOM进行对比，如不变则不进行更新，这样的render和虚拟DOM的对比明显是在浪费，如下图（黄色表示浪费的render和虚拟DOM对比）,这个明显做了很多无用功啊，如果这个树的深度很深，那就会导致性能上巨差。</p>
+<p><img src="https://sfault-image.b0.upaiyun.com/150/116/1501167720-5851433ff1174_articlex" alt=""></p>
+<blockquote>
+<p>拆分组件是有利于复用和组件优化的，生成虚拟DOM并进行比对发生在render()后，而不是render()前</p>
+</blockquote>
+<h4 id="更新阶段的生命周期"><a href="#更新阶段的生命周期" class="headerlink" title="更新阶段的生命周期"></a>更新阶段的生命周期</h4><ul>
+<li>componentWillReceiveProps(object nextProps)：当挂载的组件接收到新的props时被调用。此方法应该被用于比较this.props 和 nextProps以用于使用this.setState()执行状态转换。（组件内部数据有变化，使用state，但是在更新阶段又要在props改变的时候改变state，则在这个生命周期里面）</li>
+<li>shouldComponentUpdate(object nextProps, object nextState)： -boolean 当组件决定任何改变是否要更新到DOM时被调用。作为一个优化实现比较this.props 和 nextProps 、this.state 和 nextState ，如果React应该跳过更新，返回false。</li>
+<li>componentWillUpdate(object nextProps, object nextState)：在更新发生前被立即调用。你不能在此调用this.setState()。</li>
+<li>componentDidUpdate(object prevProps, object prevState)： 在更新发生后被立即调用。（可以在DOM更新完之后，做一些收尾的工作）</li>
+</ul>
+<blockquote>
+<p>React的优化是基于shouldComponentUpdate的，该生命周期默认返回true，所以一旦prop或state有任何变化，都会引起重新render。</p>
+</blockquote>
+<p>所以shouldComponentUpdate就很重要，这里讲一下这个方法，react在每个组件生命周期更新的时候都会调用一个shouldComponentUpdate(nextProps, nextState)函数，它的职责就是返回true或者false，true表示需要更新，false表示不需要，默认返回为true，即便你没有显示的定义shouldComponentUpdate函数。这就不难解释上面发生的资源浪费了（默认都是true所以组件都会更新的）</p>
+<p>为了进一步说明问题，我们再引用一张官网的图来解释，如下图（ SCU表示shouldComponentUpdate，绿色表示返回true(需要更新)，红色表示返回false(不需要更新)；vDOMEq表示虚拟DOM比对，绿色表示一致(不需要更新)，红色表示发生改变(需要更新)）：</p>
+<p><img src="https://sfault-image.b0.upaiyun.com/146/798/1467989449-5851f3865be3b_articlex" alt=""></p>
+<p>根据渲染流程，首先会判断shouldComponentUpdate(SCU)是否需要更新。如果需要更新，则调用组件的render生成新的虚拟DOM（就是根据这个方法来判断是否更新），然后再与旧的虚拟DOM对比(vDOMEq)，如果对比一致就不更新，如果对比不同，则根据最小粒度改变去更新DOM(这也是一个优点，最小粒度更新)；如果SCU不需要更新，则直接保持不变，同时其子元素也保持不变。然后自己需要控制SCU?</p>
+<p>每当组件的props或state改变时，react会重新创建一个虚拟DOM，并拿这个DOM与上一个作对比，如果发现两个虚拟DOM不完全相同，则React就会做reconcile（校正？），把有差异的地方更新到真实的DOM上（这当然是建立在SCU方法返回true的前提下），react中父组件更新默认触发所有子组件更新。</p>
+<ul>
+<li>C1根节点，绿色SCU (true)，表示需要更新，然后vDOMEq红色，表示虚拟DOM不一致，需要更新。</li>
+<li>C2节点，红色SCU (false)，表示不需要更新，所以C4,C5均不再进行检查</li>
+<li>C3节点同C1，需要更新</li>
+<li>C6节点，绿色SCU (true)，表示需要更新，然后vDOMEq红色，表示虚拟DOM不一致，更新DOM。</li>
+<li>C7节点同C2</li>
+<li>C8节点，绿色SCU (true)，表示需要更新，然后vDOMEq绿色，表示虚拟DOM一致，不更新DOM。</li>
+</ul>
+<h4 id="一些带坑的写法"><a href="#一些带坑的写法" class="headerlink" title="一些带坑的写法"></a>一些带坑的写法</h4><ul>
+<li>{…this.props} (不要滥用，请只传递component需要的props，传得太多，或者层次传得太深，都会加重shouldComponentUpdate里面的数据比较负担，因此，请慎用spread attributes（<component {...props}="">）)。</component></li>
+<li>::this.handleChange()。(请将方法的bind一律置于constructor)</li>
+<li>复杂的页面不要在一个组件里面写完。</li>
+<li>请尽量使用const element。</li>
+<li>map里面添加key，并且key不要使用index（可变的）具体可参考<a href="http://levy.work/2016-08-31-debug-react-key-with-performance-tool/" target="_blank" rel="noopener">使用Perf工具研究React Key对渲染的影响</a></li>
+<li>尽量少用setTimeOut或不可控的refs、DOM操作。</li>
+<li>props和state的数据尽可能简单明了，扁平化。</li>
+<li>使用return null而不是CSS的display:none来控制节点的显示隐藏。保证同一时间页面的DOM节点尽可能的少。</li>
+</ul>
+<h4 id="一个react优化的点"><a href="#一个react优化的点" class="headerlink" title="一个react优化的点"></a>一个react优化的点</h4><blockquote>
+<p>react经常会让你给标签加一个key，不然会有警告，这里研究一下这个优化方向。React本身就非常关注性能，其提供的虚拟DOM搭配上Diff算法，实现对DOM操作最小粒度的改变也是非常的高效。然而其组件渲染机制，也决定了在对组件进行更新时还可以进行更细致的优化。</p>
+</blockquote>
+<p>主要包括两个点：</p>
+<ol>
+<li>父组件更新默认触发所有子组件更新</li>
+<li>列表类型的组件默认更新方式非常复杂</li>
+</ol>
+
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/01/17/ReactJs之路/">ReactJs之路</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 xu 的个人博客">xu</a></p>
+        <p><span>发布时间:</span>2018年01月17日 - 22时36分</p>
+        <p><span>最后更新:</span>2018年08月27日 - 19时30分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/01/17/ReactJs之路/" title="ReactJs之路">http://xu1009.github.io/2018/01/17/ReactJs之路/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xu1009.github.io/2018/01/17/ReactJs之路/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2018/01/17/RPC相关/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          RPC相关
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/10/21/Spring持续更新/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring持续更新</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#react-Router"><span class="toc-number">1.</span> <span class="toc-text">react Router</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#state"><span class="toc-number">2.</span> <span class="toc-text">state</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件处理"><span class="toc-number">3.</span> <span class="toc-text">事件处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#条件渲染"><span class="toc-number">4.</span> <span class="toc-text">条件渲染</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#webpack"><span class="toc-number">5.</span> <span class="toc-text">webpack</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#入口"><span class="toc-number">5.1.</span> <span class="toc-text">入口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#出口"><span class="toc-number">5.2.</span> <span class="toc-text">出口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#loader"><span class="toc-number">5.3.</span> <span class="toc-text">loader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mainfest"><span class="toc-number">5.4.</span> <span class="toc-text">mainfest</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#插件"><span class="toc-number">5.5.</span> <span class="toc-text">插件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块热替换（hot-module-replacement）"><span class="toc-number">6.</span> <span class="toc-text">模块热替换（hot module replacement）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#webpack-作用"><span class="toc-number">7.</span> <span class="toc-text">webpack 作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建一个webpack工程的基本步骤"><span class="toc-number">8.</span> <span class="toc-text">创建一个webpack工程的基本步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#一个开发工具"><span class="toc-number">8.1.</span> <span class="toc-text">一个开发工具</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS中的Box-Model"><span class="toc-number">9.</span> <span class="toc-text">CSS中的Box Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jquery的deferred对象"><span class="toc-number">10.</span> <span class="toc-text">Jquery的deferred对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有关CSS样式优先级问题"><span class="toc-number">11.</span> <span class="toc-text">有关CSS样式优先级问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#选择器类型"><span class="toc-number">11.1.</span> <span class="toc-text">选择器类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reacjs"><span class="toc-number">12.</span> <span class="toc-text">reacjs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react一些基础常识"><span class="toc-number">13.</span> <span class="toc-text">react一些基础常识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#更新阶段的生命周期"><span class="toc-number">13.1.</span> <span class="toc-text">更新阶段的生命周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一些带坑的写法"><span class="toc-number">13.2.</span> <span class="toc-text">一些带坑的写法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一个react优化的点"><span class="toc-number">13.3.</span> <span class="toc-text">一个react优化的点</span></a></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'xu1009',
+      repo: 'xu1009.github.io',
+      oauth: {
+        client_id: '6ce4c127cbff7d5540c2',
+        client_secret: '4c1cafc3880ee908111dfca1a6b8a91af4fd07d6',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/01/17/RPC相关/" title="上一篇: RPC相关">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/10/21/Spring持续更新/" title="下一篇: Spring持续更新">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/27/java面试/">'java面试'</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/AI在路上/">AI在路上</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/总结一哈java中一些问题/">总结一哈java中一些问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/Mybatis一些原理/">Mybatis一些原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/RPC相关/">RPC相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/ReactJs之路/">ReactJs之路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/21/Spring持续更新/">Spring持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/25/zookeeper/">zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/java并发常见问题/">java并发常见问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/java并发基础/">java并发基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/head-first-design-pattern/">head first design pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/记录一下大神给推荐的书籍哈/">记录一下大神给推荐的书籍哈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/02/Spring随笔记录/">Spring随笔记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/SpringMVC框架简述/">SpringMVC框架简述</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/Maven实战/">Maven实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/19/Mock与junit/">Mock与junit</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/深入分析JAVA-WEB技术总结/">深入分析JAVA WEB技术总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/JVM基础知识/">JVM基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/02/MYSQL相关基础知识/">MYSQL相关基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/">Nginx+tomcat+redis实现服务器集群和共享session</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/golang学习/">golang学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/常用RPC框架/">常用RPC框架</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/javaWeb基本知识/">javaWeb基本知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/Spring相关内容总结/">Spring相关内容总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/测试一下上传图片/">测试一下上传图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/hexo-githubpages搭建个人博客/">hexo+githubpages搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/20/markdown语法简介/">markdown语法简介</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

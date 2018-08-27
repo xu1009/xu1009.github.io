@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Nginx+tomcat+redis实现服务器集群和共享session | BlogXu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="有关Nginx Nginx是一个代理服务器，主要功能是实现负载均衡和虚拟主机。 负载均衡就是使用Nginx作为代理服务器，用户请求首先是达到Nginx服务器，Nginx再根据实际情况将请求分流，分发到不同后端，这里就是后端实现了服务器集群， 下图就是负载均衡原理 有关Nginx的详细介绍可以参考该博客nginx详细介绍及配置有关redis redis是一个数据库，一个键值型数据库 redis将数据">
+<meta name="keywords" content="学习，Nginx，redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx+tomcat+redis实现服务器集群和共享session">
+<meta property="og:url" content="http://xu1009.github.io/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/index.html">
+<meta property="og:site_name" content="BlogXu">
+<meta property="og:description" content="有关Nginx Nginx是一个代理服务器，主要功能是实现负载均衡和虚拟主机。 负载均衡就是使用Nginx作为代理服务器，用户请求首先是达到Nginx服务器，Nginx再根据实际情况将请求分流，分发到不同后端，这里就是后端实现了服务器集群， 下图就是负载均衡原理 有关Nginx的详细介绍可以参考该博客nginx详细介绍及配置有关redis redis是一个数据库，一个键值型数据库 redis将数据">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://img.blog.csdn.net/20160612171735599?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://img.blog.csdn.net/20160725171038125">
+<meta property="og:updated_time" content="2018-08-27T11:30:41.303Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx+tomcat+redis实现服务器集群和共享session">
+<meta name="twitter:description" content="有关Nginx Nginx是一个代理服务器，主要功能是实现负载均衡和虚拟主机。 负载均衡就是使用Nginx作为代理服务器，用户请求首先是达到Nginx服务器，Nginx再根据实际情况将请求分流，分发到不同后端，这里就是后端实现了服务器集群， 下图就是负载均衡原理 有关Nginx的详细介绍可以参考该博客nginx详细介绍及配置有关redis redis是一个数据库，一个键值型数据库 redis将数据">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160612171735599?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  
+    <link rel="alternative" href="/atom.xml" title="BlogXu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/xu.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/xu.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">xu</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/writesomething">随笔</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/xu1009" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/Keras" title="weibo">weibo</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Mock-junit/" style="font-size: 10px;">Mock junit</a> <a href="/tags/RPC-序列化/" style="font-size: 10px;">RPC 序列化</a> <a href="/tags/design-pattern/" style="font-size: 10px;">design pattern</a> <a href="/tags/dp-gluon/" style="font-size: 10px;">dp gluon</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/java-NIO-反射/" style="font-size: 10px;">java NIO 反射</a> <a href="/tags/java-web/" style="font-size: 10px;">java web</a> <a href="/tags/java-基础-面试/" style="font-size: 10px;">java 基础 面试</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mybatis-orm/" style="font-size: 10px;">mybatis orm</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/spring/" style="font-size: 20px;">spring</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/前端-react/" style="font-size: 10px;">前端 react</a> <a href="/tags/图片/" style="font-size: 10px;">图片</a> <a href="/tags/学习/" style="font-size: 15px;">学习</a> <a href="/tags/学习，Nginx，redis/" style="font-size: 10px;">学习，Nginx，redis</a> <a href="/tags/并发-Java/" style="font-size: 15px;">并发 Java</a> <a href="/tags/总结/" style="font-size: 15px;">总结</a> <a href="/tags/程序猿的书/" style="font-size: 10px;">程序猿的书</a>
+                    </div>
+                </section>
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">爱代码，爱生活！</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/xu.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/writesomething">随笔</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/xu1009" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/Keras" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-Nginx-tomcat-redis实现服务器集群和共享session" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/" class="article-date">
+      <time datetime="2017-06-27T07:37:22.000Z" itemprop="datePublished">2017-06-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Nginx+tomcat+redis实现服务器集群和共享session
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习，Nginx，redis/">学习，Nginx，redis</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="有关Nginx"><a href="#有关Nginx" class="headerlink" title="有关Nginx"></a>有关Nginx</h2><ul>
+<li>Nginx是一个代理服务器，主要功能是实现负载均衡和虚拟主机。</li>
+<li>负载均衡就是使用Nginx作为代理服务器，用户请求首先是达到Nginx服务器，Nginx再根据实际情况将请求分流，分发到不同后端，这里就是后端实现了服务器集群，</li>
+<li>下图就是负载均衡原理<br><img src="http://img.blog.csdn.net/20160612171735599?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="负载均衡原理"></li>
+<li>有关Nginx的详细介绍可以参考该博客<a href="http://blog.csdn.net/hiyun9/article/details/51602428" target="_blank" rel="noopener">nginx详细介绍及配置</a><h2 id="有关redis"><a href="#有关redis" class="headerlink" title="有关redis"></a>有关redis</h2></li>
+<li>redis是一个数据库，一个键值型数据库</li>
+<li>redis将数据存储到内存，持久化到磁盘，所以读写速度很快</li>
+<li>redis可以做关系型数据库的缓存，存储一些数据量比较小的数据<h2 id="Nginx负载均衡中的session问题"><a href="#Nginx负载均衡中的session问题" class="headerlink" title="Nginx负载均衡中的session问题"></a>Nginx负载均衡中的session问题</h2></li>
+<li>负载均衡会将每次请求分发到不同的服务器</li>
+<li>session保存在服务器端，sessionid在本地，这就会导致在这个服务器生成的session下次请求另一个服务器时导致无法识别的问题。</li>
+<li>这就需要服务器集群之间共享session</li>
+<li>最简单的问题就是登陆验证的时候，验证码保存到session中，验证码的生成是一个服务器，最后登陆验证的时候是另一个服务器，这就会导致验证失败。<h4 id="几种解决session共享的方法"><a href="#几种解决session共享的方法" class="headerlink" title="几种解决session共享的方法"></a>几种解决session共享的方法</h4></li>
+</ul>
+<ol>
+<li><p>配置Nginx中neinx.conf的server选项，如下加入ip_hash,这样是对于同一个ip只会分发到一个服务器，这样其实失去了负载均衡的意思，而且Nginx获取的必须是用户真实的ip地址，也就是必须是最前端的服务器，配置如下</p>
+<figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#user  nobody;</span></span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line"><span class="comment">#error_log  logs/error.log;</span></span><br><span class="line"><span class="comment">#error_log  logs/error.log  notice;</span></span><br><span class="line"><span class="comment">#error_log  logs/error.log  info;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#pid        logs/nginx.pid;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    <span class="attribute">worker_connections  1024;</span></span><br><span class="line"><span class="attribute">&#125;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">http &#123;</span></span><br><span class="line"><span class="attribute">    include       mime.types;</span></span><br><span class="line"><span class="attribute">    default_type  application/octet-stream;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</span></span><br><span class="line"><span class="attribute">    #                  '$status $body_bytes_sent "$http_referer" '</span></span><br><span class="line"><span class="attribute">    #                  '"$http_user_agent" "$http_x_forwarded_for"';</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">    #access_log  logs/access.log  main;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">    sendfile        on;</span></span><br><span class="line"><span class="attribute">    #tcp_nopush     on;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">    #keepalive_timeout  0;</span></span><br><span class="line"><span class="attribute">    keepalive_timeout  65;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">    #gzip  on;</span></span><br><span class="line"><span class="attribute">upstream netitcast.com&#123;</span></span><br><span class="line"><span class="attribute">   server  127.0.0.1</span>:18080 weight=1;</span><br><span class="line">   <span class="attribute">server  127.0.0.1</span>:28080 weight=2;</span><br><span class="line">   <span class="attribute">ip_hash; #这里配置</span></span><br><span class="line"><span class="attribute">&#125;</span></span><br><span class="line"><span class="attribute">    server &#123;</span></span><br><span class="line"><span class="attribute">        listen       80;</span></span><br><span class="line"><span class="attribute">        server_name  localhost;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">        #charset koi8-r;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">        #access_log  logs/host.access.log  main;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">        #location / &#123;</span></span><br><span class="line"><span class="attribute">        #    root   html;</span></span><br><span class="line"><span class="attribute">        #    index  index.html index.htm;</span></span><br><span class="line"><span class="attribute">        #&#125;</span></span><br><span class="line"><span class="attribute">		location / &#123;</span></span><br><span class="line"><span class="attribute">			proxy_pass  http</span>://netitcast<span class="variable">.com</span>;</span><br><span class="line">			<span class="attribute">proxy_redirect  default;</span></span><br><span class="line"><span class="attribute">		&#125;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">        #error_page  404              /404.html;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">        # redirect server error pages to the static page /50x.html</span></span><br><span class="line"><span class="attribute">        #</span></span><br><span class="line"><span class="attribute">        error_page   500 502 503 504  /50x.html;</span></span><br><span class="line"><span class="attribute">        location = /50x.html &#123;</span></span><br><span class="line"><span class="attribute">            root   html;</span></span><br><span class="line"><span class="attribute">        &#125;</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">        # proxy the PHP scripts to Apache listening on 127.0.0.1</span>:80</span><br><span class="line">        #</span><br><span class="line">        #location ~ \<span class="variable">.php</span>$ &#123;</span><br><span class="line">        #    proxy_pass   http://127.0.0.1;</span><br><span class="line">        <span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment">#location ~ \.php$ &#123;</span></span><br><span class="line">        <span class="comment">#    root           html;</span></span><br><span class="line">        <span class="comment">#    fastcgi_pass   127.0.0.1:9000;</span></span><br><span class="line">        <span class="comment">#    fastcgi_index  index.php;</span></span><br><span class="line">        <span class="comment">#    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span></span><br><span class="line">        <span class="comment">#    include        fastcgi_params;</span></span><br><span class="line">        <span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># deny access to .htaccess files, if Apache's document root</span></span><br><span class="line">        <span class="comment"># concurs with nginx's one</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment">#location ~ /\.ht &#123;</span></span><br><span class="line">        <span class="comment">#    deny  all;</span></span><br><span class="line">        <span class="comment">#&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># another virtual host using mix of IP-, name-, and port-based configuration</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#server &#123;</span></span><br><span class="line">    <span class="comment">#    listen       8000;</span></span><br><span class="line">    <span class="comment">#    listen       somename:8080;</span></span><br><span class="line">    <span class="comment">#    server_name  somename  alias  another.alias;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#    location / &#123;</span></span><br><span class="line">    <span class="comment">#        root   html;</span></span><br><span class="line">    <span class="comment">#        index  index.html index.htm;</span></span><br><span class="line">    <span class="comment">#    &#125;</span></span><br><span class="line">    <span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># HTTPS server</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#server &#123;</span></span><br><span class="line">    <span class="comment">#    listen       443 ssl;</span></span><br><span class="line">    <span class="comment">#    server_name  localhost;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#    ssl_certificate      cert.pem;</span></span><br><span class="line">    <span class="comment">#    ssl_certificate_key  cert.key;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#    ssl_session_cache    shared:SSL:1m;</span></span><br><span class="line">    <span class="comment">#    ssl_session_timeout  5m;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#    ssl_ciphers  HIGH:!aNULL:!MD5;</span></span><br><span class="line">    <span class="comment">#    ssl_prefer_server_ciphers  on;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#    location / &#123;</span></span><br><span class="line">    <span class="comment">#        root   html;</span></span><br><span class="line">    <span class="comment">#        index  index.html index.htm;</span></span><br><span class="line">    <span class="comment">#    &#125;</span></span><br><span class="line">    <span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第二个就是使用redis存储session了</p>
+<blockquote>
+<p> 这里使用的是tomcat-redis-session-manager框架，该框架是基于tomcat服务器的，只需要在tomcat中加入tomcat-redis-session-1.0-SNAPSHOT.jar、jedis-2.7.2.jar、commons-pool2-2.0.jar三个包<br> 三个包的下载地址<a href="http://download.csdn.net/detail/u010870518/9585716" target="_blank" rel="noopener">点击下载</a>网上很多包不能用，这里是可以用的，不过是对于tomcat7</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><p>修改Tomcat的conf/context.xml，加入redis的相关连接信息，配置如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Valve</span> <span class="attr">className</span>=<span class="string">"com.orangefunction.tomcat.redissessions.RedisSessionHandlerValve"</span> /&gt;</span>  </span><br><span class="line"> <span class="tag">&lt;<span class="name">Manager</span> <span class="attr">className</span>=<span class="string">"com.orangefunction.tomcat.redissessions.RedisSessionManager"</span>  </span></span><br><span class="line"><span class="tag">  <span class="attr">host</span>=<span class="string">"localhost"</span>  </span></span><br><span class="line"><span class="tag">  <span class="attr">port</span>=<span class="string">"6379"</span>  </span></span><br><span class="line"><span class="tag">  <span class="attr">database</span>=<span class="string">"0"</span>  </span></span><br><span class="line"><span class="tag">  <span class="attr">maxInactiveInterval</span>=<span class="string">"60"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这样就可以在新建session的时候将session存储到redis然后读取的时候从redis获取，redis是服务器集群的共享，<br>下图是原理<br><img src="http://img.blog.csdn.net/20160725171038125" alt="redis共享session的原理"></p>
+</li>
+<li>在默认的情况下Tomcat的Session管理，如果不进行设置的话是由Tomcat自带的tandardManager类进行控制的，我们可以根据这个类自定义一个Manager，主要重写的就是org.apache.catalina.session.ManagerBase里边的具体写的操作，<br>这也是tomcat-redis-session-manager的基本原理，将tomcat的session存储位置指向了Redis</li>
+<li>RedisSessionManager继承了org.apache.catalina.session.ManagerBase并重写了add、findSession、createEmptySession、remove等方法，并将对session的增删改查操作指向了对Redis数据存储的操作</li>
+</ul>
+
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/">Nginx+tomcat+redis实现服务器集群和共享session</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 xu 的个人博客">xu</a></p>
+        <p><span>发布时间:</span>2017年06月27日 - 15时37分</p>
+        <p><span>最后更新:</span>2018年08月27日 - 19时30分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/" title="Nginx+tomcat+redis实现服务器集群和共享session">http://xu1009.github.io/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xu1009.github.io/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2017/07/02/MYSQL相关基础知识/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          MYSQL相关基础知识
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/23/golang学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">golang学习</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#有关Nginx"><span class="toc-number">1.</span> <span class="toc-text">有关Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有关redis"><span class="toc-number">2.</span> <span class="toc-text">有关redis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx负载均衡中的session问题"><span class="toc-number">3.</span> <span class="toc-text">Nginx负载均衡中的session问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#几种解决session共享的方法"><span class="toc-number">3.0.1.</span> <span class="toc-text">几种解决session共享的方法</span></a></li></ol></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'xu1009',
+      repo: 'xu1009.github.io',
+      oauth: {
+        client_id: '6ce4c127cbff7d5540c2',
+        client_secret: '4c1cafc3880ee908111dfca1a6b8a91af4fd07d6',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/07/02/MYSQL相关基础知识/" title="上一篇: MYSQL相关基础知识">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/06/23/golang学习/" title="下一篇: golang学习">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/27/java面试/">'java面试'</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/AI在路上/">AI在路上</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/总结一哈java中一些问题/">总结一哈java中一些问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/Mybatis一些原理/">Mybatis一些原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/RPC相关/">RPC相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/ReactJs之路/">ReactJs之路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/21/Spring持续更新/">Spring持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/25/zookeeper/">zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/java并发常见问题/">java并发常见问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/java并发基础/">java并发基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/head-first-design-pattern/">head first design pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/记录一下大神给推荐的书籍哈/">记录一下大神给推荐的书籍哈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/02/Spring随笔记录/">Spring随笔记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/SpringMVC框架简述/">SpringMVC框架简述</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/Maven实战/">Maven实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/19/Mock与junit/">Mock与junit</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/深入分析JAVA-WEB技术总结/">深入分析JAVA WEB技术总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/JVM基础知识/">JVM基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/02/MYSQL相关基础知识/">MYSQL相关基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/">Nginx+tomcat+redis实现服务器集群和共享session</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/golang学习/">golang学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/常用RPC框架/">常用RPC框架</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/javaWeb基本知识/">javaWeb基本知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/Spring相关内容总结/">Spring相关内容总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/测试一下上传图片/">测试一下上传图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/hexo-githubpages搭建个人博客/">hexo+githubpages搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/20/markdown语法简介/">markdown语法简介</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

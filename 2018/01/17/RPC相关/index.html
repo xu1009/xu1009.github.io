@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RPC相关 | BlogXu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="序列化就是将对象转化为二进制流，不同序列化框架会将对象转成不同二进制流。在RPC调用中，不可避免的要接触到数据的序列化和解序列化。Java对象在一个网络节点中序列化好，放到网络中传输，到另一个网络节点时必须能够反序列化，对象得到正确的解析，这是RPC里的最基本问题。  Java序列化机制 Java序列化的对象需要实现serialabel接口，没有特殊指定的话，就是用默认的序列化方式，该序列化方式">
+<meta name="keywords" content="RPC 序列化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RPC相关">
+<meta property="og:url" content="http://xu1009.github.io/2018/01/17/RPC相关/index.html">
+<meta property="og:site_name" content="BlogXu">
+<meta property="og:description" content="序列化就是将对象转化为二进制流，不同序列化框架会将对象转成不同二进制流。在RPC调用中，不可避免的要接触到数据的序列化和解序列化。Java对象在一个网络节点中序列化好，放到网络中传输，到另一个网络节点时必须能够反序列化，对象得到正确的解析，这是RPC里的最基本问题。  Java序列化机制 Java序列化的对象需要实现serialabel接口，没有特殊指定的话，就是用默认的序列化方式，该序列化方式">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://img.blog.csdn.net/20140930104345373?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRlcl9aQw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20140930114738752?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRlcl9aQw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-27T11:30:41.306Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RPC相关">
+<meta name="twitter:description" content="序列化就是将对象转化为二进制流，不同序列化框架会将对象转成不同二进制流。在RPC调用中，不可避免的要接触到数据的序列化和解序列化。Java对象在一个网络节点中序列化好，放到网络中传输，到另一个网络节点时必须能够反序列化，对象得到正确的解析，这是RPC里的最基本问题。  Java序列化机制 Java序列化的对象需要实现serialabel接口，没有特殊指定的话，就是用默认的序列化方式，该序列化方式">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20140930104345373?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRlcl9aQw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternative" href="/atom.xml" title="BlogXu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/xu.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/xu.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">xu</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/writesomething">随笔</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/xu1009" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/Keras" title="weibo">weibo</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Mock-junit/" style="font-size: 10px;">Mock junit</a> <a href="/tags/RPC-序列化/" style="font-size: 10px;">RPC 序列化</a> <a href="/tags/design-pattern/" style="font-size: 10px;">design pattern</a> <a href="/tags/dp-gluon/" style="font-size: 10px;">dp gluon</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/java-NIO-反射/" style="font-size: 10px;">java NIO 反射</a> <a href="/tags/java-web/" style="font-size: 10px;">java web</a> <a href="/tags/java-基础-面试/" style="font-size: 10px;">java 基础 面试</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mybatis-orm/" style="font-size: 10px;">mybatis orm</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/spring/" style="font-size: 20px;">spring</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/前端-react/" style="font-size: 10px;">前端 react</a> <a href="/tags/图片/" style="font-size: 10px;">图片</a> <a href="/tags/学习/" style="font-size: 15px;">学习</a> <a href="/tags/学习，Nginx，redis/" style="font-size: 10px;">学习，Nginx，redis</a> <a href="/tags/并发-Java/" style="font-size: 15px;">并发 Java</a> <a href="/tags/总结/" style="font-size: 15px;">总结</a> <a href="/tags/程序猿的书/" style="font-size: 10px;">程序猿的书</a>
+                    </div>
+                </section>
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">爱代码，爱生活！</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/xu.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/writesomething">随笔</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/xu1009" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/Keras" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-RPC相关" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/01/17/RPC相关/" class="article-date">
+      <time datetime="2018-01-17T14:42:15.000Z" itemprop="datePublished">2018-01-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RPC相关
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RPC-序列化/">RPC 序列化</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<p>序列化就是将对象转化为二进制流，不同序列化框架会将对象转成不同二进制流。在RPC调用中，不可避免的要接触到数据的序列化和解序列化。Java对象在一个网络节点中序列化好，放到网络中传输，到另一个网络节点时必须能够反序列化，对象得到正确的解析，这是RPC里的最基本问题。</p>
+</blockquote>
+<h3 id="Java序列化机制"><a href="#Java序列化机制" class="headerlink" title="Java序列化机制"></a>Java序列化机制</h3><ul>
+<li>Java序列化的对象需要实现serialabel接口，没有特殊指定的话，就是用默认的序列化方式，该序列化方式会将对象本身，及对象的引用全部序列化，开销比较大，（深拷贝的应用）依赖于jvm，可以实现不同平台之间的序列化和反序列化。</li>
+<li>Java序列化就是将对象转换成一堆byte，就是二进制的序列化。<br>Java序列化后包含的信息是：</li>
+</ul>
+<ol>
+<li>所有非静态且未声明未transient的成员；</li>
+<li>类的固有信息，如字段名，方法名，版本等；</li>
+<li>父类的序列化信息；</li>
+<li>对象成员变量的序列化信息。</li>
+</ol>
+<h3 id="hessian序列化"><a href="#hessian序列化" class="headerlink" title="hessian序列化"></a>hessian序列化</h3><ul>
+<li>hessian主要用于java序列化。它的实现机制是着重于数据，附带简单的类型信息的方法</li>
+<li>对于简单的数据类型。就像Integer a = 1，hessian会序列化成I 1这样的流，I表示int or Integer，1就是数据内容</li>
+<li>对于复杂对象，通过Java的反射机制，hessian把对象所有的属性当成一个Map来序列化，产生类似M className propertyName1 I 1 propertyName S stringValue</li>
+<li>对于引用对象，在序列化过程中，如果一个对象之前出现过，hessian会直接插入一个R index这样的块来表示一个引用位置，从而省去再次序列化和反序列化的时间<h3 id="thrift序列化"><a href="#thrift序列化" class="headerlink" title="thrift序列化"></a>thrift序列化</h3>Thrift是Facebook开源提供的一个高性能，轻量级RPC服务框架，其产生正是为了满足当前大数据量、分布式、跨语言、跨平台数据通讯的需求。 但是，Thrift并不仅仅是序列化协议，而是一个RPC框架。相对于JSON和XML而言，Thrift在空间开销和解析性能上有了比较大的提升，对于对性能要求比较高的分布式系统，它是一个优秀的RPC解决方案；但是由于Thrift的序列化被嵌入到Thrift框架里面，Thrift框架本身并没有透出序列化和反序列化接口，这导致其很难和其他传输层协议共同使用（例如HTTP）。<h3 id="protobuf序列化"><a href="#protobuf序列化" class="headerlink" title="protobuf序列化"></a>protobuf序列化</h3>序列化数据非常简洁，紧凑，析速度非常快，提供了非常友好的动态库。使用简介，反序列化只需要一行代码。但是在JavaBean和proto之间的转换较麻烦。<h3 id="avro序列化"><a href="#avro序列化" class="headerlink" title="avro序列化"></a>avro序列化</h3></li>
+<li>Avro的产生解决了JSON的冗长和没有IDL的问题。 Avro提供两种序列化格式：JSON格式或者Binary格式。Binary格式在空间开销和解析性能方面可以和Protobuf媲美，JSON格式方便测试阶段的调试。</li>
+<li>动态类型：Avro并不需要生成代码，模式和数据存放在一起，而模式使得整个数据的处理过程并不生成代码、静态数据类型等等。这方便了数据处理系统和语言的构造。</li>
+<li>未标记的数据：由于读取数据的时候模式是已知的，那么需要和数据一起编码的类型信息就很少了，这样序列化的规模也就小了。</li>
+<li>不需要用户指定字段号：即使模式改变，处理数据时新旧模式都是已知的，所以通过使用字段名称可以解决差异问题。</li>
+</ul>
+<h3 id="thrift"><a href="#thrift" class="headerlink" title="thrift"></a>thrift</h3><p>thrift是目前使用比较多的rpc框架，使用IDL中间语言编写相关，然后再生成相应语言，因此可以实现跨语言的框架。</p>
+<ul>
+<li>基于二进制的高性能编解码</li>
+<li>基于NIO的底层通信</li>
+<li>相对简单的服务调用模型</li>
+<li>使用IDL支持跨平台<br>thrif核心组件有：</li>
+<li>TProtocol 协议和编解码组件</li>
+<li>TTransport 传输组件</li>
+<li>TProcessor 服务调用组件</li>
+<li>TServer，Client 服务器和客户端组件</li>
+</ul>
+<p>RPC中客户端和服务器药传输的数据有：<br>客户端</p>
+<ul>
+<li>方法名称，包括类名称和方法名称</li>
+<li>方法参数，包括参数类型和参数值</li>
+<li>附加数据，包括附件，超时信息，自定义的控制信息。<br>服务器</li>
+<li>调用的返回码</li>
+<li>返回值</li>
+<li>异常信息<br>发送消息的组合方式在IDL中都定义好了，服务器和客户端是一一对应的，所以不会存在解析问题。</li>
+</ul>
+<ol>
+<li><p>writeMessgeBegin方法写了消息头，包括4字节的版本号和类型信息，字符串类型的方法名，４字节的序列号seqId</p>
+</li>
+<li><p>writeFieldBegin，写了１个字节的字段数据类型，和2个字节字段的顺序号</p>
+</li>
+</ol>
+<p>序列化消息头加消息体的格式，先写消息头再写消息体，消息头包括4字节的版本号和调用方法的类型，字符串类型的方法名，4字节的序列号，消息体就是写方法的参数，接下来就是写字段，传入的具体参数类型及数值。方法参数的顺序服务器和客户端保持一致，客户端写的顺序和服务器端读的顺序一致，也就是按照方法入口参数的顺序来写的。</p>
+<p>thrift中IDL支持的数据类型<br>bool 布尔型<br>byte ８位整数<br>i16  16位整数<br>i32  32位整数<br>i64  64位整数<br>double 双精度浮点数<br>string 字符串<br>binary 字节数组<br>list<i16> List集合，必须指明泛型<br>map&lt;string, string&gt; Map类型，必须指明泛型<br>set<i32> Set集合，必须指明泛型 </i32></i16></p>
+<p>IDL生成的类主要有5个部分</p>
+<ul>
+<li>接口类型，服务端使用它作为顶层接口，编写接口实现，客户端用它作为生成代理的服务接口。</li>
+<li>客户端类型，一个同步客户端，一个异步客户端。</li>
+<li>processor，用来支持方法调用，服务的实现类都要使用processor注册。</li>
+<li>方法参数封装类。</li>
+<li>方法返回值封装类。</li>
+</ul>
+<ol>
+<li><p>TProcessor就定义了一个顶层的调用方法process，参数是输入流和输出流</p>
+</li>
+<li><p>抽象类TBaseProcessor提供了TProcessor的process的默认实现，先读消息头，拿到要调用的方法名，然后从维护的一个Map中取ProcessFunction对象。ProcessFunction对象是实际方法的抽象，调用它的process方法，实际是调用了实际的方法。</p>
+</li>
+<li><p>Processor类是自动生成了，它依赖Iface接口，负责把实际的方法实现和方法的key关联起来，放到Map中维护<br>核心类：</p>
+</li>
+<li>自动生成的Iface接口，是远程方法的顶层接口</li>
+<li><p>自动生成的Processor类及相关父类，包括TProcessor接口，TBaseProcess抽象类</p>
+</li>
+<li><p>ProcessFunction抽象类，抽象了一个具体的方法调用，包含了方法名信息，调用方法的抽象过程等</p>
+</li>
+<li><p>TNonblcokingServer，是NIO服务器的默认实现，通过Args参数来配置Processor等信息</p>
+</li>
+<li>FrameBuffer类，服务器NIO的缓冲区对象，这个对象在服务器端收到全包并解码后，会调用Processor去完成实际的方法调用</li>
+<li>服务器端的方法的具体实现类，实现Iface接口</li>
+</ol>
+<p>TProcessor 是一个接口，只定义了一个方法，process，TBaseProcessor实现了该接口，首先读取消息头，拿到要调用的方法名，然后根据方法名从Map中拿出一个processFunction对象，该对象是具体方法的抽象，调用它的process方法就是调用了该方法，framebuffer用于NIO服务器保存中间态，<br><img src="http://img.blog.csdn.net/20140930104345373?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRlcl9aQw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<h3 id="frameBuffer"><a href="#frameBuffer" class="headerlink" title="frameBuffer"></a>frameBuffer</h3><p>这个是NIO的服务端的核心组件，一方面是缓冲区，另一方面承担了RPC方法调用。framebuffer提供了invoke方法，当读满包时，就会通过他管理的processor来完成实际方法的调用。<br><img src="http://img.blog.csdn.net/20140930114738752?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRlcl9aQw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br>framebuffer 写消息体responseReady()</p>
+<ol>
+<li>创建ByteBuffer</li>
+<li>修改状态到AWAITING_REGISTER_WRITE</li>
+<li>调用requestSelecinterestChange()注册change的写事件。</li>
+<li>Selector会根据状态调用FrameBuffer的write方法</li>
+</ol>
+<h3 id="Transport传输层分析"><a href="#Transport传输层分析" class="headerlink" title="Transport传输层分析"></a>Transport传输层分析</h3><p>TIOStreamTransport和TSocket是阻塞同步IO,TSocket封装了Socket接口。</p>
+<p>TNonblockingTransport，TNonblockingSocket对应非阻塞IO。</p>
+<p>thrift协议和具体的传输对象绑定的。使用具体的transport来读写数据。thrift使用NIO服务器读取数据，每次先读取消息头，消息头是封装了消息的长度，然后再读取消息体，所以在客户端发送消息时，消息的封装也使用了相同的方式，这里都是使用TframedTransport包装流来传输数据</p>
+<h3 id="TServer服务器分析"><a href="#TServer服务器分析" class="headerlink" title="TServer服务器分析"></a>TServer服务器分析</h3><p>Thrift使用Tserver作为服务器的抽象，使用TServerTransport作为服务器的acceptor抽象，监听端口，创建客户端socket连接，TServerTransport分为两种，阻塞和非阻塞。</p>
+<ol>
+<li>TNonblockingServerTransport和TNonblockingServerSocket作为非阻塞IO的Acceptor,封装了ServerSocketChannel</li>
+<li>TServerSocket作为阻塞同步IO的Acceptor，封装了ServerSocket</li>
+</ol>
+<p>TProtocol序列化</p>
+<ol>
+<li><p>write/read Message，读写消息头，消息头包含了方法名，序列号等信息</p>
+</li>
+<li><p>write/read Struct，将RPC方法的参数/返回值封装成结构体，读写结构体即表示要读写RPC方法参数了</p>
+</li>
+<li><p>write/read Field，每一个参数都被抽象成Field，Field主要包含了字段的索引信息，类型信息等</p>
+</li>
+<li><p>write/read Type，即读写各种具体的数据<br>来一段服务器和客户端的代码感受一下，下面是TNonBlockingServer</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yangyang.thrift.tnonblockingserver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yangyang.thrift.api.HelloService;</span><br><span class="line"><span class="keyword">import</span> com.yangyang.thrift.service.HelloServiceImpl;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.TException;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.TProcessor;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.protocol.TCompactProtocol;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.server.TNonblockingServer;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.transport.TFramedTransport;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.transport.TNonblockingServerSocket;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * **</span></span><br><span class="line"><span class="comment"> * 注册服务端</span></span><br><span class="line"><span class="comment"> *  使用非阻塞式IO，服务端和客户端需要指定 TFramedTransport 数据传输的方式。 TNonblockingServer</span></span><br><span class="line"><span class="comment"> * Created by chenshunyang on 2016/10/31.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloTNonblockingServer</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 注册端口</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SERVER_PORT = <span class="number">8080</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> TException</span>&#123;</span><br><span class="line">        <span class="comment">//处理器</span></span><br><span class="line">        TProcessor processor = <span class="keyword">new</span> HelloService.Processor&lt;HelloService.Iface&gt;(<span class="keyword">new</span> HelloServiceImpl());</span><br><span class="line">        <span class="comment">// 传输通道 - 非阻塞方式</span></span><br><span class="line">        TNonblockingServerSocket serverTransport = <span class="keyword">new</span> TNonblockingServerSocket(SERVER_PORT);</span><br><span class="line">        <span class="comment">//异步IO，需要使用TFramedTransport，它将分块缓存读取。</span></span><br><span class="line">        TNonblockingServer.Args tArgs = <span class="keyword">new</span> TNonblockingServer.Args(serverTransport);</span><br><span class="line">        tArgs.processor(processor);</span><br><span class="line">        <span class="comment">// 使用非阻塞式IO，服务端和客户端需要指定TFramedTransport数据传输的方式</span></span><br><span class="line">        tArgs.transportFactory(<span class="keyword">new</span> TFramedTransport.Factory());</span><br><span class="line">        <span class="comment">//使用高密度二进制协议</span></span><br><span class="line">        tArgs.protocolFactory(<span class="keyword">new</span> TCompactProtocol.Factory());</span><br><span class="line"></span><br><span class="line">        TNonblockingServer server = <span class="keyword">new</span> TNonblockingServer(tArgs);</span><br><span class="line">        System.out.println(<span class="string">"HelloTNonblockingServer start...."</span>);</span><br><span class="line">        server.serve();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yangyang.thrift.tnonblockingserver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yangyang.thrift.api.HelloService;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.TException;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.protocol.TCompactProtocol;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.protocol.TProtocol;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.transport.TFramedTransport;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.transport.TSocket;</span><br><span class="line"><span class="keyword">import</span> org.apache.thrift.transport.TTransport;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 客户端调用HelloTNonblockingServer,HelloTHsHaServer</span></span><br><span class="line"><span class="comment"> * 非阻塞</span></span><br><span class="line"><span class="comment"> * Created by chenshunyang on 2016/10/31.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloTNonblockingClient</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String SERVER_IP = <span class="string">"127.0.0.1"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SERVER_PORT = <span class="number">8080</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TIMEOUT = <span class="number">30000</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> TException</span>&#123;</span><br><span class="line">        <span class="comment">//设置传输通道，对于非阻塞服务，需要使用TFramedTransport，它将数据分块发送</span></span><br><span class="line">        TTransport transport = <span class="keyword">new</span> TFramedTransport(<span class="keyword">new</span> TSocket(SERVER_IP,SERVER_PORT,TIMEOUT));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 协议要和服务端HelloTNonblockingServer一致,使用高密度二进制协议</span></span><br><span class="line">        TProtocol protocol = <span class="keyword">new</span> TCompactProtocol(transport);</span><br><span class="line"></span><br><span class="line">        HelloService.Client client = <span class="keyword">new</span> HelloService.Client(protocol);</span><br><span class="line">        transport.open();</span><br><span class="line">        String result = client.hello(<span class="string">"jack"</span>);</span><br><span class="line">        System.out.println(<span class="string">"result : "</span> + result);</span><br><span class="line">        <span class="comment">//关闭资源</span></span><br><span class="line">        transport.close();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/01/17/RPC相关/">RPC相关</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 xu 的个人博客">xu</a></p>
+        <p><span>发布时间:</span>2018年01月17日 - 22时42分</p>
+        <p><span>最后更新:</span>2018年08月27日 - 19时30分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/01/17/RPC相关/" title="RPC相关">http://xu1009.github.io/2018/01/17/RPC相关/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xu1009.github.io/2018/01/17/RPC相关/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2018/01/17/Mybatis一些原理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Mybatis一些原理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/17/ReactJs之路/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ReactJs之路</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java序列化机制"><span class="toc-number">1.</span> <span class="toc-text">Java序列化机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hessian序列化"><span class="toc-number">2.</span> <span class="toc-text">hessian序列化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#thrift序列化"><span class="toc-number">3.</span> <span class="toc-text">thrift序列化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#protobuf序列化"><span class="toc-number">4.</span> <span class="toc-text">protobuf序列化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#avro序列化"><span class="toc-number">5.</span> <span class="toc-text">avro序列化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#thrift"><span class="toc-number">6.</span> <span class="toc-text">thrift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frameBuffer"><span class="toc-number">7.</span> <span class="toc-text">frameBuffer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transport传输层分析"><span class="toc-number">8.</span> <span class="toc-text">Transport传输层分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TServer服务器分析"><span class="toc-number">9.</span> <span class="toc-text">TServer服务器分析</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'xu1009',
+      repo: 'xu1009.github.io',
+      oauth: {
+        client_id: '6ce4c127cbff7d5540c2',
+        client_secret: '4c1cafc3880ee908111dfca1a6b8a91af4fd07d6',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/01/17/Mybatis一些原理/" title="上一篇: Mybatis一些原理">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2018/01/17/ReactJs之路/" title="下一篇: ReactJs之路">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/27/java面试/">'java面试'</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/AI在路上/">AI在路上</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/总结一哈java中一些问题/">总结一哈java中一些问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/Mybatis一些原理/">Mybatis一些原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/RPC相关/">RPC相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/ReactJs之路/">ReactJs之路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/21/Spring持续更新/">Spring持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/25/zookeeper/">zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/java并发常见问题/">java并发常见问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/java并发基础/">java并发基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/head-first-design-pattern/">head first design pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/记录一下大神给推荐的书籍哈/">记录一下大神给推荐的书籍哈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/02/Spring随笔记录/">Spring随笔记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/SpringMVC框架简述/">SpringMVC框架简述</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/Maven实战/">Maven实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/19/Mock与junit/">Mock与junit</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/深入分析JAVA-WEB技术总结/">深入分析JAVA WEB技术总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/JVM基础知识/">JVM基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/02/MYSQL相关基础知识/">MYSQL相关基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/">Nginx+tomcat+redis实现服务器集群和共享session</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/golang学习/">golang学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/常用RPC框架/">常用RPC框架</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/javaWeb基本知识/">javaWeb基本知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/Spring相关内容总结/">Spring相关内容总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/测试一下上传图片/">测试一下上传图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/hexo-githubpages搭建个人博客/">hexo+githubpages搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/20/markdown语法简介/">markdown语法简介</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

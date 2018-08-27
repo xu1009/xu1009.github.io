@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>zookeeper | BlogXu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="zookeeper是一种为分布式应用设计的高可用，高性能且一致的开源协调服务，他提供了一项基本服务：分布式锁服务，还有配置维护，组维护，分布式消息队列，分布式通知/协调。一致性、可用性和容错性，使用的是Zab协议，数据结构Znode，原语、通知机制–watch机制。  数据模型zk拥有一个层次的命名空间，如下：  Znode通过路径引用，就像Unix中的文件路径，路径必须是绝对的，因为他们必须由">
+<meta name="keywords" content="zookeeper">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zookeeper">
+<meta property="og:url" content="http://xu1009.github.io/2017/09/25/zookeeper/index.html">
+<meta property="og:site_name" content="BlogXu">
+<meta property="og:description" content="zookeeper是一种为分布式应用设计的高可用，高性能且一致的开源协调服务，他提供了一项基本服务：分布式锁服务，还有配置维护，组维护，分布式消息队列，分布式通知/协调。一致性、可用性和容错性，使用的是Zab协议，数据结构Znode，原语、通知机制–watch机制。  数据模型zk拥有一个层次的命名空间，如下：  Znode通过路径引用，就像Unix中的文件路径，路径必须是绝对的，因为他们必须由">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://images.cnitblog.com/blog/671563/201411/301534562152768.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/671563/201411/301534569026625.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/671563/201411/301534572468352.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/671563/201411/301535008567950.png">
+<meta property="og:image" content="http://www.uml.org.cn/zjjs/images/2014111912.png">
+<meta property="og:image" content="http://img.blog.csdn.net/20170829141216394?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRzI5MDA5NTE0Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-27T11:30:41.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zookeeper">
+<meta name="twitter:description" content="zookeeper是一种为分布式应用设计的高可用，高性能且一致的开源协调服务，他提供了一项基本服务：分布式锁服务，还有配置维护，组维护，分布式消息队列，分布式通知/协调。一致性、可用性和容错性，使用的是Zab协议，数据结构Znode，原语、通知机制–watch机制。  数据模型zk拥有一个层次的命名空间，如下：  Znode通过路径引用，就像Unix中的文件路径，路径必须是绝对的，因为他们必须由">
+<meta name="twitter:image" content="http://images.cnitblog.com/blog/671563/201411/301534562152768.png">
+  
+    <link rel="alternative" href="/atom.xml" title="BlogXu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/xu.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/xu.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">xu</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/writesomething">随笔</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/xu1009" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/Keras" title="weibo">weibo</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Mock-junit/" style="font-size: 10px;">Mock junit</a> <a href="/tags/RPC-序列化/" style="font-size: 10px;">RPC 序列化</a> <a href="/tags/design-pattern/" style="font-size: 10px;">design pattern</a> <a href="/tags/dp-gluon/" style="font-size: 10px;">dp gluon</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/java-NIO-反射/" style="font-size: 10px;">java NIO 反射</a> <a href="/tags/java-web/" style="font-size: 10px;">java web</a> <a href="/tags/java-基础-面试/" style="font-size: 10px;">java 基础 面试</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mybatis-orm/" style="font-size: 10px;">mybatis orm</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/spring/" style="font-size: 20px;">spring</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/前端-react/" style="font-size: 10px;">前端 react</a> <a href="/tags/图片/" style="font-size: 10px;">图片</a> <a href="/tags/学习/" style="font-size: 15px;">学习</a> <a href="/tags/学习，Nginx，redis/" style="font-size: 10px;">学习，Nginx，redis</a> <a href="/tags/并发-Java/" style="font-size: 15px;">并发 Java</a> <a href="/tags/总结/" style="font-size: 15px;">总结</a> <a href="/tags/程序猿的书/" style="font-size: 10px;">程序猿的书</a>
+                    </div>
+                </section>
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">爱代码，爱生活！</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/xu.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/writesomething">随笔</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/xu1009" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/Keras" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-zookeeper" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/25/zookeeper/" class="article-date">
+      <time datetime="2017-09-25T13:04:57.000Z" itemprop="datePublished">2017-09-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      zookeeper
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zookeeper/">zookeeper</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<p>zookeeper是一种为分布式应用设计的高可用，高性能且一致的开源协调服务，他提供了一项基本服务：分布式锁服务，还有配置维护，组维护，分布式消息队列，分布式通知/协调。一致性、可用性和容错性，使用的是Zab协议，数据结构Znode，原语、通知机制–watch机制。</p>
+</blockquote>
+<h3 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h3><p>zk拥有一个层次的命名空间，如下：<br><img src="http://images.cnitblog.com/blog/671563/201411/301534562152768.png" alt=""></p>
+<ul>
+<li>Znode通过路径引用，就像Unix中的文件路径，路径必须是绝对的，因为他们必须由斜杠字符来开头，还必须是唯一的，/zookeeper用来保存管理信息，比如关键配额信息。</li>
+<li>Znode兼具文件和目录两种特点，每个znode由三部分组成，首先是stat，表示状态信息，描述该节点的版本，权限等信息，然后是data，这个是当前节点存储的数据，最后是children，表示Znode下的子节点。<br>节点存储的信息也是很小的，最大只能是1M，通常情况下要比这个小的多，存储的都是配置信息，状态信息，汇集位置等等，管理调度数据。</li>
+<li>数据访问，存储的数据要被原子性操作，要么完成要么失败，每个节点还有自己的ACL,规定了用户权限。</li>
+<li>节点类型，临时节点，该节点就是存活在回话还没结束的情况下，一旦回话结束，临时节点就会被自动删除，临时节点不允许有子节点。还有就是顺序节点，除非用户删除，不然会一直存在。顺序节点，路径结尾加一个递增的计数，这个计数对于此节点父节点是唯一的，计数值大于一定值时，计数器会溢出。</li>
+<li>watch，客户端可以在节点上设置watch，这就是监视器，当该节点的状态发生变化时，将会触发watch对应的操作，然后会向客户端发送一条通知，然后watch失效，客户端需要重新注册。<h3 id="zk中的时间"><a href="#zk中的时间" class="headerlink" title="zk中的时间"></a>zk中的时间</h3></li>
+<li>Zxid，使得zk节点状态改变的每一个操作将使节点接收到一个Zxid格式的时间戳，时间戳全局有序，每个节点维护三个Zxid值，分别为：cZxid、mZxid、pZxid，分别是节点创建的时间戳，节点修改时间，第三个不知道是啥。Zxid是一个64位的数字，高32位是epoch用来标识leader关系是否改变，每次一个leader被选出来，它都会有一个新的epoch，低32位是个递增数。版本号，对节点每一个操作都致使这个节点版本号增加，每个节点维护着三个版本号，首先是version节点数据版本号，cversion节点版本号，aversion节点所拥有的acl版本号。<br>节点属性如下：</li>
+</ul>
+<p><img src="http://images.cnitblog.com/blog/671563/201411/301534569026625.png" alt=""></p>
+<h3 id="zk服务中的操作"><a href="#zk服务中的操作" class="headerlink" title="zk服务中的操作"></a>zk服务中的操作</h3><p><img src="http://images.cnitblog.com/blog/671563/201411/301534572468352.png" alt=""></p>
+<p>更新ZooKeeper操作是有限制的。delete或setData必须明确要更新的Znode的版本号，我们可以调用exists找到。如果版本号不匹配，更新将会失败。</p>
+<p>更新ZooKeeper操作是非阻塞式的。因此客户端如果失去了一个更新(由于另一个进程在同时更新这个Znode)，他可以在不阻塞其他进程执行的情况下，选择重新尝试或进行其他操作</p>
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><blockquote>
+<p>ZooKeeper可以为所有的读操作设置watch，这些读操作包括：exists()、getChildren()及getData()。watch事件是一次性的触发器，当watch的对象状态发生改变时，将会触发此对象上watch所对应的事件。watch事件将被异步地发送给客户端，并且ZooKeeper为watch机制提供了有序的一致性保证。理论上，客户端接收watch事件的时间要快于其看到watch对象状态变化的时间。</p>
+</blockquote>
+<p>① 一个成功的setData操作将触发Znode的数据watch</p>
+<p>② 一个成功的create操作将触发Znode的数据watch以及孩子watch</p>
+<p>③ 一个成功的delete操作将触发Znode的数据watch以及孩子watch</p>
+<p>ZooKeeper所管理的watch可以分为两类：</p>
+<p>① 数据watch(data  watches)：getData和exists负责设置数据watch<br>② 孩子watch(child watches)：getChildren负责设置孩子watch</p>
+<h3 id="Master选举"><a href="#Master选举" class="headerlink" title="Master选举"></a>Master选举</h3><p>在分布式锁服务中，有一种最典型应用场景，就是通过对集群进行Master选举，来解决分布式系统中的单点故障。什么是分布式系统中的单点故障：通常分布式系统采用主从模式，就是一个主控机连接多个处理节点。主节点负责分发任务，从节点负责处理任务，当我们的主节点发生故障时，那么整个系统就都瘫痪了，那么我们把这种故障叫作单点故障。</p>
+<p>传统方式是使用备用主机，不断向master发送ping包，来确定master是否存活，如果没收到ack就认为master挂了，自己会启动一个新实例，但是这样会存在一个问题，那就是网络问题，其实master没有挂，但是由于网络问题，备用主机没有收到master的ack，这时候自己会启动实例，这就会导致服务存在双master，导致系统混乱。</p>
+<p>看看zk的解决方式，虽然不能解决网络问题，但是能保证每个时刻只存在一个master</p>
+<p><img src="http://images.cnitblog.com/blog/671563/201411/301535008567950.png" alt=""></p>
+<p>选取编号最小的节点为主节点，主节点挂掉之后会重新触发一次选举。</p>
+<p>下面是配置文件<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># The number of milliseconds of each tick</span><br><span class="line">tickTime=2000</span><br><span class="line"></span><br><span class="line"># The number of ticks that the initial</span><br><span class="line"># synchronization phase can take</span><br><span class="line"></span><br><span class="line">initLimit=10</span><br><span class="line">follower和leader连接同步到leader的初始化连接时间。</span><br><span class="line"></span><br><span class="line"># The number of ticks that can pass between</span><br><span class="line"># sending a request and getting an acknowledgement</span><br><span class="line">syncLimit=5</span><br><span class="line">leader和follower之间发送消息时，请求和应答时间长度</span><br><span class="line"># the directory where the snapshot is stored.</span><br><span class="line">dataDir=D:/softinstall/zk/zookeeper-3/temp/zookeeper/</span><br><span class="line">这个目录下需要创建myid存储服务器编号</span><br><span class="line"># the port at which the clients will connect</span><br><span class="line">clientPort=2183</span><br><span class="line">zk监听端口</span><br><span class="line">#the location of the log file</span><br><span class="line">dataLogDir=D:/softinstall/zk/zookeeper-3/temp/log/</span><br><span class="line">日志</span><br><span class="line">server.0=localhost:2287:3387</span><br><span class="line">server.1=localhost:2288:3388</span><br><span class="line">server.2=localhost:2289:3389</span><br><span class="line"></span><br><span class="line">server.A=B：C：D</span><br><span class="line">A：其中 A 是一个数字，表示这个是服务器的编号</span><br><span class="line">B：是这个服务器的 ip 地址；</span><br><span class="line">C：Leader选举的端口；</span><br><span class="line">D：Zookeeper服务器之间的通信端口。</span><br></pre></td></tr></table></figure></p>
+<p>zookeeper不支持递归的删除操作，因此在删除父节点之前必须先删除子节点，delete操作要先比较版本号，乐观锁机制，delete的第二个参数设置为-1可以绕过这个版本检测机制。</p>
+<h3 id="zk异常"><a href="#zk异常" class="headerlink" title="zk异常"></a>zk异常</h3><ul>
+<li>InterruptedException异常<br>如果操作被中断，就会抛出这个异常，在Java语言中取消阻塞方法会调用interrupt()方法，如果成功取消阻塞方法的话就会抛出这个异常，通常使用这种方法来取消zookeeper操作。</li>
+<li>KeeperException异常<br>Zookeeper服务器发出一个错误信号或者服务器存在通信问题，抛出的是这个异常。</li>
+</ul>
+<p>这个异常通常非为3类：</p>
+<ol>
+<li>状态异常，操作不能作用于znode树而导致失败，通常是同一时间有另外一个进程正在修改znode，根据版本号这个操作就会失败。</li>
+<li>可恢复异常，能够在同一个zookeeper回话中恢复的异常，对于这种异常的处理，要分情况，幂等操作和非幂等操作，幂等是指多次执行不会有影响，比如读请求和更新值，这种就简单重试就行，非幂等操作就不行，因为他们一次操作的结果和多次操作的结果可能不一样。</li>
+<li>不可恢复异常，比如会话失效，这种只能重新连接。<h3 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h3>同一台机器上，在相同jvm情况下，锁是靠jvm内部机制实现，但是在分布式系统中，多个进程分布在不同的机器上，这就需要新的锁机制了，zk就有这种功能，分布式锁可以在大型分布式系统中实现领导者选举（这个选举和zk自己的领导选举不一样，主要是为了与主进程保持一致的分布式系统设计），持有锁的那个进程就是系统的领导者。</li>
+</ol>
+<ul>
+<li>一般情况下分布式锁的实现，首先是创建一个作为锁的znode（永久），然后希望获得锁的客户端创建临时顺序子节点作为这个节点的子节点，在任何时间都是顺序号最小的客户端持有锁。</li>
+<li>上诉方法会导致羊群效应，什么是羊群效应呢，就是当客户端数量比较大的情况下，每客户端都会在那个节点下创建子节点，并在锁znode上设置观察，每次锁被释放的时候，观察会被触发，zk需要向所有客户端发出通知，但是实际上只又很少一部分需要处理这一事件，最后只有一个客户端成功获得锁，zk发送大量通知会产生峰值流量，这会对zk服务器造成压力，解决这个问题方法是只有前一个顺序号的子节点消失时才需要通知下一个客户端，而不是删除或者创建任何子节点时都需要通知。就是每个子节点只观察自己上一个znode。</li>
+<li>这个还有一个问题就是，不能处理因连接丢失而导致的creat操作失败。就是我们创建过程中，连接丢失了，但是我们又不知道是否创建成功，这时候不能简单的重试，因为如果第一次创建成功，重试的话，就会导致有一个节点根本没有进程和他对应，这个节点也就不会被删除，除非会话结束，最后导致死锁，这个解决方法就是在子节点名称中加入ID，自己可以分辨的ID,比如zk提供了获取当前会话的id，这个可以加到里面，这个id是全局唯一的，这样就可以在创建之前检查一下了。<h3 id="zookeeper实现共享锁"><a href="#zookeeper实现共享锁" class="headerlink" title="zookeeper实现共享锁"></a>zookeeper实现共享锁</h3></li>
+</ul>
+<blockquote>
+<p>serverA 和 serverB同时访问serverC上的文件，并同时对该文件执行写操作，如果没有锁的话，导致写入的顺序会混乱，这就需要共享锁了。</p>
+</blockquote>
+<ul>
+<li>利用节点的唯一性，比如加锁时就床架某个节点，其它机器尝试获得锁的时候也创建同样的节点，但是由于节点的唯一性导致无法创建成功，解锁的时候，只需要删除这个节点就行，这个在公司做那个定时任务时，由于服务器的集群，要保证同一时刻只有一个定时任务触发，这就需要共享锁了，这个是将自己ip存到那个节点，每次其它机器都是读取节点的内容和自己的ip对比，释放锁的时候是结束回话，那个临时节点会被自动删除。<br><img src="http://www.uml.org.cn/zjjs/images/2014111912.png" alt=""></li>
+<li>利用顺序节点来创建共享锁，这个和前面一样啊，就是节点顺序号最小的获得锁，羊群效应</li>
+</ul>
+<h3 id="zk简述"><a href="#zk简述" class="headerlink" title="zk简述"></a>zk简述</h3><blockquote>
+<p>zk不是用来存储数据的，他的数据都是在replicateddatabase中，这也是一个内存数据库，一般可想而知就不会很大，zk主要存储的是配置信息元数据，协调功能，主要作用是用来维护和监控存储数据的状态变化，通过监控这些数据状态的变化，可以达到基于数据的集群管理，关心的数据，数据量还不是很大的。HDFS则是存储在磁盘上。</p>
+</blockquote>
+<p>zk作用:</p>
+<ol>
+<li>集群管理：利用临时节点特性，节点关联的是机器的主机名，ip地址等相关信息，集群单点故障也属于该范畴。</li>
+<li>统一命名：利用节点的唯一性和目录节点树结构。</li>
+<li>配置管理：节点关联的是配置信息。</li>
+<li>分布式锁：节点关联的是要竞争的资源。</li>
+</ol>
+<h4 id="数据发布和订阅"><a href="#数据发布和订阅" class="headerlink" title="数据发布和订阅"></a>数据发布和订阅</h4><blockquote>
+<p>这个就是所谓的配置管理，配置数据发布到zk上，订阅者动态获取数据，实现配置信息的集中式管理和动态更新，比如全局配置信息，地址列表。集中式配置管理在应用集群中是非常常见的，通过在节点上设置watch，在节点状态发生变化时会通知客户端。</p>
+</blockquote>
+<p>相关应用</p>
+<ol>
+<li>索引信息和集群中机器节点状态存放在zk一些指定节点，供各个客户端订阅使用。</li>
+<li>系统日志（经过处理后）存储，这些日志通常2-3天后被清除</li>
+<li>应用中用到的一些全局变量，比如一些消息中间件的消息队列通常有个offset，这个offset存放在zk上，这样集群中每个发送者都能知道当前的发送进度。</li>
+<li>配置信息集中管理，应用其中的时候主动获取一次，并在节点上注册一个watcher。</li>
+</ol>
+<p>如下所示：配置信息放到一个节点，其它客户端设置watcher<br><img src="http://img.blog.csdn.net/20170829141216394?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRzI5MDA5NTE0Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<h4 id="统一命名服务"><a href="#统一命名服务" class="headerlink" title="统一命名服务"></a>统一命名服务</h4><blockquote>
+<p>这个一般都是在rpc框架中使用的，就是通过一个服务名来获得资源服务的地址和提供者信息。像soa上，自己手动在zk上写入的服务名和服务名下的接口名和响应的ip地址和端口，消费者根据服务名和接口名获得相关的服务提供者的地址和端口</p>
+</blockquote>
+<h4 id="分布通知-协调"><a href="#分布通知-协调" class="headerlink" title="分布通知/协调"></a>分布通知/协调</h4><blockquote>
+<p>zk中特有watcher注册与异步通知机制能够很好的实现分布式环境下不同系统之间的通知与协调，实现对数据变更的实时处理。</p>
+</blockquote>
+<p>相关应用：</p>
+<ol>
+<li>心跳检测机制：检测系统和被检测系统通过zk上某个节点关联。</li>
+<li>系统调度模式：控制台和推送系统，控制台控制推送系统进行相应的推送工作，其实就是使用的watcher</li>
+<li>工作汇报模式：就是子任务启动后，会注册一个临时节点，然后去修改这个节点，管理者可以获取这个节点信息。</li>
+</ol>
+<h4 id="集群管理"><a href="#集群管理" class="headerlink" title="集群管理"></a>集群管理</h4><ol>
+<li>集群机器监控<br>实时检测集群机器是否存活<br>master选举<br>相同的业务分布在不同的机器上，有些业务逻辑，例如一些耗时的计算，往往只需要整个集群中的某一台机器进行执行，其余共享这个结果，减少重复劳动，提高性能。</li>
+</ol>
+<p>这个master选举和锁一样啊？？？？？？？？？</p>
+
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/09/25/zookeeper/">zookeeper</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 xu 的个人博客">xu</a></p>
+        <p><span>发布时间:</span>2017年09月25日 - 21时04分</p>
+        <p><span>最后更新:</span>2018年08月27日 - 19时30分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/25/zookeeper/" title="zookeeper">http://xu1009.github.io/2017/09/25/zookeeper/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xu1009.github.io/2017/09/25/zookeeper/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2017/10/21/Spring持续更新/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Spring持续更新
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/18/java并发常见问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">java并发常见问题</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据模型"><span class="toc-number">1.</span> <span class="toc-text">数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zk中的时间"><span class="toc-number">2.</span> <span class="toc-text">zk中的时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zk服务中的操作"><span class="toc-number">3.</span> <span class="toc-text">zk服务中的操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#watch"><span class="toc-number">4.</span> <span class="toc-text">watch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master选举"><span class="toc-number">5.</span> <span class="toc-text">Master选举</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zk异常"><span class="toc-number">6.</span> <span class="toc-text">zk异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式锁"><span class="toc-number">7.</span> <span class="toc-text">分布式锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zookeeper实现共享锁"><span class="toc-number">8.</span> <span class="toc-text">zookeeper实现共享锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zk简述"><span class="toc-number">9.</span> <span class="toc-text">zk简述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据发布和订阅"><span class="toc-number">9.1.</span> <span class="toc-text">数据发布和订阅</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#统一命名服务"><span class="toc-number">9.2.</span> <span class="toc-text">统一命名服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分布通知-协调"><span class="toc-number">9.3.</span> <span class="toc-text">分布通知/协调</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集群管理"><span class="toc-number">9.4.</span> <span class="toc-text">集群管理</span></a></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'xu1009',
+      repo: 'xu1009.github.io',
+      oauth: {
+        client_id: '6ce4c127cbff7d5540c2',
+        client_secret: '4c1cafc3880ee908111dfca1a6b8a91af4fd07d6',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/10/21/Spring持续更新/" title="上一篇: Spring持续更新">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/09/18/java并发常见问题/" title="下一篇: java并发常见问题">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/27/java面试/">'java面试'</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/AI在路上/">AI在路上</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/总结一哈java中一些问题/">总结一哈java中一些问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/Mybatis一些原理/">Mybatis一些原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/RPC相关/">RPC相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/ReactJs之路/">ReactJs之路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/21/Spring持续更新/">Spring持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/25/zookeeper/">zookeeper</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/java并发常见问题/">java并发常见问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/java并发基础/">java并发基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/head-first-design-pattern/">head first design pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/记录一下大神给推荐的书籍哈/">记录一下大神给推荐的书籍哈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/02/Spring随笔记录/">Spring随笔记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/SpringMVC框架简述/">SpringMVC框架简述</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/Maven实战/">Maven实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/19/Mock与junit/">Mock与junit</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/深入分析JAVA-WEB技术总结/">深入分析JAVA WEB技术总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/JVM基础知识/">JVM基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/02/MYSQL相关基础知识/">MYSQL相关基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/27/Nginx-tomcat-redis实现服务器集群和共享session/">Nginx+tomcat+redis实现服务器集群和共享session</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/golang学习/">golang学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/常用RPC框架/">常用RPC框架</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/javaWeb基本知识/">javaWeb基本知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/Spring相关内容总结/">Spring相关内容总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/测试一下上传图片/">测试一下上传图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/hexo-githubpages搭建个人博客/">hexo+githubpages搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/20/markdown语法简介/">markdown语法简介</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
