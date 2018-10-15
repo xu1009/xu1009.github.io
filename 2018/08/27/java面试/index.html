@@ -242,7 +242,169 @@
       
     
     <div class="article-entry" itemprop="articleBody">
+
+
+
       
+      
+          
+      
+      
+          <blockquote>
+<p>JRE 是java运行环境，包括JVM和java类库，以及一些模块等，JDK是JRE的一个超集，提供了更多工具，比如编译器、各种诊断工具等。</p>
+</blockquote>
+<h4 id="java是解释执行？"><a href="#java是解释执行？" class="headerlink" title="java是解释执行？"></a>java是解释执行？</h4><blockquote>
+<p>明显不是，问题比较简单，回答不能笼统，首先是经过javac把java文件编译成字节码，也就是class文件，然后通过jvm内嵌的解释器转换成机器码，通常jvm是oracle jdk的hotspot，内嵌解释器是JIT，会将一部分热点代码编译成机器码，属于编译执行。</p>
+</blockquote>
+<p>java分为编译期和运行时， 编译指的是javac把源码编译成字节码文件,运行时JVM会通过类加载器加载字节码，转成机器码执行。</p>
+<p>是这样的， javac把源码编译成字节码文件，然后JVM加载这个字节码文件，使用内部解释器进行解释执行，同时也引入了JIT技术，也就是对于某些需要反复执行的代码（热点代码）转成机器码，这样下次就不用解释执行了。然后AOT是啥呢，是通过工具直接把字节码全转换成机器码，这样就不用解释执行了，提高效率。</p>
+<p>java通过jvm这种跨平台的抽象，屏蔽了操作系统和硬件的细节，实现一次编译，到处执行的基础，class-loader加载字节码，解释或者编译执行。</p>
+<p>JDK8使用的是解释和编译混合的一种模式。<br>java启动参数 -Xint就是高数jvm只进行解释执行，不对代码进行编译。<br>-Xcomp 关闭解释运行，最大化优化级别。</p>
+<p>AOT 直接将字节码文件编译成机器码，避免了类加载过程。</p>
+<p>java蓝图：</p>
+<p><img src="https://static001.geekbang.org/resource/image/20/32/20bc6a900fc0b829c2f0e723df050732.png" alt=""></p>
+<h4 id="Exception和Error区别？"><a href="#Exception和Error区别？" class="headerlink" title="Exception和Error区别？"></a>Exception和Error区别？</h4><blockquote>
+<p>都继承了Throwable类，Exception 是程序正常运行中，可以预料的意外情况，可以预料的意外情况，可能并且应该被捕获，进行相应处理。Error是指在正常情况下不大可能出现的情况，比如常见的内存泄露，不能捕获。</p>
+</blockquote>
+<p>说一下Exception</p>
+<p>分为可检查异常和不检查异常，可检查异常是指在源码里面显示地进行捕获处理，编译期就会进行检查，不检查异常又称为运行时异常比如NPC等，通常这个可以编码避免错误，具体根据需要判断是否需要捕获。</p>
+<p>看一下下面这张图：</p>
+<p><img src="https://static001.geekbang.org/resource/image/ac/00/accba531a365e6ae39614ebfa3273900.png" alt=""></p>
+<p>ClassNotFoundException和NoClassDefFoundError的区别?</p>
+<h4 id="final、finally、finalize区别"><a href="#final、finally、finalize区别" class="headerlink" title="final、finally、finalize区别"></a>final、finally、finalize区别</h4><p>下面这段代码里面的finally是不会执行的，这是个特例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    System.exit(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">finally</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"asd"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>finalize阻止gc，不推荐使用，回收之前干些事情，会降低回收效能。</p>
+<h4 id="强引用、软引用、弱引用、幻想引用"><a href="#强引用、软引用、弱引用、幻想引用" class="headerlink" title="强引用、软引用、弱引用、幻想引用"></a>强引用、软引用、弱引用、幻想引用</h4><blockquote>
+<p>不同的引用类型，主要体现的是对象的可达性状态和对垃圾收集的影响。</p>
+</blockquote>
+<p>看一下这个图,状态切换，软引用和弱引用多用于缓存，虚引用用于监控？<br><img src="https://static001.geekbang.org/resource/image/36/b0/36d3c7b158eda9421ef32463cb4d4fb0.png" alt=""></p>
+<p>虚引用必须和引用队列搭配使用，主要是用于跟踪对象被垃圾回收的活动，因为虚引用所引用的对象在被垃圾回收之前,先把引用放入队列，这样可以通过判断队列是否有内容来判断对象状态，在垃圾回收之前发出通知。</p>
+<h4 id="String、StringBuffer-StringBuilder区别"><a href="#String、StringBuffer-StringBuilder区别" class="headerlink" title="String、StringBuffer StringBuilder区别"></a>String、StringBuffer StringBuilder区别</h4><p>String 还是有很多东西的，比如给你几个用例判断创建了几个对象，还有intern()方法，以及在几个jdk版本中的区别</p>
+<p>主要在1.7之后将对于字符串分为堆内存和常量池。</p>
+<ul>
+<li>String s1 = “first”;</li>
+<li>String s2 = “se” + “cond”;</li>
+<li>String s12 = “first” + s2;</li>
+<li>String s3 = new String(“three”);</li>
+<li>String s4 = new String(“fo”) + “ur”;</li>
+<li>String s5 = new String(“fo”) + new String(“ur”);</li>
+</ul>
+<p>上述在内存中的存储如下：<br><img src="https://user-gold-cdn.xitu.io/2018/1/5/160c3dd4be37720c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>对于 “” 这种类型是在编译期间就能确定的， 属于字符串常量，会直接在常量池中创建，对于 new String()创建的字符串引用就不会。美滋滋。</p>
+<p>还有一个intern()方法，这个方法的作用是先看一下常量池中是否有该字符串，如果有的话就返回常量池中的，如果没有的话，就把堆中引用地址加到常量池返回的是同一个对象，或者说两个引用同一个对象。</p>
+<h4 id="动态代理机制"><a href="#动态代理机制" class="headerlink" title="动态代理机制"></a>动态代理机制</h4><blockquote>
+<p>java是一种强类型静态语言，静态是指在编译时检查，动态是指在运行时检查。强类型和弱类型就不用解释了。</p>
+</blockquote>
+<p>反射给java提供了部分动态语言的能力。</p>
+<p>说一下动态代理，jdk本身有的利用的是反射技术，还有cglib、asm等基于字节码操作机制。</p>
+<p>jdk动态代理确定是必须实现某个接口，以及强制写invocationHandler有点侵入式。<br>cglib基于字节码基于子类？后面再看。</p>
+<h4 id="包装类和普通数据类型（Integer，-int）"><a href="#包装类和普通数据类型（Integer，-int）" class="headerlink" title="包装类和普通数据类型（Integer， int）"></a>包装类和普通数据类型（Integer， int）</h4><blockquote>
+<p>装箱和拆箱，较小值缓存，比如int类型-128到127这个可以配置最大值范围。</p>
+</blockquote>
+<p>对象由三部分组成： 对象头、对象实例、对齐填充。</p>
+<p>对象头第一部分存储对象自身运行时数据，比如hashcode、gc分代年龄、锁状态标志、线程持有的锁、偏向线程ID、偏向时间戳等，这部分称为Mark word。</p>
+<p>第二部分是类型指针，对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。</p>
+<p>实例数据就是包含真正存储的信息。</p>
+<p>对齐填充是相当于占位符。</p>
+<h4 id="Vector、ArrayList、LinkedList"><a href="#Vector、ArrayList、LinkedList" class="headerlink" title="Vector、ArrayList、LinkedList"></a>Vector、ArrayList、LinkedList</h4><blockquote>
+<p>都支持按位置进行定位，添加删除等操作，集合框架中的List，都提供迭代器遍历。</p>
+</blockquote>
+<p>Vector：线程安全的动态数组，线程安全是通过synchronize关键字实现的，性能比较差，自动扩容，当数组满时，会创建新的数组，拷贝原有数组数据。<br>ArrayList： 非线程安全的动态数组，扩容逻辑和Vector不一样。<br>LinkedList：非线程安全的双向链表，对于删除和插入操作来说，相对比较好。<br>看一下狭义的集合框架：<br><img src="https://static001.geekbang.org/resource/image/67/c7/675536edf1563b11ab7ead0def1215c7.png" alt=""></p>
+<p>Collections.synchronizedList(new ArrayList&lt;&gt;()) 可以将那些非线程安全的集合包装成线程安全的，怎么实现的呢，就是很简单粗暴，将那些get、set、add之类的方法全部加上synchronize关键字。</p>
+<p>jdk内部排序，比如Arrays.sort()和Collections.sort()使用的是什么排序算法，这要根据数据类型来分。</p>
+<p>原始数据类型使用的是快速排序的变种，对象数据类型使用的是二分和归并的变种。</p>
+<h4 id="HashTable、hashmap、treemap"><a href="#HashTable、hashmap、treemap" class="headerlink" title="HashTable、hashmap、treemap"></a>HashTable、hashmap、treemap</h4><p>看一下map的结构，比如下图：<br><img src="https://static001.geekbang.org/resource/image/26/7c/266cfaab2573c9777b1157816784727c.png" alt=""></p>
+<p>散列是啥，散列是根据key得到内存中的地址，key到内存地址过程叫散列，映射函数叫散列函数，映射表叫散列集。</p>
+<p>面试必问的hashmap源码：</p>
+<ul>
+<li>基本实现</li>
+<li>容量和负载因子</li>
+<li>树化<br>看一下map的结构，数组加链表不用说了<br><img src="https://static001.geekbang.org/resource/image/1f/56/1f72306a9d8719c66790b56ef7977c56.png" alt=""></li>
+</ul>
+<p>具体hashmap可以看一下这个<a href="http://welkinbai.coding.me/2017/08/12/jdk-collection-3/#HashMap%EF%BC%88%E5%AE%9E%E7%8E%B0%E5%B1%82%EF%BC%89" target="_blank" rel="noopener">博客</a></p>
+<h4 id="jdk并发包concurrenthashmap"><a href="#jdk并发包concurrenthashmap" class="headerlink" title="jdk并发包concurrenthashmap"></a>jdk并发包concurrenthashmap</h4><blockquote>
+<p>分段式加锁，线程安全，1.7和1.8区别。</p>
+</blockquote>
+<p><img src="https://static001.geekbang.org/resource/image/d4/d9/d45bcf9a34da2ef1ef335532b0198bd9.png" alt=""></p>
+<p>线程安全的list还有个copyonwriteArrayList<br>还有就是可以通过Collections提供的同步包装器，只是简单的把所有操作加上synchronize关键字</p>
+<h4 id="java-io-nio-nio2-aio"><a href="#java-io-nio-nio2-aio" class="headerlink" title="java io nio nio2(aio)"></a>java io nio nio2(aio)</h4><blockquote>
+<p>NIO面试的时候问的比较多一些，然后NIO(同步非阻塞)的话是1.4新加的，1.7又做了很大改变，可以称为NIO2或者AIO,异步非阻塞IO</p>
+</blockquote>
+<p>说一下同步和异步与阻塞和非阻塞的区别和联系</p>
+<ul>
+<li>同步和异步，同步是一种可靠额有序运行机制，当我们进行同步操作时，后续任务是等待当前调用返回，才会进行下一步，异步则不需要等待，通常是依赖回调机制来实现任务间的次序关系，事件驱动（感觉比阻塞非阻塞更上一层）</li>
+<li>阻塞非阻塞，是线程级别的，和同步和非同步相比要更底层一些，上面是任务级别的。</li>
+</ul>
+<p>看一下java io的uml图：<br><img src="https://static001.geekbang.org/resource/image/43/8b/4338e26731db0df390896ab305506d8b.png" alt=""></p>
+<p>NIO 使用单线程管理channel，减少了线程切换开销<br>看一下NIO的框图：</p>
+<p><img src="https://static001.geekbang.org/resource/image/ad/a2/ad3b4a49f4c1bff67124563abc50a0a2.png" alt=""></p>
+<p>再看一下NIO2<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">AsynchronousServerSocketChannel serverSocketChannel = AsynchronousServerSocketChannel.open().bind(<span class="keyword">new</span> InetSocketAddress(InetAddress.getLocalHost(), <span class="number">8888</span>));</span><br><span class="line">      serverSocketChannel.accept(serverSocketChannel, <span class="keyword">new</span> CompletionHandler&lt;AsynchronousSocketChannel, AsynchronousServerSocketChannel&gt;() &#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">completed</span><span class="params">(AsynchronousSocketChannel asynchronousSocketChannel, AsynchronousServerSocketChannel asynchronousServerSocketChannel)</span> </span>&#123;</span><br><span class="line">              System.out.println(<span class="string">"12321"</span>);</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">failed</span><span class="params">(Throwable throwable, AsynchronousServerSocketChannel asynchronousServerSocketChannel)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>和ajax很像啊，事件驱动，异步回调。</p>
+<p>详细说一下同步异步，阻塞和非阻塞问题</p>
+<ul>
+<li>BIO传统的IO模型</li>
+<li>同步非阻塞IO,默认创建的socket都是阻塞的，非阻塞IO要求socket被设置为NONBLOCK,并非是java NIO</li>
+<li>IO多路复用，即经典的Reactor设计模式，有时也称为异步阻塞IO,java中的selector和Linux中的epoll都是这种模型</li>
+<li>异步IO，即经典的Proactor设计模式，异步非阻塞IO</li>
+</ul>
+<p>同步和异步描述的是用户线程与内核的<strong>交互方式</strong>：同步是指用户线程发起IO请求后需要等待或者轮询内核IO操作完成后才能继续执行，而异步是指用户线程发起IO请求后仍继续执行，当内核IO操作完成之后通知用户，或者调用用户线程注册的回调函数。</p>
+<p>阻塞和非阻塞的概念描述的是用户线程调用内核IO的<strong>操作方式</strong>：阻塞是指IO操作需要彻底完成后才返回到用户空间，而非阻塞是指IO操作被调用后立即返回给用户一个状态值，无需等到IO操作彻底完成。</p>
+<p>感觉一样，看一下图：</p>
+<p>同步阻塞IO<br>这个图还是比较形象的，被动等待，需要等待数据准备好后才能读取。<br><img src="http://images.cnitblog.com/blog/405877/201411/142330286789443.png" alt=""></p>
+<p>同步非阻塞IO<br>同步非阻塞IO是在同步阻塞IO基础上，将socket设置为非阻塞，这样用户线程可以在发起IO请求后立即返回。这个是用户线程主动去查，不在内核阻塞，内核会立即返回，然后用户线程主动的去轮询状态。这样会导致产生大量重复请求，耗费大量CPU资源。<br><img src="http://images.cnitblog.com/blog/405877/201411/142332004602984.png" alt=""></p>
+<p>IO多路复用<br>IO多路复用模型是建立在内核提供的多路分离函数select基础之上的，使用select函数可以避免非阻塞IO模型中轮询等待的问题。<br><img src="http://images.cnitblog.com/blog/405877/201411/142332187256396.png" alt=""></p>
+<p>主要是把socket添加到select中，然后阻塞等待select系统调用返回，当数据到达时，socket被激活，select函数返回，用户线程正式发起read请求，读取数据并执行。这样其实也是阻塞的，阻塞在select那，只不过实现了单线程监听多个通道，提高了cpu利用率，用户可以注册自己感兴趣的socket或者IO请求，然后去做自己的事情。</p>
+<p>其实利用的是reactor设计模式，见下图：<br><img src="http://images.cnitblog.com/blog/405877/201411/142332350853195.png" alt=""></p>
+<p>异步阻塞，阻塞主要是调用内核那个select函数时阻塞。<br><img src="http://images.cnitblog.com/blog/405877/201411/142333254136604.png" alt=""></p>
+<p>异步IO使用了Proactor设计模式：</p>
+<p><img src="http://images.cnitblog.com/blog/405877/201411/151608309061672.jpg" alt=""></p>
+<p>Proactor模式和Reactor模式在结构上比较相似，不过在用户（Client）使用方式上差别较大。Reactor模式中，用户线程通过向Reactor对象注册感兴趣的事件监听，然后事件触发时调用事件处理函数。而Proactor模式中，用户线程将AsynchronousOperation（读/写等）、Proactor以及操作完成时的CompletionHandler注册到AsynchronousOperationProcessor。AsynchronousOperationProcessor使用Facade模式提供了一组异步操作API（读/写等）供用户使用，当用户线程调用异步API后，便继续执行自己的任务。AsynchronousOperationProcessor 会开启独立的内核线程执行异步操作，实现真正的异步。当异步IO操作完成时，AsynchronousOperationProcessor将用户线程与AsynchronousOperation一起注册的Proactor和CompletionHandler取出，然后将CompletionHandler与IO操作的结果数据一起转发给Proactor，Proactor负责回调每一个异步操作的事件完成处理函数handle_event。虽然Proactor模式中每个异步操作都可以绑定一个Proactor对象，但是一般在操作系统中，Proactor被实现为Singleton模式，以便于集中化分发操作完成事件。</p>
+<p><img src="http://images.cnitblog.com/blog/405877/201411/142333511475767.png" alt=""></p>
+<p>异步IO模型中，用户线程直接使用内核提供的异步IO API发起read请求，且发起后立即返回，继续执行用户线程代码。不过此时用户线程已经将调用的AsynchronousOperation和CompletionHandler注册到内核，然后操作系统开启独立的内核线程去处理IO操作。当read请求的数据到达时，由内核负责读取socket中的数据，并写入用户指定的缓冲区中。最后内核将read的数据和用户线程注册的CompletionHandler分发给内部Proactor，Proactor将IO完成的信息通知给用户线程（一般通过调用用户线程注册的完成事件处理函数），完成异步IO。</p>
+<p>有个理解比较形象，就是区分同步异步以及阻塞非阻塞。</p>
+<p>阻塞非阻塞是对于判断数据是否就绪是由用户线程还是内核线程完成，异步还是同步由数据拷贝是由用户线程还是内核线程完成。</p>
+<h4 id="说一下文件拷贝？"><a href="#说一下文件拷贝？" class="headerlink" title="说一下文件拷贝？"></a>说一下文件拷贝？</h4><p>说一下用户态空间和内核态空间：</p>
+<p>系统调用时操作系统的最小功能单位。</p>
+<p>用户态空间是指应用，内核态空间是指底层硬件资源比如cpu，内存等，为上层提供访问接口也就是“系统调用”</p>
+<p>看一下IO操作写入和读取操作：<br>进行了多次上下文切换，先从磁盘读取到内核缓存，用户再到内核缓存去拿数据，反向同理。<br><img src="https://static001.geekbang.org/resource/image/6d/85/6d2368424431f1b0d2b935386324b585.png" alt=""></p>
+<p>但是NIO拷贝文件实现了0拷贝，是啥呢，就是直接在内核层面操作，不涉及用户态空间。看一下下面这个图：</p>
+<p><img src="https://static001.geekbang.org/resource/image/b0/ea/b0c8226992bb97adda5ad84fe25372ea.png" alt=""></p>
+<h4 id="接口和抽象类"><a href="#接口和抽象类" class="headerlink" title="接口和抽象类"></a>接口和抽象类</h4><p>接口中只能包含public方法或者public static final 常量，可以实现多个接口，不能实例化，1.8有自己的实现default方法。</p>
+<p>抽象类，不能实例化，不能多继承，可以有抽象方法，也可以没有，子类必须实现抽象方法。</p>
+<h4 id="synchronize关键字和reentrantLock"><a href="#synchronize关键字和reentrantLock" class="headerlink" title="synchronize关键字和reentrantLock"></a>synchronize关键字和reentrantLock</h4><p>再入锁，表示一个线程试图获取一个他已经获取的锁时，这个获取动作自动完成，锁的持有是以线程为单位而不是基于调用次数。</p>
+<p>再入锁要比synchronized关键字能实现更加细腻的操作，比如公平性，实现带有超时的锁，条件变量。通过CAS操作，将线程对象放到一个双向链表中，然后每次取出双向链表中的头结点和当前线程相比。</p>
+<p>synchronized 是基于monitor实现的，monitorenter和monitorexit，jdk 1.6之后对synchronized进行了优化，实现了三种不同的锁： 偏斜锁，轻量级锁，重量级锁。</p>
+<p>并发包将锁分为读写锁，因为读之间是不需要同步的。</p>
+<h4 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h4><blockquote>
+<p>线程是系统调度的最小单元，一个进程可以包含多个线程，作为任务真正的执行者，有自己的栈，寄存器和本地存储，但是会和进程内其他线程共享文件描述符、虚拟地址空间等。</p>
+</blockquote>
+<p>线程状态： 新创建，可运行，阻塞，等待，计时等待，终止。</p>
+<p>状态转移看下图：<br><img src="https://static001.geekbang.org/resource/image/31/dc/3169b7ca899afeb0359f132fb77c29dc.png" alt=""></p>
+<p>死锁发生条件就是循环依赖,详情见下面代码，下面还有检测死锁的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.company.interview;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.management.ManagementFactory;</span><br><span class="line"><span class="keyword">import</span> java.lang.management.ThreadInfo;</span><br><span class="line"><span class="keyword">import</span> java.lang.management.ThreadMXBean;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ScheduledExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LockSample</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String lockA;</span><br><span class="line">    <span class="keyword">private</span> String lockB;</span><br><span class="line">    LockSample(String name, String lockA, String lockB)&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">        <span class="keyword">this</span>.lockA = lockA;</span><br><span class="line">        <span class="keyword">this</span>.lockB = lockB;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (lockA)&#123;</span><br><span class="line">            System.out.println(<span class="keyword">this</span>.getName() + <span class="string">"   "</span> + lockA);</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"before "</span> + <span class="keyword">this</span>.getName());</span><br><span class="line"><span class="comment">//                Thread.sleep(1000L);</span></span><br><span class="line">                System.out.println(<span class="string">"after "</span> + <span class="keyword">this</span>.getName());</span><br><span class="line">                <span class="keyword">synchronized</span> (lockB)&#123;</span><br><span class="line">                    System.out.println(<span class="keyword">this</span>.getName() + <span class="string">"   "</span> + lockB);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">        ThreadMXBean mxBean = ManagementFactory.getThreadMXBean();</span><br><span class="line">        Runnable dlCheck = () -&gt; &#123;</span><br><span class="line">          <span class="keyword">long</span>[] threadIds = mxBean.findDeadlockedThreads();</span><br><span class="line">          <span class="keyword">if</span> (threadIds != <span class="keyword">null</span>)&#123;</span><br><span class="line">              ThreadInfo[] threadInfo = mxBean.getThreadInfo(threadIds);</span><br><span class="line">              <span class="keyword">for</span> (ThreadInfo threadInfo1 : threadInfo)&#123;</span><br><span class="line">                  System.out.println(threadInfo1.getThreadName());</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(<span class="number">1</span>);</span><br><span class="line">        scheduledExecutorService.scheduleAtFixedRate(dlCheck, <span class="number">5</span>, <span class="number">10</span>, TimeUnit.SECONDS);</span><br><span class="line">        String lockA = <span class="string">"1"</span>;</span><br><span class="line">        String lockB = <span class="string">"2"</span>;</span><br><span class="line">        LockSample lockSample1 = <span class="keyword">new</span> LockSample(<span class="string">"THREAD1"</span>, lockA, lockB);</span><br><span class="line">        LockSample lockSample2 = <span class="keyword">new</span> LockSample(<span class="string">"THREAD2"</span>, lockB, lockA);</span><br><span class="line">        lockSample1.start();</span><br><span class="line">        lockSample2.start();</span><br><span class="line">        lockSample1.join();</span><br><span class="line">        lockSample2.join();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>copyonwrite 的操作是是不修改原来的数组，直接copy之后修改然后替换。</p>
+<p>信号量是啥就是允许同一时间多少线程可以运行，类似于线程池？</p>
+<p>countdownLatch有点像定时器中断？</p>
+<h4 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h4><p>命令式编程和函数式编程，命令式编程就是那种在代码上很明显一步步实现功能，函数式是更抽象的描述，高阶函数，让函数像数据一样进行传递，而且函数内部不依赖于外部变量，利于单测，感觉就像高阶函数，传递的是函数，函数又像java匿名内部类那种，代码简洁。</p>
+<p>命令式： 完全自己一步步实现</p>
+<p>声明式： 底层一部分实现依赖于库</p>
+<p>函数式： 基于声明式，加入高阶函数</p>
+<p>函数式编程的特点：</p>
+<ol>
+<li>函数可以作为参数传递给另一个函数（高阶函数）</li>
+<li>只用表达式不用语句，这里和js很像，expression和statement的区别，表达式有返回值，语句没有，函数式编程要求只用表达式</li>
+<li>没有副作用，就是不修改外部变量，是个独立模块，每次都是返回新值</li>
+</ol>
+<p>函数式编程意义：</p>
+<ol>
+<li>代码简洁</li>
+<li>接近自然语言</li>
+<li>方便做单元测试，因为是独立模块，不依赖于外部。</li>
+<li>易于并发编程，因为是独立模块，不修改外部变量，都是自己局部变量。</li>
+</ol>
+
+          </div>
+      
+      <!-- 
           
            
             
@@ -399,7 +561,8 @@
 </ol>
 
          
-      
+       -->
+
 
       
     </div>

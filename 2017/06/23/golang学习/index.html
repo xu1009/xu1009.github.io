@@ -221,7 +221,35 @@
       
     
     <div class="article-entry" itemprop="articleBody">
+
+
+
       
+      
+          
+      
+      
+          <h3 id="go语言"><a href="#go语言" class="headerlink" title="go语言"></a>go语言</h3><p>先来一段代码感受一下<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span><br><span class="line">	fmt.Print(<span class="string">"hello world"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>分析一下这段代码</p>
+<ul>
+<li>包是main这个也是有意义的，包是main的表示该段代码可以独立执行</li>
+<li>main函数和正常的程序一样，程序运行时首先执行的，如果有init函数就执行init</li>
+<li>标识符首字母的大小写决定了该变量的可见性，大写就是public，小写是private</li>
+</ul>
+</blockquote>
+<hr>
+<blockquote>
+<p>go语言也需要提前声明变量</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="keyword">int</span> = <span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line">a := <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>常量const，不能被修改的量</p>
+</blockquote>
+
+          </div>
+      
+      <!-- 
           
            
             
@@ -244,7 +272,8 @@
 </blockquote>
 
          
-      
+       -->
+
 
       
     </div>

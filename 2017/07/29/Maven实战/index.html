@@ -221,7 +221,45 @@
       
     
     <div class="article-entry" itemprop="articleBody">
+
+
+
       
+      
+          
+      
+      
+          <ul>
+<li>构建是什么，build这个不是IDE帮我们完成的吗，为啥需要maven</li>
+<li>平时用到的maven都是依赖管理工具和项目信息管理工具</li>
+<li>maven有一个坐标系统准确定位每一个构建（artifact）</li>
+<li>坐标系统就是按package来一级级传递的吧</li>
+<li>构建工具有 maven ant ide make等</li>
+<li>IDE都是手工的进行鼠标点击来完成编译、测试、代码生成，低效还容易出错。</li>
+<li>make是最早的构建工具，有一个Makefile的脚本文件驱动，在Linux下比较好使。</li>
+<li>Ant意思是another neat tool，构建工具，基本结构也是target和depends，没有依赖管理，可以借助Ivy管理依赖。</li>
+<li>maven是声明式的，有很好的依赖管理。</li>
+<li>maven可以创建内部的仓库服务器，中央仓库会有点慢而且，有些jar不一定有.使用nexus建立自己的maven仓库。</li>
+<li>maven的坐标系统，就是groupid artifactid等</li>
+<li>groupid artifactid version 依赖的基本坐标</li>
+<li>type 依赖的类型，默认为jar</li>
+<li>scope以来的范围，就是作用域</li>
+<li>optional 标记依赖是否可选</li>
+<li>exclusion 用来排除依赖传递性</li>
+<li>依赖范围就是用来控制依赖与这三种classpath（编译、测试、运行）的关系</li>
+<li><scope> </scope>有这几种依赖范围，</li>
+<li>compile：编译依赖范围，这也是默认的依赖范围，三个阶段都可以。</li>
+<li>test：测试依赖范围，只对测试依赖有效</li>
+<li>provided：已提供依赖范围，只对编译和测试有效，运行无效。</li>
+<li>runtime：测试和运行时有效</li>
+<li>system：和provided一样，但是这个必须指定依赖的路径。</li>
+<li>import：这个后续补上，没详细说</li>
+<li>jar包冲突，maven有自己的依赖调解原则，第一原则是最近者优先，最先依赖的那个会被使用，如果路径长度是一样的就看依赖在pom文件中的顺序。</li>
+</ul>
+
+          </div>
+      
+      <!-- 
           
            
             
@@ -254,7 +292,8 @@
 </ul>
 
          
-      
+       -->
+
 
       
     </div>

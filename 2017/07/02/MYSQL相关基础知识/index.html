@@ -225,7 +225,46 @@
       
     
     <div class="article-entry" itemprop="articleBody">
+
+
+
       
+      
+          
+      
+      
+          <h3 id="一些基本知识"><a href="#一些基本知识" class="headerlink" title="一些基本知识"></a>一些基本知识</h3><ul>
+<li>SELECT * FROM TABLE1 LEFT JOIN TABLE2 ON …</li>
+<li><p>left join on是查询左边所有右边满足条件的记录如下所示语法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> p.FirstName, p.LastName, a.City, a.State  <span class="keyword">FROM</span> Person p <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Address a <span class="keyword">on</span> p.PersonId = a.PersonId;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>RIGHT JOIN ON 与其对应 查询的是右边所有，左边满足条件的记录，比如上述查询等效如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> p.FirstName, p.LastName, a.City, a.State  <span class="keyword">FROM</span>  Address a <span class="keyword">RIGHT</span> <span class="keyword">JOIN</span>  Person p <span class="keyword">on</span> p.PersonId = a.PersonId;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DISTINCT 是去除查询的结果集中重复的元素</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> salary <span class="keyword">FROM</span> <span class="keyword">TABLE</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/2017/07/02/MYSQL相关基础知识/dis.jpg" alt="distinct的用法"></p>
+<ul>
+<li>IN操作符如下用法<br><img src="/2017/07/02/MYSQL相关基础知识/in.jpg" alt="in操作符"><br>其中要是查找不在其中的就是加个NOT IN 这样就可以找到补集</li>
+<li>between语句<br><img src="/2017/07/02/MYSQL相关基础知识/between.jpg" alt="between语句用法"><h3 id="join"><a href="#join" class="headerlink" title="join"></a>join</h3></li>
+<li>inner join是内连接，关键字在表中存在至少一个匹配时返回行，没有匹配就不返回</li>
+<li>left join和right join肯定有返回,left join是左边所有加上右边满足条件的，right join是右边所有加上左边满足条件的 </li>
+<li>UNION 语句是将两个查询的结果合并，这个会去除重复的元素</li>
+<li><p>union all 回列出所有元素</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span> <span class="keyword">FROM</span> C</span><br><span class="line"><span class="keyword">UNION</span> ALL</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span> <span class="keyword">FROM</span> B</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>group by是按类分的最后返回的感觉是两个表的样子</p>
+</li>
+<li>分享一个细节就是使用IN的语句时，可以 in table，不过列需要对应<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> t_topics <span class="keyword">WHERE</span> (reply_count,user_id) <span class="keyword">IN</span> (<span class="keyword">SELECT</span> user_id <span class="keyword">as</span> <span class="keyword">id</span>,<span class="keyword">max</span>(reply_count) <span class="keyword">as</span> <span class="keyword">max</span> <span class="keyword">from</span> t_topics <span class="keyword">GROUP</span> <span class="keyword">BY</span> user_id)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>比如这个，in前面的列顺序必须和后面的一致</p>
+
+          </div>
+      
+      <!-- 
           
            
             
@@ -259,7 +298,8 @@
 <p>比如这个，in前面的列顺序必须和后面的一致</p>
 
          
-      
+       -->
+
 
       
     </div>

@@ -221,7 +221,69 @@
       
     
     <div class="article-entry" itemprop="articleBody">
+
+
+
       
+      
+          
+      
+      
+          <!-- toc -->
+<h2 id="Hexo安装，hexo基于node，首先需要安装nodejs"><a href="#Hexo安装，hexo基于node，首先需要安装nodejs" class="headerlink" title="Hexo安装，hexo基于node，首先需要安装nodejs"></a>Hexo安装，hexo基于node，首先需要安装nodejs</h2><ul>
+<li>安装hexo  </li>
+</ul>
+<p><code>npm install -g hexo</code><br><code>hexo version</code>查看hexo版本，确定是否安装完成<br><a id="more"></a></p>
+<h2 id="有关-config-yml配置"><a href="#有关-config-yml配置" class="headerlink" title="有关_config.yml配置"></a>有关_config.yml配置</h2><h3 id="Site-站点配置"><a href="#Site-站点配置" class="headerlink" title="Site 站点配置"></a>Site 站点配置</h3><ul>
+<li>title: Hexo-demo #网站标题</li>
+<li>subtitle: hexo is simple and easy to study #网站副标题　　</li>
+<li>description: this is hexo-demo #网栈描述</li>
+<li>author: pomy #你的名字</li>
+<li>language: zh-CN #网站使用的语言</li>
+<li><p>timezone: Asia/Shanghai #网站时区</p>
+<h3 id="URL可以不用配置"><a href="#URL可以不用配置" class="headerlink" title="URL可以不用配置"></a>URL可以不用配置</h3></li>
+<li><p>url: <a href="http://yoursite.com" target="_blank" rel="noopener">http://yoursite.com</a> #网址，搜索时会在搜索引擎中显示</p>
+</li>
+<li>root: / #网站根目录</li>
+<li>permalink: :year/:month/:day/:title/ #永久链接格式</li>
+<li>permalink_defaults: #永久链接中各部分的默认值<h3 id="Directory-目录配置"><a href="#Directory-目录配置" class="headerlink" title="Directory 目录配置"></a>Directory 目录配置</h3></li>
+<li>source_dir: source #资源文件夹，这个文件夹用来存放内容</li>
+<li>public_dir: public #公共文件夹，这个文件夹用于存放生成的站点文件</li>
+<li>tag_dir: tags #标签文件夹</li>
+<li>archive_dir: archives #归档文件夹</li>
+<li>category_dir: categories #分类文件夹</li>
+<li>code_dir: downloads/code #Include code 文件夹</li>
+<li>i18n_dir: :lang #国际化文件夹</li>
+<li>skip_render: #跳过指定文件的渲染，您可使用 glob 来配置路径<h3 id="Writing-写作配置"><a href="#Writing-写作配置" class="headerlink" title="Writing 写作配置"></a>Writing 写作配置</h3></li>
+<li>new_post_name: :title.md # 新文章的文件名称</li>
+<li>default_layout: post #默认布局</li>
+<li>titlecase: false # Transform title into titlecase</li>
+<li>external_link: true # Open external links in new tab</li>
+<li>filename_case: 0 #把文件名称转换为 (1) 小写或 (2) 大写</li>
+<li>render_drafts: false #显示草稿</li>
+<li>post_asset_folder: false #是否启动资源文件夹</li>
+<li>relative_link: false #把链接改为与根目录的相对位址</li>
+<li>future: true</li>
+<li>highlight: #代码块的设置</li>
+<li>enable: true</li>
+<li>line_number: true</li>
+<li>auto_detect: true</li>
+<li>tab_replace:<h3 id="Category-amp-Tag-分类-amp-标签"><a href="#Category-amp-Tag-分类-amp-标签" class="headerlink" title="Category &amp; Tag 分类 &amp; 标签"></a>Category &amp; Tag 分类 &amp; 标签</h3></li>
+<li>default_category: uncategorized #默认分类</li>
+<li>category_map: #分类别名</li>
+<li>tag_map: #标签别名<h3 id="Date-Time-format-时间和日期"><a href="#Date-Time-format-时间和日期" class="headerlink" title="Date / Time format 时间和日期"></a>Date / Time format 时间和日期</h3></li>
+<li>date_format: YYYY-MM-DD</li>
+<li>time_format: HH:mm:ss<h3 id="Pagination-分页"><a href="#Pagination-分页" class="headerlink" title="Pagination 分页"></a>Pagination 分页</h3></li>
+<li>per_page: 10 #每页显示的文章量 (0 = 关闭分页功能)</li>
+<li>pagination_dir: page #分页目录<h3 id="Extensions-扩展"><a href="#Extensions-扩展" class="headerlink" title="Extensions 扩展"></a>Extensions 扩展</h3><h4 id="Plugins-http-hexo-io-plugins-插件"><a href="#Plugins-http-hexo-io-plugins-插件" class="headerlink" title="Plugins: http://hexo.io/plugins/ 插件"></a>Plugins: <a href="http://hexo.io/plugins/" target="_blank" rel="noopener">http://hexo.io/plugins/</a> 插件</h4><h4 id="Themes-http-hexo-io-themes-主题"><a href="#Themes-http-hexo-io-themes-主题" class="headerlink" title="Themes: http://hexo.io/themes/ 主题"></a>Themes: <a href="http://hexo.io/themes/" target="_blank" rel="noopener">http://hexo.io/themes/</a> 主题</h4></li>
+<li>theme: landscape #当前主题名称<h3 id="Deployment-部署到github"><a href="#Deployment-部署到github" class="headerlink" title="Deployment #部署到github"></a>Deployment #部署到github</h3><h4 id="Docs-http-hexo-io-docs-deployment-html"><a href="#Docs-http-hexo-io-docs-deployment-html" class="headerlink" title="Docs: http://hexo.io/docs/deployment.html"></a>Docs: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="noopener">http://hexo.io/docs/deployment.html</a></h4></li>
+<li>deploy:</li>
+<li>type:</li>
+</ul>
+
+          </div>
+      
+      <!-- 
           
            
             
@@ -278,7 +340,8 @@
 </ul>
 
          
-      
+       -->
+
 
       
     </div>
