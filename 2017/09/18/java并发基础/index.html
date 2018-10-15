@@ -227,6 +227,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
+           
+            
         <h3 id="线程控制逃逸规则"><a href="#线程控制逃逸规则" class="headerlink" title="线程控制逃逸规则"></a>线程控制逃逸规则</h3><p>如果一个资源的创建，使用，销毁都在同一个线程内完成，且永远不会脱离该线程的控制，则该资源的使用就是线程安全的。</p>
 <p>竞态条件：当多个线程同时访问同一个资源，并且其中改的一个或者多个线程对这个资源进行了写操作，才会产生静态条件，多个线程同时读取一个资源不会产生竞态条件。</p>
 <h3 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h3><p>线程独享栈，线程共享堆<br><img src="http://tutorials.jenkov.com/images/java-concurrency/java-memory-model-1.png" alt=""></p>
@@ -305,7 +307,9 @@
 <h4 id="CAS-乐观锁-非阻塞"><a href="#CAS-乐观锁-非阻塞" class="headerlink" title="CAS 乐观锁 非阻塞"></a>CAS 乐观锁 非阻塞</h4><p>CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。</p>
 <p>volatile多用于单个线程写，多线程读的情况。</p>
 
+         
       
+
       
     </div>
     
@@ -456,6 +460,7 @@
     <script>
         
     </script>
+
 </div>
       <footer id="footer">
     <div class="outer">

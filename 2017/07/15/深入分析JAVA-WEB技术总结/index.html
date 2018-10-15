@@ -223,6 +223,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
+           
+            
         <h5 id="DNS解析过程"><a href="#DNS解析过程" class="headerlink" title="DNS解析过程"></a>DNS解析过程</h5><ul>
 <li>最先在浏览器缓存里面找</li>
 <li>本地操作系统缓存</li>
@@ -263,7 +265,9 @@
 <li>其实这个没啥讲的，这个用的比较多的是在集群条件下的共享问题，session本质还是cookie，一种特殊的cookie，jsessionid = value<br>value是session的id，服务端会根据这个id去找session对象，这样就可以在传输中节省了大量带宽，传输的只是id了，而且安全性比cookie高，cookie还就是在客户端存储有限制，但是session在服务端集群的条件下存在共享的问题，各有好处，现在用的都是分布式缓存来存储session，有一个订阅服务器去管理，这样就将存储和管理从服务器分离，减少了服务器的负担，可以有效控制session的安全性和cookie的数量。</li>
 </ul>
 
+         
       
+
       
     </div>
     
@@ -414,6 +418,7 @@
     <script>
         
     </script>
+
 </div>
       <footer id="footer">
     <div class="outer">
