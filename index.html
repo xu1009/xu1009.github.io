@@ -213,7 +213,7 @@
 
 
 
-      
+      <!-- 
       
           
               
@@ -247,21 +247,47 @@
       
           </div>
           <div class="article-more-link">
-              <a href="/2018/08/27/java面试/#more">article.more</a>
+              <a href="/2018/08/27/java面试/#more">Read More</a>
           </div>
+       -->
+
+
       
-      <!-- 
           
+           <!--  -->
+
            
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+
             
            <blockquote>
+<p>JRE 是java运行环境，包括JVM和java类库，以及一些模块等，JDK是JRE的一个超集，提供了更多工具，比如编译器、各种诊断工具等。</p>
+</blockquote>
+<h4 id="java是解释执行？"><a href="#java是解释执行？" class="headerlink" title="java是解释执行？"></a>java是解释执行？</h4><blockquote>
+<p>明显不是，问题比较简单，回答不能笼统，首先是经过javac把java文件编译成字节码，也就是class文件，然后通过jvm内嵌的解释器转换成机器码，通常jvm是oracle jdk的hotspot，内嵌解释器是JIT，会将一部分热点代码编译成机器码，属于编译执行。</p>
+
            
              <p class="article-more-link">
                       <a href="/2018/08/27/java面试/#more">Read More</a>
                     </p>
             
              
-       -->
+      
 
 
       
@@ -322,7 +348,7 @@
 
 
 
-      
+      <!-- 
       
           
               
@@ -356,21 +382,47 @@
       
           </div>
           <div class="article-more-link">
-              <a href="/2018/01/17/AI在路上/#more">article.more</a>
+              <a href="/2018/01/17/AI在路上/#more">Read More</a>
           </div>
+       -->
+
+
       
-      <!-- 
           
+           <!--  -->
+
            
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+
             
            <blockquote>
+<p>看了李沐的博士这五年，心中感慨万千，哈哈哈，跟着沐哥学学。</p>
+</blockquote>
+<p>机器学习通常是写一个灵活的程序，一个模型，用数据来训练即系学习模型，利用数据编程。<br><img src="https://zh.gluon.ai/_images/ml-loop.png" alt=""><br>机器学习四个要素：数据、转换数据的模型、衡量模型好坏的损失函数和一个调整模型权重来最小化损失函数的算法。</p>
+<p>监督学习和非监督学习</p>
+
            
              <p class="article-more-link">
                       <a href="/2018/01/17/AI在路上/#more">Read More</a>
                     </p>
             
              
-       -->
+      
 
 
       
@@ -431,7 +483,7 @@
 
 
 
-      
+      <!-- 
       
           
               
@@ -465,21 +517,47 @@
       
           </div>
           <div class="article-more-link">
-              <a href="/2018/01/17/总结一哈java中一些问题/#more">article.more</a>
+              <a href="/2018/01/17/总结一哈java中一些问题/#more">Read More</a>
           </div>
+       -->
+
+
       
-      <!-- 
           
+           <!--  -->
+
            
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+
             
            <h3 id="Java-NIO-Overview"><a href="#Java-NIO-Overview" class="headerlink" title="Java NIO Overview"></a>Java NIO Overview</h3><ol>
+<li>channel </li>
+<li>buffer</li>
+<li>selector<blockquote>
+<p>channel与selector搭配使用，必须将selector配置成非阻塞模式，但是filechannel只能配置成阻塞模式，所以不能和selector搭配使用。</p>
+
            
              <p class="article-more-link">
                       <a href="/2018/01/17/总结一哈java中一些问题/#more">Read More</a>
                     </p>
             
              
-       -->
+      
 
 
       
@@ -540,7 +618,7 @@
 
 
 
-      
+      <!-- 
       
           
               
@@ -574,21 +652,47 @@
       
           </div>
           <div class="article-more-link">
-              <a href="/2018/01/17/Mybatis一些原理/#more">article.more</a>
+              <a href="/2018/01/17/Mybatis一些原理/#more">Read More</a>
           </div>
+       -->
+
+
       
-      <!-- 
           
+           <!--  -->
+
            
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+
             
            <p>mybatis是以一个sqlsessionFactory的实例为中心，sqlsessionfactory可以通过sqlsessionfactoryBuilder获得，主要是Mybatis可以使用自己的Resource工具类来从xml文件获得，然后使用那个builder生成factory</p>
+<p>从sqlsessionfactory获取sqlsession的实例，这个sqlsession完全包含了面向数据库执行sql命令所需的所有方法，开始会话，结束会话，中间是操作，sqlsession可以通过映射器类找到对应映射sql语句，最后调用这个sql，一般映射的sql语句都是配置到xml文件中，或者简单的sql语句也可以使用注解，这样比xml文件要简单的多，但是大量复杂的sql语句还是放到xml文件中比较靠谱。</p>
+<p>还有一个类型转换，Java类型到数据库类型之间的转换，有自己内部的类型转换处理器，也可以自定义类型处理器，在配置文件中指定处理器就行。一般都是使用的内部的处理器，根据数据库类型转换成Java类型，比较特殊的可以使用自定义处理器。</p>
+<p>数据库连接池</p>
+<p>这个是为了避免创建新的实例时所必需的初始化和认证时间，这样再有请求过来就会被阻塞，所以就存在了数据库连接池，这是一种使得并发Web请求能够快速响应的流行处理方式。</p>
+
            
              <p class="article-more-link">
                       <a href="/2018/01/17/Mybatis一些原理/#more">Read More</a>
                     </p>
             
              
-       -->
+      
 
 
       
@@ -649,7 +753,7 @@
 
 
 
-      
+      <!-- 
       
           
               
@@ -683,21 +787,47 @@
       
           </div>
           <div class="article-more-link">
-              <a href="/2018/01/17/RPC相关/#more">article.more</a>
+              <a href="/2018/01/17/RPC相关/#more">Read More</a>
           </div>
+       -->
+
+
       
-      <!-- 
           
+           <!--  -->
+
            
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+
             
            <blockquote>
+<p>序列化就是将对象转化为二进制流，不同序列化框架会将对象转成不同二进制流。在RPC调用中，不可避免的要接触到数据的序列化和解序列化。Java对象在一个网络节点中序列化好，放到网络中传输，到另一个网络节点时必须能够反序列化，对象得到正确的解析，这是RPC里的最基本问题。</p>
+</blockquote>
+<h3 id="Java序列化机制"><a href="#Java序列化机制" class="headerlink" title="Java序列化机制"></a>Java序列化机制</h3><ul>
+<li>Java序列化的对象需要实现serialabel接口，没有特殊指定的话，就是用默认的序列化方式，该序列化方式会将对象本身，及对象的引用全部序列化，开销比较大，（深拷贝的应用）依赖于jvm，可以实现不同平台之间的序列化和反序列化。</li>
+
            
              <p class="article-more-link">
                       <a href="/2018/01/17/RPC相关/#more">Read More</a>
                     </p>
             
              
-       -->
+      
 
 
       
@@ -758,7 +888,7 @@
 
 
 
-      
+      <!-- 
       
           
               
@@ -792,21 +922,47 @@
       
           </div>
           <div class="article-more-link">
-              <a href="/2018/01/17/ReactJs之路/#more">article.more</a>
+              <a href="/2018/01/17/ReactJs之路/#more">Read More</a>
           </div>
+       -->
+
+
       
-      <!-- 
           
+           <!--  -->
+
            
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+
             
            <ul>
+<li>包管理器 npm</li>
+<li>构建器 webpack</li>
+<li>编译器 babel<br>JSX 语法</li>
+</ul>
+
            
              <p class="article-more-link">
                       <a href="/2018/01/17/ReactJs之路/#more">Read More</a>
                     </p>
             
              
-       -->
+      
 
 
       
@@ -867,7 +1023,7 @@
 
 
 
-      
+      <!-- 
       
           
               
@@ -901,21 +1057,47 @@
       
           </div>
           <div class="article-more-link">
-              <a href="/2017/10/21/Spring持续更新/#more">article.more</a>
+              <a href="/2017/10/21/Spring持续更新/#more">Read More</a>
           </div>
+       -->
+
+
       
-      <!-- 
           
+           <!--  -->
+
            
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+
             
            <blockquote>
+<p>spring是一个轻量级开发应用框架，一个完整的应用是由一组相互协作的对象组成，spring就是是的这些对象在完成功能的同时实现低耦合，高内聚。spring一部分功能就是管理这些对象，处理对象间的依赖关系。spring还提供像通用日志记录、性能统计、安全控制、异常处理等面向切面的能力，还有数据库事物。超级粘合平台，除了自己提供功能外，还提供粘合其它技术和框架的能力。</p>
+</blockquote>
+<p>spring的优点</p>
+<ol>
+
            
              <p class="article-more-link">
                       <a href="/2017/10/21/Spring持续更新/#more">Read More</a>
                     </p>
             
              
-       -->
+      
 
 
       
@@ -976,7 +1158,7 @@
 
 
 
-      
+      <!-- 
       
           
               
@@ -1010,21 +1192,47 @@
       
           </div>
           <div class="article-more-link">
-              <a href="/2017/09/25/zookeeper/#more">article.more</a>
+              <a href="/2017/09/25/zookeeper/#more">Read More</a>
           </div>
+       -->
+
+
       
-      <!-- 
           
+           <!--  -->
+
            
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+
             
            <blockquote>
+<p>zookeeper是一种为分布式应用设计的高可用，高性能且一致的开源协调服务，他提供了一项基本服务：分布式锁服务，还有配置维护，组维护，分布式消息队列，分布式通知/协调。一致性、可用性和容错性，使用的是Zab协议，数据结构Znode，原语、通知机制–watch机制。</p>
+</blockquote>
+<h3 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h3><p>zk拥有一个层次的命名空间，如下：<br><img src="http://images.cnitblog.com/blog/671563/201411/301534562152768.png" alt=""></p>
+<ul>
+
            
              <p class="article-more-link">
                       <a href="/2017/09/25/zookeeper/#more">Read More</a>
                     </p>
             
              
-       -->
+      
 
 
       
@@ -1085,7 +1293,7 @@
 
 
 
-      
+      <!-- 
       
           
               
@@ -1119,21 +1327,47 @@
       
           </div>
           <div class="article-more-link">
-              <a href="/2017/09/18/java并发常见问题/#more">article.more</a>
+              <a href="/2017/09/18/java并发常见问题/#more">Read More</a>
           </div>
+       -->
+
+
       
-      <!-- 
           
+           <!--  -->
+
            
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+
             
            <h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><blockquote>
+<p>volatile 就是为了保证可见性和有序性，并不能保证原子性，多用于一个写线程，多个读线程的情况。</p>
+</blockquote>
+<ul>
+<li>将当前处理器缓存行的数据会写回到系统内存。</li>
+
            
              <p class="article-more-link">
                       <a href="/2017/09/18/java并发常见问题/#more">Read More</a>
                     </p>
             
              
-       -->
+      
 
 
       
@@ -1194,7 +1428,7 @@
 
 
 
-      
+      <!-- 
       
           
               
@@ -1228,21 +1462,47 @@
       
           </div>
           <div class="article-more-link">
-              <a href="/2017/09/18/java并发基础/#more">article.more</a>
+              <a href="/2017/09/18/java并发基础/#more">Read More</a>
           </div>
+       -->
+
+
       
-      <!-- 
           
+           <!--  -->
+
            
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+               
+               
+           
+
             
            <h3 id="线程控制逃逸规则"><a href="#线程控制逃逸规则" class="headerlink" title="线程控制逃逸规则"></a>线程控制逃逸规则</h3><p>如果一个资源的创建，使用，销毁都在同一个线程内完成，且永远不会脱离该线程的控制，则该资源的使用就是线程安全的。</p>
+<p>竞态条件：当多个线程同时访问同一个资源，并且其中改的一个或者多个线程对这个资源进行了写操作，才会产生静态条件，多个线程同时读取一个资源不会产生竞态条件。</p>
+<h3 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h3><p>线程独享栈，线程共享堆<br><img src="http://tutorials.jenkov.com/images/java-concurrency/java-memory-model-1.png" alt=""></p>
+<p>下面是栈和堆的存储类型</p>
+<p><img src="http://tutorials.jenkov.com/images/java-concurrency/java-memory-model-2.png" alt=""></p>
+
            
              <p class="article-more-link">
                       <a href="/2017/09/18/java并发基础/#more">Read More</a>
                     </p>
             
              
-       -->
+      
 
 
       
